@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="EPAM_e.popovich" verbose="1">
+	<parameter name="email_text" value="epam_e.popovich" />
+	<test name="Test @tut.by EMAIL">
+		<parameter name="sender_mail_login" value="epam1.popovich@tut.by" />
+		<parameter name="sender_mail_password" value="" />
+		<parameter name="recipient_mail_login" value="epam2.popovich@tut.by" />
+		<parameter name="recipient_mail_password" value="" />
+		<classes>
+			<class name="demo.test.tests.TutByEmailTest" />
+		</classes>
+	</test>
+</suite>

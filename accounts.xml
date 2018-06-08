@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<accounts>
+    <account name="sender">
+        <email>@tut.by</email>
+        <login>epam1.popovich</login>
+        <password></password>
+    </account>
+    <account name="recipient">
+        <email>@tut.by</email>
+        <login>epam1.popovich</login>
+        <password></password>
+    </account>
+</accounts>

@@ -49,7 +49,7 @@ public class TutByEmailTest extends BaseTest {
             }
         }
 	}
-	
+
 	@AfterMethod
     public void deleteEmailFolders() {
 	    for(MailUtils mail : mailBox) {
@@ -77,6 +77,7 @@ public class TutByEmailTest extends BaseTest {
 		new AuthorizeEmailForm().signIn(senderMailLogin, senderMailPassword).fetchEmailFolder(EmailAccountPage.NavBox.SENT).getMailsForm();
 
 		new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
+		Browser.openStartPage();
 	}
 
     private MailUtils getMailStore(String login, String password) {

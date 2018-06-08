@@ -33,7 +33,7 @@ public final class Browser {
 		Logger.getInstance().info(String.format("browser %s is ready", currentBrowser.name()));
 	}
 
-	synchronized static Browser getInstance() {
+	synchronized public static Browser getInstance() {
 		if (instance == null) {
 			initProperties();
 			instance = new Browser();
@@ -69,12 +69,12 @@ public final class Browser {
 		return timeoutForCondition;
 	}
 
-	public String getStartBrowserURL() {
+	public static String getStartBrowserURL() {
 		return browserURL;
 	}
 
-	public void openStartPage() {
-		getDriver().navigate().to(props.getProperty(getStartBrowserURL()));
+	public static void openStartPage() {
+		getDriver().navigate().to(browserURL);
 	}
 
 	void windowMaximise() {

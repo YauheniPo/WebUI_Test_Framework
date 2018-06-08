@@ -21,7 +21,7 @@ public class EmailAccountPage extends BaseForm {
     }
 
     public EmailAccountPage fetchEmailFolder(NavBox folder) {
-        new Button(By.xpath(String.format(locNavBarElement, folder.getLoc())), String.format("Folder %s", folder.getLoc().toUpperCase()));
+        new Button(By.xpath(String.format(locNavBarElement, folder.getLoc())), String.format("Folder %s", folder.getLoc().toUpperCase())).click();
         return this;
     }
 

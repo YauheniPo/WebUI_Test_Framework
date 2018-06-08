@@ -2,7 +2,6 @@ package webdriver;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 

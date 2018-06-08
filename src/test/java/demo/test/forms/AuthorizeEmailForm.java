@@ -10,7 +10,7 @@ public class AuthorizeEmailForm extends BaseForm {
 	private static final By MAIN_LOCATOR = By.xpath("//*[@class='bookBody']");
 	private final TextBox textBoxInputLogin = new TextBox(By.xpath("//*[@id='form']//input[@name='login']"), "Input Login");
 	private final TextBox textBoxInputPassword = new TextBox(By.xpath("//*[@id='form']//input[@name='password']"), "Input Password");
-	private final Button btnSighIn = new Button(By.xpath("//button[@type='submit']"), "Sign In");
+	private final Button btnSighIn = new Button(By.xpath("//*[@type='submit']"), "Sign In");
 	
 	public AuthorizeEmailForm() {
 		super(MAIN_LOCATOR, "tut.by Authorize Email Form");

@@ -27,23 +27,9 @@ public abstract class BaseEntity {
         getBrowser().exit();
     }
 
-    public void doAssert(final Boolean isTrue, final String passMsg, final String failMsg) {
-        if (isTrue) {
-            info(passMsg);
-        } else {
-            fatal(failMsg);
-        }
-    }
-
     protected void assertEquals(final Object expected, final Object actual) {
         if (!expected.equals(actual)) {
             fatal("Expected value: '" + expected.toString() + "', but was: '" + actual.toString() + "'");
-        }
-    }
-
-    public void assertEquals(final String message, final Object expected, final Object actual) {
-        if (!expected.equals(actual)) {
-            fatal(message);
         }
     }
 

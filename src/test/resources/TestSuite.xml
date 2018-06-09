@@ -2,9 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="EPAM_e.popovich" verbose="1">
 	<parameter name="emailText" value="epam_e.popovich" />
-	<!--<parameter name="dataBaseLocation" value="accounts.xml" />-->
+	<parameter name="dataBaseLocation" value="accounts.xml" />
 	<!--<parameter name="dataBaseLocation" value="accounts.csv" />-->
-	<parameter name="dataBaseLocation" value="db" />
+	<!--<parameter name="dataBaseLocation" value="db" />-->
 	<test name="Test @tut.by EMAIL">
 		<classes>
 			<class name="demo.test.tests.TutByEmailTest" />

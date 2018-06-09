@@ -19,11 +19,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TutByEmailTest extends BaseTest {
-	private String emailText;
-	private String senderMailLogin;
+	public String senderMailLogin;
+	public String recipientMailLogin;
 	private String senderMailPassword;
-	private String recipientMailLogin;
 	private String recipientMailPassword;
+	private String emailText;
     private MailUtils mailSender;
 	private String currentBrowser = Browser.getBrowserName();
 	private ArrayList<MailUtils> mailBox = new ArrayList<>();

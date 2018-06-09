@@ -12,10 +12,6 @@ import java.util.concurrent.TimeUnit;
 final public class SmartWait {
     private static final Logger logger = Logger.getInstance();
 
-    public static <T> T waitFor(ExpectedCondition<T> condition) {
-        return waitFor(condition, Long.parseLong(Browser.getTimeoutForCondition()));
-    }
-
     private static <T> T waitFor(ExpectedCondition<T> condition, long timeOutInSeconds) {
         Browser.getDriver().manage().timeouts().implicitlyWait(0L, TimeUnit.MILLISECONDS);
         Wait<WebDriver> wait = new FluentWait<>((WebDriver) Browser.getDriver())

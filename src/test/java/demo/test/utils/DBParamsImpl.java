@@ -28,6 +28,8 @@ public class DBParamsImpl extends InitParams {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
+        } finally {
+            database.close();
         }
         setParams(data);
         LOGGER.info(String.format("Вata received from %s", dataBaselocation));

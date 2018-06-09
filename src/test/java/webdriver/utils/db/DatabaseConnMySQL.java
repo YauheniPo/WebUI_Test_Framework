@@ -41,7 +41,7 @@ public class DatabaseConnMySQL extends BaseEntity {
     }
 
     public void close() {
-        info("Connection close");
+        info("DB connection is closing");
         if (connection != null) {
             try {
                 connection.close();

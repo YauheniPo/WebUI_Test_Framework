@@ -43,6 +43,24 @@ public final class Logger {
 		info(String.format("--------==[ %1$s.]==--------", msg));
 	}
 
+	private void logTestEnd(final String data, final String result, final String reason) {
+		info("");
+		String leftAlignFormat = "| %-20s | %-22s | %-32s |%n";
+		info("+----------------------------------------------+------------------------+-------------------------------------+%n");
+		info("| Account                                      | Result (Passed\\Failed) | Failures reason                     |%n");
+		info("+----------------------------------------------+------------------------+-------------------------------------+%n");
+		info(String.format(leftAlignFormat, data, result, reason));
+		info("+----------------------------------------------+------------------------+-------------------------------------+%n");
+	}
+
+	void logTestEnd(final String data) {
+		logTestEnd(data, "Passed", "");
+	}
+
+	void logTestEnd(final String data, final String reason) {
+		logTestEnd(data, "Failed", reason);
+	}
+
 	void logTestName(final String testName) {
 		String formattedName = String.format("===================== '%1$s' =====================", testName);
 		StringBuilder delims = new StringBuilder();
@@ -51,17 +69,5 @@ public final class Logger {
 			delims.append("-"); }info(delims.toString());
 		info(formattedName);
 		info(delims.toString());
-	}
-
-	void logTestEnd(final String testName) {
-		info("");
-		String formattedEnd = String.format("***** %1$s: *****", testName);
-		StringBuilder stars = new StringBuilder();
-		int nChars = formattedEnd.length();
-		for (int i = 0; i < nChars; i++) {
-			stars.append("*"); }info(stars.toString());
-		info(formattedEnd);
-		info(stars.toString());
-		info("");
 	}
 }

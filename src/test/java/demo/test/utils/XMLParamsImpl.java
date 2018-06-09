@@ -43,10 +43,7 @@ public class XMLParamsImpl extends InitParams {
                 data.add(eElement.getElementsByTagName("password").item(0).getTextContent());
             }
         }
-        senderMailLogin = data.get(0);
-        senderMailPassword = data.get(1);
-        recipientMailLogin = data.get(2);
-        recipientMailPassword = data.get(3);
+        setParams(data);
         LOGGER.info(String.format("Вata received from %s", dataBaselocation));
         return this;
     }

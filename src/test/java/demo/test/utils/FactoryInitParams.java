@@ -7,7 +7,7 @@ public class FactoryInitParams {
             return new XMLParamsImpl().fetchTestData(dataBaseLocation);
         } else if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.CSV.name())) {
             return new CSVParamsImpl().fetchTestData(dataBaseLocation);
-        } else if (!dataBaseLocation.split(":")[0].equals(dataBaseLocation)) {
+        } else if (dataBaseLocation.toUpperCase().equals(DataBaseType.DB.name())) {
             return new DBParamsImpl().fetchTestData(dataBaseLocation);
         }
         return null;

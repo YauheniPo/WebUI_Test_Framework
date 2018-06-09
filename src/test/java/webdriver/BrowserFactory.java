@@ -21,7 +21,7 @@ import static webdriver.ConstantsFrm.CHROMEDRIVER;
 import static webdriver.ConstantsFrm.WEBDRIVER_CHROME;
 
 final public class BrowserFactory {
-    public static final String PLATFORM = System.getProperty("os.name").toLowerCase();
+    private static final String PLATFORM = System.getProperty("os.name").toLowerCase();
     private static final Logger logger = Logger.getInstance();
     private static final String CLS_NAME = BrowserFactory.class.getName();
 

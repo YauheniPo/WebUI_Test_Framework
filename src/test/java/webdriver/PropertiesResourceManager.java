@@ -12,6 +12,18 @@ public final class PropertiesResourceManager {
 		properties = appendFromResource(properties, resourceName);
 	}
 
+	public String getProperty(final String key) {
+		return properties.getProperty(key);
+	}
+
+	public String getProperty(final String key, final String defaultValue) {
+		return properties.getProperty(key, defaultValue);
+	}
+
+	public void setProperty(final String key, final String value) {
+		properties.setProperty(key, value);
+	}
+
 	private Properties appendFromResource(final Properties objProperties, final String resourceName) {
 		InputStream inStream = this.getClass().getClassLoader().getResourceAsStream(resourceName);
 
@@ -26,17 +38,5 @@ public final class PropertiesResourceManager {
 			logger.error(String.format("Resource \"%1$s\" could not be found", resourceName));
 		}
 		return objProperties;
-	}
-
-	public String getProperty(final String key) {
-		return properties.getProperty(key);
-	}
-
-	public String getProperty(final String key, final String defaultValue) {
-		return properties.getProperty(key, defaultValue);
-	}
-
-	public void setProperty(final String key, final String value) {
-		properties.setProperty(key, value);
 	}
 }

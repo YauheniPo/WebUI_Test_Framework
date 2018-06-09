@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 public abstract class BaseEntity {
     protected static Logger logger = Logger.getInstance();
 
-    protected Browser getBrowser() {
+    private Browser getBrowser() {
         return Browser.getInstance();
     }
 
@@ -19,16 +19,12 @@ public abstract class BaseEntity {
     public void before() {
         Browser browser = getBrowser();
         browser.windowMaximise();
-        browser.navigate(browser.getStartBrowserURL());
+        browser.navigate(Browser.getStartBrowserURL());
     }
 
     @AfterTest
     public void after() {
         getBrowser().exit();
-    }
-
-    protected final void debug(final String message) {
-        logger.debug(String.format("[%1$s] %2$s", this.getClass().getSimpleName(), (message)));
     }
 
     public void doAssert(final Boolean isTrue, final String passMsg, final String failMsg) {
@@ -39,9 +35,9 @@ public abstract class BaseEntity {
         }
     }
 
-    public void assertEquals(final Object expected, final Object actual) {
+    protected void assertEquals(final Object expected, final Object actual) {
         if (!expected.equals(actual)) {
-            fatal("Expected value: '" + expected + "', but was: '" + actual + "'");
+            fatal("Expected value: '" + expected.toString() + "', but was: '" + actual.toString() + "'");
         }
     }
 
@@ -49,6 +45,10 @@ public abstract class BaseEntity {
         if (!expected.equals(actual)) {
             fatal(message);
         }
+    }
+
+    protected final void debug(final String message) {
+        logger.debug(String.format("[%1$s] %2$s", this.getClass().getSimpleName(), (message)));
     }
 
     protected void info(final String message) {
@@ -63,11 +63,11 @@ public abstract class BaseEntity {
         logger.fatal(message);
     }
 
-    protected String makeScreen(final Class<? extends BaseEntity> name) {
+    String makeScreen(final Class<? extends BaseEntity> name) {
         return makeScreen(name, true);
     }
 
-    protected String makeScreen(final Class<? extends BaseEntity> name, final boolean additionalInfo) {
+    private String makeScreen(final Class<? extends BaseEntity> name, final boolean additionalInfo) {
         String fileName = name.getPackage().getName() + "." + name.getSimpleName();
         String pageSourcePath = String.format("surefire-reports" + File.separator + "html" +
                 File.separator + "Screenshots/%1$s.txt", fileName);
@@ -75,13 +75,13 @@ public abstract class BaseEntity {
                 File.separator + "Screenshots/%1$s.png", fileName);
 
         try {
-            String pageSource = getBrowser().getDriver().getPageSource();
+            String pageSource = Browser.getDriver().getPageSource();
             FileUtils.writeStringToFile(new File(Paths.get(pageSourcePath).toUri()), pageSource);
         } catch (Exception e1) {
             logger.debug(e1.getMessage());
         }
         try {
-            File screen = getBrowser().getDriver().getScreenshotAs(OutputType.FILE);
+            File screen = Browser.getDriver().getScreenshotAs(OutputType.FILE);
             File addedNewFile = new File(new File(screenshotPath).toURI());
             FileUtils.copyFile(screen, addedNewFile);
         } catch (Exception e) {

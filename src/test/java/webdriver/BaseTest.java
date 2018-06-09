@@ -14,9 +14,8 @@ public abstract class BaseTest extends BaseEntity {
             logger.logTestEnd(currentClass.getName());
         } catch (Exception | AssertionError e) {
             logger.debug(e.getMessage());
-            throw e;
-        } finally {
             makeScreen(currentClass);
+            throw e;
         }
     }
 }

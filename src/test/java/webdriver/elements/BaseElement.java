@@ -1,6 +1,9 @@
 package webdriver.elements;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebElement;
@@ -9,7 +12,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import webdriver.BaseEntity;
 import webdriver.Browser;
-import webdriver.CommonFunctions;
 import webdriver.waitings.SmartWait;
 
 import java.util.List;
@@ -48,7 +50,7 @@ public abstract class BaseElement extends BaseEntity {
     public String getName() {
         try {
             if (name == null) {
-                name = getBrowser().getDriver().findElement(locator).getText();
+                name = Browser.getDriver().findElement(locator).getText();
             }
         } catch (Exception e) {
             debug(e.getMessage());
@@ -65,24 +67,15 @@ public abstract class BaseElement extends BaseEntity {
     public void sendKeys(Keys key) {
         waitForIsElementPresent();
         assertIsPresent();
-        getBrowser().getDriver().findElement(locator).sendKeys(key);
+        Browser.getDriver().findElement(locator).sendKeys(key);
     }
 
     public void click() {
         waitForIsElementPresent();
         info("locator clicking");
-        getBrowser().getDriver().getMouse().mouseMove(element.getCoordinates());
-        if (getBrowser().getDriver() instanceof JavascriptExecutor) {
-            getBrowser().getDriver().executeScript("arguments[0].style.border='3px solid red'", element);
-        }
-        element.click();
-    }
-
-    public void clickWithoutWait() {
-        info("locator clicking");
-        getBrowser().getDriver().getMouse().mouseMove(element.getCoordinates());
-        if (getBrowser().getDriver() instanceof JavascriptExecutor) {
-            getBrowser().getDriver().executeScript("arguments[0].style.border='3px solid red'", element);
+        Browser.getDriver().getMouse().mouseMove(element.getCoordinates());
+        if (Browser.getDriver() instanceof JavascriptExecutor) {
+            Browser.getDriver().executeScript("arguments[0].style.border='3px solid red'", element);
         }
         element.click();
     }
@@ -96,14 +89,14 @@ public abstract class BaseElement extends BaseEntity {
     public void clickRight() {
         waitForIsElementPresent();
         info("Clicking Right");
-        getBrowser().getDriver().getMouse().mouseMove(element.getCoordinates());
-        getBrowser().getDriver().getMouse().contextClick(element.getCoordinates());
+        Browser.getDriver().getMouse().mouseMove(element.getCoordinates());
+        Browser.getDriver().getMouse().contextClick(element.getCoordinates());
     }
 
     public void clickViaAction() {
         waitForIsElementPresent();
         info("locator clicking");
-        Actions action = new Actions(getBrowser().getDriver());
+        Actions action = new Actions(Browser.getDriver());
         action.click(getElement());
         action.perform();
     }
@@ -112,38 +105,30 @@ public abstract class BaseElement extends BaseEntity {
         waitForIsElementPresent();
         assertIsPresent();
         info("locator clicking");
-        getBrowser().getDriver().executeScript("arguments[0].click();", getElement());
+        Browser.getDriver().executeScript("arguments[0].click();", getElement());
     }
 
     public void doubleClick() {
         waitForIsElementPresent();
         info("locator clicking double");
-        getBrowser().getDriver().getMouse().mouseMove(element.getCoordinates());
-        Actions builder = new Actions(getBrowser().getDriver());
+        Browser.getDriver().getMouse().mouseMove(element.getCoordinates());
+        Actions builder = new Actions(Browser.getDriver());
         Action dClick = builder.doubleClick(element).build();
         dClick.perform();
 
     }
 
-    public void moveMouseToElement() {
-        waitForIsElementPresent();
-        CommonFunctions.centerMouse();
-        Actions action = new Actions(getBrowser().getDriver());
-        action.moveToElement(getElement());
-        action.perform();
-    }
-
     public final boolean exists() {
-        getBrowser().getDriver().manage().timeouts().implicitlyWait(TIMEOUT_WAIT_0, TimeUnit.SECONDS);
-        boolean result = !getBrowser().getDriver().findElements(locator).isEmpty();
+        Browser.getDriver().manage().timeouts().implicitlyWait(TIMEOUT_WAIT_0, TimeUnit.SECONDS);
+        boolean result = !Browser.getDriver().findElements(locator).isEmpty();
         if (result)
-            element = (RemoteWebElement) getBrowser().getDriver().findElement(locator);
-        getBrowser().getDriver().manage().timeouts().implicitlyWait(Integer.valueOf(getBrowser().getTimeoutForCondition()), TimeUnit.SECONDS);
+            element = (RemoteWebElement) Browser.getDriver().findElement(locator);
+        Browser.getDriver().manage().timeouts().implicitlyWait(Integer.valueOf(Browser.getTimeoutForCondition()), TimeUnit.SECONDS);
         return result;
     }
 
     private void waitForIsElementPresent() {
-        isPresent(Integer.valueOf(getBrowser().getTimeoutForCondition()));
+        isPresent(Integer.valueOf(Browser.getTimeoutForCondition()));
         try {
             element.isDisplayed();
         } catch (Exception | AssertionError ex) {
@@ -152,7 +137,7 @@ public abstract class BaseElement extends BaseEntity {
     }
 
     public void waitForElementClickable() {
-        new WebDriverWait(getBrowser().getDriver(), Long.parseLong(getBrowser().getTimeoutForCondition())).until(ExpectedConditions.elementToBeClickable(locator));
+        new WebDriverWait(Browser.getDriver(), Long.parseLong(Browser.getTimeoutForCondition())).until(ExpectedConditions.elementToBeClickable(locator));
     }
 
     public void waitAndAssertIsPresent() {
@@ -177,7 +162,7 @@ public abstract class BaseElement extends BaseEntity {
 
     public String getAttribute(final String attr) {
         waitForIsElementPresent();
-        return getBrowser().getDriver().findElement(locator).getAttribute(attr);
+        return Browser.getDriver().findElement(locator).getAttribute(attr);
     }
 
     private void assertIsPresent() {

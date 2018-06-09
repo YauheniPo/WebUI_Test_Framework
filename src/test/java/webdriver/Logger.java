@@ -5,6 +5,7 @@ public final class Logger {
 	private static Logger instance = null;
 
     private Logger() {
+        // do not instantiate Logger class
     }
 
   	public static synchronized Logger getInstance() {
@@ -18,41 +19,41 @@ public final class Logger {
 		logStepMsg(String.format("%1$s. %2$s", step, description));
 	}
 
+	public void debug(Object message) {
+		LOG4J.debug(message);
+	}
+
+	public void debug(Object message, Throwable throwable) {
+		LOG4J.debug(message, throwable);
+	}
+
 	private void logStepMsg(final String msg) {
 		info(String.format("--------==[ %1$s.]==--------", msg));
 	}
 
 	void logTestName(final String testName) {
-    	String formattedName = String.format("===================== '%1$s' =====================", testName);
-    	StringBuilder delims = new StringBuilder();
-    	int nChars = formattedName.length();
-    	for (int i = 0; i < nChars; i++) {
-    		delims.append("-"); }info(delims.toString());
-    	info(formattedName);
-    	info(delims.toString());
+		String formattedName = String.format("===================== '%1$s' =====================", testName);
+		StringBuilder delims = new StringBuilder();
+		int nChars = formattedName.length();
+		for (int i = 0; i < nChars; i++) {
+			delims.append("-"); }info(delims.toString());
+		info(formattedName);
+		info(delims.toString());
 	}
 
 	void logTestEnd(final String testName) {
-    	info("");
-    	String formattedEnd = String.format("***** %1$s: *****", testName);
-    	StringBuilder stars = new StringBuilder();
-    	int nChars = formattedEnd.length();
-    	for (int i = 0; i < nChars; i++) {
-    		stars.append("*"); }info(stars.toString());
-    	info(formattedEnd);
-    	info(stars.toString());
-    	info("");
+		info("");
+		String formattedEnd = String.format("***** %1$s: *****", testName);
+		StringBuilder stars = new StringBuilder();
+		int nChars = formattedEnd.length();
+		for (int i = 0; i < nChars; i++) {
+			stars.append("*"); }info(stars.toString());
+		info(formattedEnd);
+		info(stars.toString());
+		info("");
 	}
 
-	public void debug(Object message) {
-		LOG4J.debug(message);
-	}
-
-    public void debug(Object message, Throwable throwable) {
-        LOG4J.debug(message, throwable);
-    }
-
-	public void info(Object message) {
+	void info(Object message) {
 		LOG4J.info(message);
 	}
 

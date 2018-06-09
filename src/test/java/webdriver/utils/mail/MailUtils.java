@@ -1,13 +1,11 @@
 package webdriver.utils.mail;
 
-import com.sun.mail.imap.IMAPMessage;
 import webdriver.BaseEntity;
 import webdriver.PropertiesResourceManager;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.IOException;
 import java.util.Properties;
 
 import static webdriver.ConstantsFrm.CHARSET;
@@ -21,12 +19,11 @@ public class MailUtils extends BaseEntity {
 	private Store store;
 	private Session session;
 	private String port;
-	private String hostProtoc;
 	private String service;
 	private String sentFolder;
 	private MimeMessage message;
 
-	public MailUtils(String host, String username, String password) {
+	private MailUtils(String host, String username, String password) {
 	    this.fromAddress = username;
 	    this.password = password;
 	    readConfig(host);
@@ -83,34 +80,7 @@ public class MailUtils extends BaseEntity {
         }
 	}
 
-	public Message[] getInboxMessages(){
-		return getMessages("INBOX");
-	}
-
-	public Message[] getMessages(Folder folder, int permission){
-    	try {
-    		folder.open(permission);
-			return folder.getMessages();
-		} catch (MessagingException e) {
-			info(e.getMessage());
-		}
-	    return null;
-	}
-
-	public Message[] getMessages(Folder folder){
-		return getMessages(folder, Folder.READ_WRITE);
-	}
-	
-	public Message[] getMessages(String folderName){
-		try {
-			return getMessages(getStoreConnected().getFolder(folderName), Folder.READ_WRITE);
-		} catch (MessagingException e) {
-			info(e.getMessage());
-		}
-		return null;
-	}
-
-	public void addMsgInFolder(String folderName) {
+	private void addMsgInFolder(String folderName) {
 		try{
 			Folder folder = getStoreConnected().getFolder(folderName);
 			folder.open(Folder.READ_WRITE);
@@ -154,20 +124,6 @@ public class MailUtils extends BaseEntity {
 		return store;
 	}
 
-	public void deleteFolderMessages(String folderName){
-		try{
-			Folder folder = getStoreConnected().getFolder(folderName);
-			folder.open(Folder.READ_WRITE);
-			Message[] messages = folder.getMessages();
-			for(Message message:messages) {
-				message.setFlag(Flags.Flag.DELETED, true);
-			}
-			folder.close(true);
-		}catch(MessagingException e){
-            debug(e.getMessage());
-		}
-	}
-
 	public void deleteAllMessages(){
 		try{
 			Folder[] folders = store.getDefaultFolder().list("*");
@@ -178,20 +134,17 @@ public class MailUtils extends BaseEntity {
 					message.setFlag(Flags.Flag.DELETED, true);
 				}
 				folder.close(true);
+				info(String.format("Mails deleted from %s from %s folder", fromAddress, folder.getName()));
 			}
 		}catch(MessagingException e){
 			debug(e.getMessage());
 		}
 	}
 
-	public Boolean isConnected(){
-		return store.isConnected();
-	}
-
 	public void closeStore(){
 		try {
 			store.close();
-			info("MailStore is close");
+			info(String.format("MailStore %s is close", fromAddress));
 		} catch (Exception e) {
             debug(e.getMessage());
 		}
@@ -199,7 +152,7 @@ public class MailUtils extends BaseEntity {
 	
 	private void readConfig(String host){
 		String prop = props.getProperty(host);
-		this.hostProtoc = prop.split(";")[0];
+		String hostProtoc = prop.split(";")[0];
 		this.service = prop.split(";")[1];
 		this.host = String.format("%s.%s", hostProtoc, service);
 		this.port = props.getProperty("port");
@@ -215,14 +168,5 @@ public class MailUtils extends BaseEntity {
 		properties.put("mail.imap.ssl.enable", "true");
 		properties.put("mail.smtp.socketFactory.port", port);
 		properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-	}
-
-    public static String getMsgText(Message msg) {
-		try {
-			return msg.getContent().toString();
-		} catch (IOException | MessagingException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 }

@@ -33,7 +33,7 @@ public final class Browser {
 		Logger.getInstance().info(String.format("browser %s is ready", currentBrowser.name()));
 	}
 
-	synchronized public static Browser getInstance() {
+	synchronized static Browser getInstance() {
 		if (instance == null) {
 			initProperties();
 			instance = new Browser();
@@ -56,38 +56,12 @@ public final class Browser {
 		return driver;
 	}
 
-	void exit() {
-		try {
-			getDriver().quit();
-			Logger.getInstance().info("browser driver quit");
-		} catch (Exception e) {
-			logger.debug(e.getMessage());
-		}
-	}
-
 	public static String getTimeoutForCondition() {
 		return timeoutForCondition;
 	}
 
-	public static String getStartBrowserURL() {
-		return browserURL;
-	}
-
 	public static void openStartPage() {
 		getDriver().navigate().to(browserURL);
-	}
-
-	void windowMaximise() {
-		try {
-			getDriver().executeScript("if (window.screen) {window.moveTo(0, 0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};");
-			getDriver().manage().window().maximize();
-		} catch (Exception e) {
-            logger.debug(e);
-		}
-	}
-
-	void navigate(final String url) {
-		getDriver().navigate().to(url);
 	}
 
 	public void refresh() {
@@ -134,5 +108,31 @@ public final class Browser {
 			logger.debug("Browser.getNewDriver", e);
 		}
 		return null;
+	}
+
+	static String getStartBrowserURL() {
+		return browserURL;
+	}
+
+	void windowMaximise() {
+		try {
+			getDriver().executeScript("if (window.screen) {window.moveTo(0, 0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};");
+			getDriver().manage().window().maximize();
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+	}
+
+	void navigate(final String url) {
+		getDriver().navigate().to(url);
+	}
+
+	void exit() {
+		try {
+			getDriver().quit();
+			Logger.getInstance().info("browser driver quit");
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+		}
 	}
 }

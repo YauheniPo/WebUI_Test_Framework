@@ -1,18 +1,19 @@
 package demo.test.tests;
 
+import demo.test.Models.Mail;
 import demo.test.forms.AuthorizeEmailForm;
 import demo.test.forms.TutByHeader;
 import demo.test.forms.UserAccountDropdown;
 import demo.test.pages.EmailAccountPage;
 import demo.test.pages.TutByHomePage;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import webdriver.BaseTest;
 import webdriver.Browser;
 import webdriver.utils.mail.MailUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -38,11 +39,16 @@ public class TutByEmailTest extends BaseTest {
 		this.recipientMailLogin = recipient_mail_login;
 		this.recipientMailPassword = recipient_mail_password;
 
+		mailSender = getMailStore(senderMailLogin, senderMailPassword);
+		mailRecipient = getMailStore(recipientMailLogin, recipientMailPassword);
+		deleteMails();
+
 		//abstractFactory
 	}
 
 	@AfterClass
-	public void closeMailStore() {
+	public void clearEmailAndCloseMailStore() {
+		deleteMails();
         for(MailUtils mail : mailBox) {
             if (mail != null) {
                 mail.closeStore();
@@ -50,34 +56,39 @@ public class TutByEmailTest extends BaseTest {
         }
 	}
 
-	@AfterMethod
-    public void deleteEmailFolders() {
-	    for(MailUtils mail : mailBox) {
-		    if (mail != null) {
-                logger.info("Очищаем входящую почту");
-                mail.deleteAllMessages();
-            }
-		}
-    }
-
 	@Override
 	public void runTest() {
 
-		logger.step(1, "mail");
+		logger.step(1, "@tut.by test");
 
-		mailSender = getMailStore(senderMailLogin, senderMailPassword);
-		Date dateTimeMail = new Date();
-		mailSender.sendMail(String.format("%s_%s_%s", emailText, currentBrowser, dateTimeMail), String.format("From %s", senderMailLogin), recipientMailLogin);
+		String dateTimeMail = new SimpleDateFormat("HH:mm").format(new Date());
+		String subject = String.format("From %s", senderMailLogin);
+		String text = String.format("%s_%s_%s", emailText, currentBrowser, dateTimeMail);
+		Mail apiMail = new Mail(subject, text, senderMailLogin, recipientMailLogin);
+
+		mailSender.sendMail(text, subject, recipientMailLogin);
 		mailSender.addMsgInSentFolder();
-		mailRecipient = getMailStore(recipientMailLogin, recipientMailPassword);
 
 		TutByHomePage tutByHomePage = new TutByHomePage();
 		tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
 
-		new AuthorizeEmailForm().signIn(senderMailLogin, senderMailPassword).fetchEmailFolder(EmailAccountPage.NavBox.SENT).getMailsForm();
+		Mail senderMail = new AuthorizeEmailForm().signIn(senderMailLogin, senderMailPassword).
+				fetchEmailFolder(EmailAccountPage.NavBox.SENT).getMailsForm().choiceLastMail().getMail();
 
 		new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
+
 		Browser.openStartPage();
+
+		tutByHomePage = new TutByHomePage();
+		tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
+
+		Mail recipientMail = new AuthorizeEmailForm().signIn(recipientMailLogin, recipientMailPassword).
+				fetchEmailFolder(EmailAccountPage.NavBox.INBOX).getMailsForm().choiceLastMail().getMail();
+
+		new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
+
+		assertEquals(apiMail, senderMail);
+		assertEquals(apiMail, recipientMail);
 	}
 
     private MailUtils getMailStore(String login, String password) {
@@ -85,4 +96,12 @@ public class TutByEmailTest extends BaseTest {
 	    mailBox.add(mail);
 	    return mail;
     }
+
+    private void deleteMails() {
+		for(MailUtils mail : mailBox) {
+			if (mail != null) {
+				mail.deleteAllMessages();
+			}
+		}
+	}
 }

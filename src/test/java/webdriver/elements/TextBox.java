@@ -16,7 +16,7 @@ public class TextBox extends BaseElement {
 
 	private void type(final String value) {
 		waitAndAssertIsPresent();
-		info(String.format("locator text typing" + " '%1$s'", value));
+		info(String.format("text sending" + " '%1$s'", value));
 		if (Browser.getDriver() != null) {
 			Browser.getDriver().executeScript("arguments[0].style.border='3px solid red'", getElement());
 		}

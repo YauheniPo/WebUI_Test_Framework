@@ -13,7 +13,7 @@ public class UserAccountDropdown extends BaseForm {
     }
 
     public void clickUserDropdownField(UserDropdown element) {
-        new Button(By.xpath(String.format(locUserDropdown, element.getLoc())), "User Account").click();
+        new Button(By.xpath(String.format(locUserDropdown, element.getLoc())), element.name()).click();
     }
 
     public enum UserDropdown {

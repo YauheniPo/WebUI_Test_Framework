@@ -55,25 +55,16 @@ public abstract class BaseEntity {
         logger.info(message);
     }
 
-    protected void error(final String message) {
-        logger.error(message);
-    }
-
     protected void fatal(final String message) {
         logger.fatal(message);
     }
 
-    String makeScreen(final Class<? extends BaseEntity> name) {
-        return makeScreen(name, true);
-    }
-
-    private String makeScreen(final Class<? extends BaseEntity> name, final boolean additionalInfo) {
+    void makeScreen(final Class<? extends BaseEntity> name) {
         String fileName = name.getPackage().getName() + "." + name.getSimpleName();
         String pageSourcePath = String.format("surefire-reports" + File.separator + "html" +
                 File.separator + "Screenshots/%1$s.txt", fileName);
         String screenshotPath = String.format("surefire-reports" + File.separator + "html" +
                 File.separator + "Screenshots/%1$s.png", fileName);
-
         try {
             String pageSource = Browser.getDriver().getPageSource();
             FileUtils.writeStringToFile(new File(Paths.get(pageSourcePath).toUri()), pageSource);
@@ -87,16 +78,9 @@ public abstract class BaseEntity {
         } catch (Exception e) {
             logger.debug(e.getMessage());
         }
-
-        if (additionalInfo) {
-            String formattedName = String.format(
-                    "<a href='Screenshots/%1$s.png'>ScreenShot</a>", fileName);
-            String formattedNamePageSource = String.format(
-                    "<a href='Screenshots/%1$s.txt'>Page Source</a>", fileName);
-            logger.info(formattedName);
-            logger.info(formattedNamePageSource);
-        }
-
-        return new File(screenshotPath).getAbsolutePath();
+        String formattedName = String.format("'Screenshots/%1$s.png'>ScreenShot", fileName);
+        String formattedNamePageSource = String.format("'Screenshots/%1$s.txt'>Page Source", fileName);
+        logger.info(formattedName);
+        logger.info(formattedNamePageSource);
     }
 }

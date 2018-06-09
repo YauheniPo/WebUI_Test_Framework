@@ -25,4 +25,14 @@ public class Mail {
                 Objects.equals(fromAddress, mail.fromAddress) &&
                 Objects.equals(toAddress, mail.toAddress);
     }
+
+    @Override
+    public String toString() {
+        return "Mail{" +
+                "subject='" + subject + '\'' +
+                ", text='" + text + '\'' +
+                ", fromAddress='" + fromAddress + '\'' +
+                ", toAddress='" + toAddress + '\'' +
+                '}';
+    }
 }

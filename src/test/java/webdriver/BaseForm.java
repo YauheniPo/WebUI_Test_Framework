@@ -6,7 +6,6 @@ import webdriver.elements.Label;
 public abstract class BaseForm extends BaseEntity {
     private By titleLocator;
     private String title;
-    protected String name;
 
     protected BaseForm(final By locator, final String formTitle) {
         init(locator, formTitle);
@@ -16,7 +15,7 @@ public abstract class BaseForm extends BaseEntity {
     private void init(final By locator, final String formTitle) {
         titleLocator = locator;
         title = formTitle;
-        name = String.format("locator form '%1$s'", this.title);
+        info(String.format("locator form '%1$s'", this.title));
     }
 
     private void assertIsOpen() {

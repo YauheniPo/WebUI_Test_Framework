@@ -23,6 +23,18 @@ public final class Logger {
 		LOG4J.debug(message);
 	}
 
+    public void error(Object message) {
+        LOG4J.error(message);
+    }
+
+	public void info(Object message) {
+		LOG4J.info(message);
+	}
+
+	public void fatal(final String message) {
+		LOG4J.fatal(message);
+	}
+
 	public void debug(Object message, Throwable throwable) {
 		LOG4J.debug(message, throwable);
 	}
@@ -51,17 +63,5 @@ public final class Logger {
 		info(formattedEnd);
 		info(stars.toString());
 		info("");
-	}
-
-	void info(Object message) {
-		LOG4J.info(message);
-	}
-
-	void error(final String message) {
-		LOG4J.error(message);
-	}
-
-	void fatal(final String message) {
-		LOG4J.fatal(message);
 	}
 }

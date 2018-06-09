@@ -9,5 +9,4 @@ public class ConstantsFrm {
     static final String CHROMEDRIVER = "chromedriver";
 
     public static final String CHARSET = "UTF-8";
-
 }

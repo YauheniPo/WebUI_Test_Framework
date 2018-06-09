@@ -34,33 +34,9 @@ public abstract class BaseElement extends BaseEntity {
         return element;
     }
 
-    public void setElement(final RemoteWebElement elementToSet) {
-        element = elementToSet;
-    }
-
-	public void fetchElementIntoElement(By locator) {
-		element = (RemoteWebElement) element.findElement(locator);
-	}
-
-	public void fetchElementIntoElementByLocator(By locator) {
-		waitAndAssertIsPresent();
-		element = (RemoteWebElement) element.findElement(locator);
-	}
-
-    public String getName() {
-        try {
-            if (name == null) {
-                name = Browser.getDriver().findElement(locator).getText();
-            }
-        } catch (Exception e) {
-            debug(e.getMessage());
-            name = "unknown";
-        }
-        return name;
-    }
-
     public String getText() {
         waitForIsElementPresent();
+        info(String.format("Getting text of element %s", this.name));
         return element.getText();
     }
 
@@ -72,7 +48,7 @@ public abstract class BaseElement extends BaseEntity {
 
     public void click() {
         waitForIsElementPresent();
-        info("locator clicking");
+        info(String.format("clicking %s", this.name));
         Browser.getDriver().getMouse().mouseMove(element.getCoordinates());
         if (Browser.getDriver() instanceof JavascriptExecutor) {
             Browser.getDriver().executeScript("arguments[0].style.border='3px solid red'", element);
@@ -91,21 +67,6 @@ public abstract class BaseElement extends BaseEntity {
         info("Clicking Right");
         Browser.getDriver().getMouse().mouseMove(element.getCoordinates());
         Browser.getDriver().getMouse().contextClick(element.getCoordinates());
-    }
-
-    public void clickViaAction() {
-        waitForIsElementPresent();
-        info("locator clicking");
-        Actions action = new Actions(Browser.getDriver());
-        action.click(getElement());
-        action.perform();
-    }
-
-    public void clickViaJS() {
-        waitForIsElementPresent();
-        assertIsPresent();
-        info("locator clicking");
-        Browser.getDriver().executeScript("arguments[0].click();", getElement());
     }
 
     public void doubleClick() {
@@ -155,24 +116,8 @@ public abstract class BaseElement extends BaseEntity {
         SmartWait.waitFor(condition);
     }
 
-    public void waitForDoesNotExist() {
-        ExpectedCondition condition = (ExpectedCondition<Boolean>) driver -> Objects.requireNonNull(driver).findElements(locator).isEmpty();
-        SmartWait.waitFor(condition);
-    }
-
-    public String getAttribute(final String attr) {
-        waitForIsElementPresent();
-        return Browser.getDriver().findElement(locator).getAttribute(attr);
-    }
-
     private void assertIsPresent() {
         if (!isPresent()) {
-            fatal("locator is absent");
-        }
-    }
-
-    public void assertIsAbsent() {
-        if (isPresent()) {
             fatal("locator is absent");
         }
     }

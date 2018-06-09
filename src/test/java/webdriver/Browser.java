@@ -1,7 +1,5 @@
 package webdriver;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import javax.naming.NamingException;
@@ -45,10 +43,6 @@ public final class Browser {
 		return currentBrowser.name();
 	}
 
-	public static PropertiesResourceManager getProperty() {
-		return props;
-	}
-
 	public static RemoteWebDriver getDriver() {
 		if(driver == null){
 			driver = getNewDriver();
@@ -67,16 +61,6 @@ public final class Browser {
 	public void refresh() {
 		getDriver().navigate().refresh();
 		Logger.getInstance().info("Page was refreshed.");
-	}
-
-	public void openNewWindow() {
-		getDriver().findElement(By.xpath("//body")).sendKeys(Keys.CONTROL, "n");
-		Object[] headers = getDriver().getWindowHandles().toArray();
-		getDriver().switchTo().window(headers[headers.length - 1].toString());
-	}
-
-	public String getLocation() {
-		return getDriver().getCurrentUrl();
 	}
 
 	public enum Browsers {

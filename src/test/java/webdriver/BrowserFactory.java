@@ -88,8 +88,11 @@ final public class BrowserFactory {
         ffProfile.setPreference("browser.download.manager.showWhenStarting", false);
         ffProfile.setPreference("pdfjs.disabled", true);
         ffProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
-
-        return new FirefoxDriver(new FirefoxBinary(), ffProfile, caps);
+        FirefoxBinary firefoxBinary = new FirefoxBinary();
+        if (Browser.isBrowserHeadless()) {
+            firefoxBinary.addCommandLineOptions("--headless");
+        }
+        return new FirefoxDriver(firefoxBinary, ffProfile, caps);
     }
     
     private static RemoteWebDriver getChromeDriver() {

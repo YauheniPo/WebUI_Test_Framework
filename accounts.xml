@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <accounts>
     <account>
-        <login>epam1.@tut.by</login>
-        <password></password>
+        <login>epam1.popovich@tut.by</login>
+        <password>epampopovich</password>
     </account>
     <account>
-        <login>epam2.@tut.by</login>
-        <password></password>
+        <login>epam2.popovich@tut.by</login>
+        <password>epam2popovich</password>
     </account>
 </accounts>

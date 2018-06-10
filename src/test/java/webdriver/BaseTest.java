@@ -34,7 +34,8 @@ public abstract class BaseTest extends BaseEntity {
      */
     @DataProvider(name = "initParams")
     public Object[][] getParams() {
-        String dataBaseLocation = Browser.getPropsStage().getProperty("dataBaseLocation");
+        String dataBaseLocation = "dataBaseLocation";
+        dataBaseLocation = Browser.getPropsStage().getProperty(dataBaseLocation);
         InitParams testData = new FactoryInitParams().getTestData(dataBaseLocation);
         if (testData == null) {
             logger.error(String.format("Data not received from %s", dataBaseLocation));
@@ -44,7 +45,7 @@ public abstract class BaseTest extends BaseEntity {
     }
 
     /**
-     * X test.
+     * Unit test.
      *
      * @param senderMailLogin       the sender mail login
      * @param senderMailPassword    the sender mail password

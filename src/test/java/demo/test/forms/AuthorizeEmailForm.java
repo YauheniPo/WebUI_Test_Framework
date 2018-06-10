@@ -32,7 +32,7 @@ public class AuthorizeEmailForm extends BaseForm {
 	}
 
 	/**
-	 * Input psw.
+	 * Input password.
 	 *
 	 * @param password the password
 	 */

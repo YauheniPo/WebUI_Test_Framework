@@ -15,14 +15,14 @@ public class EmailAccountPage extends BaseForm {
     private final String locNavBarElement = "//div[contains(@data-key, 'left-box')]//a[contains(@href, '%s')]";
     private MailsForm mailsForm = new MailsForm();
 
-    /**
+  /**
      * Instantiates a new Email account page.
      */
     public EmailAccountPage() {
         super(MAIN_LOCATOR, "Email Page");
     }
 
-    /**
+  /**
      * Gets mails form.
      *
      * @return the mails form
@@ -31,7 +31,7 @@ public class EmailAccountPage extends BaseForm {
         return mailsForm;
     }
 
-    /**
+  /**
      * Fetch email folder email account page.
      *
      * @param folder the folder
@@ -42,7 +42,7 @@ public class EmailAccountPage extends BaseForm {
         return this;
     }
 
-    /**
+  /**
      * Click user account user account dropdown.
      *
      * @return the user account dropdown
@@ -52,15 +52,16 @@ public class EmailAccountPage extends BaseForm {
         return new UserAccountDropdown();
     }
 
-    /**
-     * The enum Nav box.
+   /**
+     * The enum Navbox.
      */
     public enum NavBox {
-        /**
-         * Inbox nav box.
+     /**
+         * Inbox navigation box.
          */
-        INBOX("inbox"), /**
-         * Sent nav box.
+        INBOX("inbox"),
+     /**
+         * Sent navigation box.
          */
         SENT("sent");
 
@@ -70,10 +71,10 @@ public class EmailAccountPage extends BaseForm {
             this.navBoxLocator = locator;
         }
 
-        /**
-         * Gets loc.
+   /**
+         * Gets locator.
          *
-         * @return the loc
+         * @return the locator
          */
         public String getLoc() {
             return navBoxLocator;

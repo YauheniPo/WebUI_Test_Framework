@@ -35,36 +35,40 @@ public class MailUtils extends BaseEntity {
 	    store = connect();
 	}
 
-    /**
-     * Instantiates a new Mail utils.
-     *
-     * @param account  the account
-     * @param password the password
-     */
-    public MailUtils(String account, String password){
+	/**
+	 * Instantiates a new Mail utils.
+	 *
+	 * @param account  the account
+	 * @param password the password
+	 */
+	public MailUtils(String account, String password){
 		this(account.split("@")[1], account, password);
 	}
 
-    /**
-     * The enum Mail protocols.
-     */
-    public enum MAIL_PROTOCOLS{
-        /**
-         * Pop 3 mail protocols.
-         */
-        POP3("pop3"), /**
-         * Smtp mail protocols.
-         */
-        SMTP("smtp"), /**
-         * Imap mail protocols.
-         */
-        IMAP("imap"), /**
-         * Imaps mail protocols.
-         */
-        IMAPS("imaps"), /**
-         * Pop 3 s mail protocols.
-         */
-        POP3S("pop3s");
+	/**
+	 * The enum Mail protocols.
+	 */
+	public enum MAIL_PROTOCOLS{
+		/**
+		 * Pop 3 mail protocols.
+		 */
+		POP3("pop3"),
+		/**
+		 * Smtp mail protocols.
+		 */
+		SMTP("smtp"),
+		/**
+		 * Imap mail protocols.
+		 */
+		IMAP("imap"),
+		/**
+		 * Imaps mail protocols.
+		 */
+		IMAPS("imaps"),
+		/**
+		 * Pop 3 s mail protocols.
+		 */
+		POP3S("pop3s");
 
 		private String protocol;
 
@@ -91,14 +95,14 @@ public class MailUtils extends BaseEntity {
 		session = Session.getInstance(properties, auth);
 	}
 
-    /**
-     * Send mail.
-     *
-     * @param text                  the text
-     * @param subject               the subject
-     * @param recipientEmsilAddress the recipient emsil address
-     */
-    public void sendMail(String text, String subject, String recipientEmsilAddress) {
+	/**
+	 * Send mail.
+	 *
+	 * @param text                  the text
+	 * @param subject               the subject
+	 * @param recipientEmsilAddress the recipient emsil address
+	 */
+	public void sendMail(String text, String subject, String recipientEmsilAddress) {
         message = new MimeMessage(session);
         try {
 			message.setHeader("Content-Type", String.format("text/plain; charset=%s", CHARSET));
@@ -125,10 +129,10 @@ public class MailUtils extends BaseEntity {
 		}
 	}
 
-    /**
-     * Add msg in sent folder.
-     */
-    public void addMsgInSentFolder(){
+	/**
+	 * Add msg in sent folder.
+	 */
+	public void addMsgInSentFolder(){
 		addMsgInFolder(sentFolder);
 	}
 
@@ -161,10 +165,10 @@ public class MailUtils extends BaseEntity {
 		return store;
 	}
 
-    /**
-     * Delete all messages.
-     */
-    public void deleteAllMessages(){
+	/**
+	 * Delete all messages.
+	 */
+	public void deleteAllMessages(){
 		try{
 			Folder[] folders = store.getDefaultFolder().list("*");
 			for (Folder folder : folders) {
@@ -181,10 +185,10 @@ public class MailUtils extends BaseEntity {
 		}
 	}
 
-    /**
-     * Close store.
-     */
-    public void closeStore(){
+	/**
+	 * Close store.
+	 */
+	public void closeStore(){
 		try {
 			store.close();
 			info(String.format("MailStore %s is close", fromAddress));

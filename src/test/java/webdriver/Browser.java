@@ -31,7 +31,7 @@ public final class Browser {
 	private static final Logger logger = Logger.getInstance();
 
 	private Browser() {
-		Logger.getInstance().info(String.format("browser %s is ready", currentBrowser.name()));
+		logger.info(String.format("browser %s is ready", currentBrowser.name()));
 	}
 
 	/**
@@ -107,7 +107,7 @@ public final class Browser {
 	 */
 	public void refresh() {
 		getDriver().navigate().refresh();
-		Logger.getInstance().info("Page was refreshed.");
+		logger.info("Page was refreshed.");
 	}
 
 	/**
@@ -143,10 +143,10 @@ public final class Browser {
 		try {
 			RemoteWebDriver driver = BrowserFactory.setUp(currentBrowser.toString());
 			driver.manage().timeouts().implicitlyWait(IMPLICITY_WAIT, TimeUnit.SECONDS);
-			Logger.getInstance().info("loc.browser.constructed");
+			logger.info("browser constructed");
 			return driver;
 		} catch (NamingException e) {
-			logger.debug("Browser.getNewDriver", e);
+			logger.debug("Browser: getting New Driver", e);
 		}
 		return null;
 	}
@@ -187,7 +187,7 @@ public final class Browser {
 	void exit() {
 		try {
 			getDriver().quit();
-			Logger.getInstance().info("browser driver quit");
+			logger.info("browser driver quit");
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
 		}

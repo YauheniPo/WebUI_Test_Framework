@@ -5,7 +5,7 @@ import webdriver.Logger;
 import java.util.List;
 
 /**
- * The type Init params.
+ * The type Init parameters.
  */
 public abstract class InitParams {
     private String senderMailLogin;
@@ -18,9 +18,9 @@ public abstract class InitParams {
     Logger LOGGER = Logger.getInstance();
 
     /**
-     * Sets params.
+     * Sets parameters.
      *
-     * @param params the params
+     * @param params the parameters
      */
     void setParams(List<String> params) {
         senderMailLogin = params.get(0);
@@ -30,7 +30,7 @@ public abstract class InitParams {
     }
 
     /**
-     * Fetch test data init params.
+     * Fetch test data init parameters.
      *
      * @param dataBaselocation the data baselocation
      * @return the init params

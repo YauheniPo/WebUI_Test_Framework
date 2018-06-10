@@ -1,7 +1,7 @@
 package demo.test.utils;
 
 /**
- * The type Factory init params.
+ * The type Factory init parameters.
  */
 public class FactoryInitParams {
 
@@ -29,10 +29,12 @@ public class FactoryInitParams {
         /**
          * Xml data base type.
          */
-        XML, /**
+        XML,
+        /**
          * Csv data base type.
          */
-        CSV, /**
+        CSV,
+        /**
          * Db data base type.
          */
         DB

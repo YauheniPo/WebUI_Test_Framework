@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS `email_accounts` (
 DELETE FROM `email_accounts`;
 /*!40000 ALTER TABLE `email_accounts` DISABLE KEYS */;
 INSERT INTO `email_accounts` (`email_id`, `login`, `password`) VALUES
-	(1, 'epam1.@tut.by', ''),
-	(2, 'epam2.@tut.by', '');
+	(1, 'epam1.popovich@tut.by', 'epampopovich'),
+	(2, 'epam2.popovich@tut.by', 'epam2popovich');
 /*!40000 ALTER TABLE `email_accounts` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

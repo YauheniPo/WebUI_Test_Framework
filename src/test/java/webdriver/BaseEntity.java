@@ -82,6 +82,15 @@ public abstract class BaseEntity {
     }
 
     /**
+     * Error.
+     *
+     * @param message the message
+     */
+    protected void error(final String message) {
+        logger.error(message);
+    }
+
+    /**
      * Make screen.
      *
      * @param name the name

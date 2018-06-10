@@ -34,8 +34,8 @@ public class TutByEmailTest extends BaseTest {
      *
      * @param emailText the email text
      */
-    @BeforeTest
-	@Parameters(value = {"emailText"})
+//    @BeforeTest
+//	@Parameters(value = {"emailText"})
 	public void initTestData(String emailText) {
         this.emailText = emailText;
     }
@@ -81,9 +81,8 @@ public class TutByEmailTest extends BaseTest {
 
 		logger.step(3, "Receiving data from the sender's mail");
 		tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
-		Mail senderMail = new AuthorizeEmailForm().signIn(senderMailLogin, senderMailPassword).
-				fetchEmailFolder(EmailAccountPage.NavBox.SENT).getMailsForm().choiceLastMail().getMail();
-		new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
+		Mail senderMail = fetchAccountMail(EmailAccountPage.NavBox.SENT, senderMailLogin, senderMailPassword);
+		logoutAccount();
 
 		logger.step(4, "Opening the main page");
 		Browser.openStartPage();
@@ -91,12 +90,20 @@ public class TutByEmailTest extends BaseTest {
 
 		logger.step(5, "Receiving data from the sender's mail");
 		tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
-		Mail recipientMail = new AuthorizeEmailForm().signIn(recipientMailLogin, recipientMailPassword).
-				fetchEmailFolder(EmailAccountPage.NavBox.INBOX).getMailsForm().choiceLastMail().getMail();
-		new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
+		Mail recipientMail = fetchAccountMail(EmailAccountPage.NavBox.INBOX, recipientMailLogin, recipientMailPassword);
+		logoutAccount();
 
 		logger.step(6, "Verification of the correctness of the data of the sent mail");
-		equalsMails(new LinkedList<>(Arrays.asList(senderMail, recipientMail, apiMail)));
+		equalsMails(apiMail, new LinkedList<>(Arrays.asList(senderMail, recipientMail)));
+	}
+
+	private Mail fetchAccountMail(EmailAccountPage.NavBox folder, String emailLogin, String emailPassword) {
+		return new AuthorizeEmailForm().signIn(emailLogin, emailPassword).
+				fetchEmailFolder(folder).getMailsForm().choiceLastMail().getMail();
+	}
+
+	private void logoutAccount() {
+		new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
 	}
 
     private MailUtils getMailStore(String login, String password) {
@@ -113,11 +120,10 @@ public class TutByEmailTest extends BaseTest {
 		}
 	}
 
-	private void equalsMails(List<Mail> mails) {
-		Mail mailFirst = mails.remove(0);
+	private void equalsMails(Mail apiMail, List<Mail> mails) {
 		for (Mail mail : mails) {
-			assertEquals(mailFirst, mail);
-            info("Expected Mail: '" + mailFirst.toString() + "' same as Mail: '" + mail.toString() + "'");
+			assertEquals(apiMail, mail);
+            info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
 		}
 	}
 

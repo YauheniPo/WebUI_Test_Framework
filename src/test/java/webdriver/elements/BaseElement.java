@@ -16,25 +16,25 @@ import java.util.Objects;
  * The type Base element.
  */
 public abstract class BaseElement extends BaseEntity {
-    /**
+  /**
      * The Name.
      */
     protected String name;
     private By locator;
     private RemoteWebElement element;
 
-    /**
+  /**
      * Instantiates a new Base element.
      *
-     * @param loc    the loc
-     * @param nameOf the name of
+     * @param locator  the locator
+     * @param nameOf   the name of
      */
-    BaseElement(final By loc, final String nameOf) {
-        locator = loc;
-        name = nameOf;
+    BaseElement(final By locator, final String nameOf) {
+        this.locator = locator;
+        this.name = nameOf;
     }
 
-    /**
+  /**
      * Gets element.
      *
      * @return the element
@@ -44,7 +44,7 @@ public abstract class BaseElement extends BaseEntity {
         return element;
     }
 
-    /**
+  /**
      * Gets text.
      *
      * @return the text
@@ -55,7 +55,7 @@ public abstract class BaseElement extends BaseEntity {
         return element.getText();
     }
 
-    /**
+  /**
      * Click.
      */
     public void click() {
@@ -77,7 +77,7 @@ public abstract class BaseElement extends BaseEntity {
         }
     }
 
-    /**
+  /**
      * Wait and assert is present.
      */
     public void waitAndAssertIsPresent() {

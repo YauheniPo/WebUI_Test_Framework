@@ -2,12 +2,23 @@ package demo.test.Models;
 
 import java.util.Objects;
 
+/**
+ * The type Mail.
+ */
 public class Mail {
     private String subject;
     private String text;
     private String fromAddress;
     private String toAddress;
 
+    /**
+     * Instantiates a new Mail.
+     *
+     * @param subject     the subject
+     * @param text        the text
+     * @param fromAddress the from address
+     * @param toAddress   the to address
+     */
     public Mail(String subject, String text, String fromAddress, String toAddress) {
         this.subject = subject;
         this.text = text;

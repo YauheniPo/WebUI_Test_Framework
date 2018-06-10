@@ -5,11 +5,33 @@ import demo.test.utils.InitParams;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * The type Base test.
+ */
 public abstract class BaseTest extends BaseEntity {
+    /**
+     * Run test.
+     *
+     * @param senderMailLogin       the sender mail login
+     * @param senderMailPassword    the sender mail password
+     * @param recipientMailLogin    the recipient mail login
+     * @param recipientMailPassword the recipient mail password
+     */
     public abstract void runTest(String senderMailLogin, String senderMailPassword,
                                  String recipientMailLogin, String recipientMailPassword);
+
+    /**
+     * Gets report data.
+     *
+     * @return the report data
+     */
     public abstract String getReportData();
 
+    /**
+     * Get params object [ ] [ ].
+     *
+     * @return the object [ ] [ ]
+     */
     @DataProvider(name = "initParams")
     public Object[][] getParams() {
         String dataBaseLocation = Browser.getPropsStage().getProperty("dataBaseLocation");
@@ -21,6 +43,14 @@ public abstract class BaseTest extends BaseEntity {
                 testData.getRecipientMailLogin(), testData.getRecipientMailPassword()}};
     }
 
+    /**
+     * X test.
+     *
+     * @param senderMailLogin       the sender mail login
+     * @param senderMailPassword    the sender mail password
+     * @param recipientMailLogin    the recipient mail login
+     * @param recipientMailPassword the recipient mail password
+     */
     @Test(dataProvider = "initParams")
     public void xTest(String senderMailLogin, String senderMailPassword,
                       String recipientMailLogin, String recipientMailPassword) {

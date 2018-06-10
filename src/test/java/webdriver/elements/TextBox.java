@@ -3,12 +3,26 @@ package webdriver.elements;
 import org.openqa.selenium.By;
 import webdriver.Browser;
 
+/**
+ * The type Text box.
+ */
 public class TextBox extends BaseElement {
-	public TextBox(final By locator, final String name) {
+    /**
+     * Instantiates a new Text box.
+     *
+     * @param locator the locator
+     * @param name    the name
+     */
+    public TextBox(final By locator, final String name) {
 		super(locator, name);
 	}
 
-	public void setText(final String value) {
+    /**
+     * Sets text.
+     *
+     * @param value the value
+     */
+    public void setText(final String value) {
 		waitAndAssertIsPresent();
 		getElement().clear();
 		type(value);

@@ -9,6 +9,9 @@ import webdriver.Logger;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Smart wait.
+ */
 final public class SmartWait {
     private static final Logger logger = Logger.getInstance();
 
@@ -27,6 +30,13 @@ final public class SmartWait {
         return null;
     }
 
+    /**
+     * Wait for true boolean.
+     *
+     * @param condition        the condition
+     * @param timeOutInSeconds the time out in seconds
+     * @return the boolean
+     */
     public static boolean waitForTrue(ExpectedCondition<Boolean> condition, long timeOutInSeconds) {
         try {
             return Boolean.class.cast(waitFor(condition, timeOutInSeconds));

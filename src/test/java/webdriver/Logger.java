@@ -1,5 +1,8 @@
 package webdriver;
 
+/**
+ * The type Logger.
+ */
 public final class Logger {
 	private static final org.apache.log4j.Logger LOG4J = org.apache.log4j.Logger.getLogger(Logger.class);
 	private static Logger instance = null;
@@ -8,34 +11,71 @@ public final class Logger {
         // do not instantiate Logger class
     }
 
-  	public static synchronized Logger getInstance() {
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
+    public static synchronized Logger getInstance() {
 		if (instance == null) {
 			instance = new Logger();
 		}
 		return instance;
 	}
 
-	public void step(final int step, final String description) {
+    /**
+     * Step.
+     *
+     * @param step        the step
+     * @param description the description
+     */
+    public void step(final int step, final String description) {
 		logStepMsg(String.format("%1$s. %2$s", step, description));
 	}
 
-	public void debug(Object message) {
+    /**
+     * Debug.
+     *
+     * @param message the message
+     */
+    public void debug(Object message) {
 		LOG4J.debug(message);
 	}
 
+    /**
+     * Error.
+     *
+     * @param message the message
+     */
     public void error(Object message) {
         LOG4J.error(message);
     }
 
-	public void info(Object message) {
+    /**
+     * Info.
+     *
+     * @param message the message
+     */
+    public void info(Object message) {
 		LOG4J.info(message);
 	}
 
-	public void fatal(final String message) {
+    /**
+     * Fatal.
+     *
+     * @param message the message
+     */
+    public void fatal(final String message) {
 		LOG4J.fatal(message);
 	}
 
-	public void debug(Object message, Throwable throwable) {
+    /**
+     * Debug.
+     *
+     * @param message   the message
+     * @param throwable the throwable
+     */
+    public void debug(Object message, Throwable throwable) {
 		LOG4J.debug(message, throwable);
 	}
 
@@ -53,15 +93,31 @@ public final class Logger {
 		info("+----------------------------------------------+------------------------+-------------------------------------+%n");
 	}
 
-	void logTestEnd(final String data) {
+    /**
+     * Log test end.
+     *
+     * @param data the data
+     */
+    void logTestEnd(final String data) {
 		logTestEnd(data, "Passed", "");
 	}
 
-	void logTestEnd(final String data, final String reason) {
+    /**
+     * Log test end.
+     *
+     * @param data   the data
+     * @param reason the reason
+     */
+    void logTestEnd(final String data, final String reason) {
 		logTestEnd(data, "Failed", reason);
 	}
 
-	void logTestName(final String testName) {
+    /**
+     * Log test name.
+     *
+     * @param testName the test name
+     */
+    void logTestName(final String testName) {
 		String formattedName = String.format("===================== '%1$s' =====================", testName);
 		StringBuilder delims = new StringBuilder();
 		int nChars = formattedName.length();

@@ -16,6 +16,9 @@ import webdriver.utils.mail.MailUtils;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * The type Tut by email test.
+ */
 public class TutByEmailTest extends BaseTest {
     private String senderMailLogin;
     private String recipientMailLogin;
@@ -26,13 +29,21 @@ public class TutByEmailTest extends BaseTest {
 	private String currentBrowser = Browser.getBrowserName();
 	private ArrayList<MailUtils> mailBox = new ArrayList<>();
 
-	@BeforeTest
+    /**
+     * Init test data.
+     *
+     * @param emailText the email text
+     */
+    @BeforeTest
 	@Parameters(value = {"emailText"})
 	public void initTestData(String emailText) {
         this.emailText = emailText;
     }
 
-	@AfterClass
+    /**
+     * Clear email and close mail store.
+     */
+    @AfterClass
 	public void clearEmailAndCloseMailStore() {
 		deleteMails();
         for(MailUtils mail : mailBox) {

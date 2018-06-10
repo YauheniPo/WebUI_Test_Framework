@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Csv params.
+ */
 public class CSVParamsImpl extends InitParams {
 
     @Override

@@ -12,27 +12,52 @@ import webdriver.waitings.SmartWait;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Base element.
+ */
 public abstract class BaseElement extends BaseEntity {
+    /**
+     * The Name.
+     */
     protected String name;
     private By locator;
     private RemoteWebElement element;
 
+    /**
+     * Instantiates a new Base element.
+     *
+     * @param loc    the loc
+     * @param nameOf the name of
+     */
     BaseElement(final By loc, final String nameOf) {
         locator = loc;
         name = nameOf;
     }
 
+    /**
+     * Gets element.
+     *
+     * @return the element
+     */
     RemoteWebElement getElement() {
         waitForIsElementPresent();
         return element;
     }
 
+    /**
+     * Gets text.
+     *
+     * @return the text
+     */
     public String getText() {
         waitForIsElementPresent();
         info(String.format("Getting text of element %s", this.name));
         return element.getText();
     }
 
+    /**
+     * Click.
+     */
     public void click() {
         waitForIsElementPresent();
         info(String.format("clicking %s", this.name));
@@ -52,6 +77,9 @@ public abstract class BaseElement extends BaseEntity {
         }
     }
 
+    /**
+     * Wait and assert is present.
+     */
     public void waitAndAssertIsPresent() {
         waitForIsElementPresent();
     }

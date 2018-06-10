@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Xml params.
+ */
 public class XMLParamsImpl extends InitParams {
 
     @Override

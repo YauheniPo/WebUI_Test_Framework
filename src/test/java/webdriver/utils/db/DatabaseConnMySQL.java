@@ -10,6 +10,9 @@ import java.sql.Statement;
 
 import static webdriver.ConstantsFrm.PROPERTIES_DB;
 
+/**
+ * The type Database conn my sql.
+ */
 public class DatabaseConnMySQL extends BaseEntity {
     private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_DB);
     private Connection connection;
@@ -31,6 +34,11 @@ public class DatabaseConnMySQL extends BaseEntity {
         return connection;
     }
 
+    /**
+     * Gets statement.
+     *
+     * @return the statement
+     */
     public Statement getStatement() {
         try {
             return getConnection().createStatement();
@@ -40,6 +48,9 @@ public class DatabaseConnMySQL extends BaseEntity {
         return null;
     }
 
+    /**
+     * Close.
+     */
     public void close() {
         info("DB connection is closing");
         if (connection != null) {

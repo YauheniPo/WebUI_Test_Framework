@@ -22,6 +22,9 @@ import java.util.Map;
 import static webdriver.ConstantsFrm.CHROMEDRIVER;
 import static webdriver.ConstantsFrm.WEBDRIVER_CHROME;
 
+/**
+ * The type Browser factory.
+ */
 final public class BrowserFactory {
     private static final String PLATFORM = System.getProperty("os.name").toLowerCase();
     private static final Logger logger = Logger.getInstance();
@@ -31,10 +34,23 @@ final public class BrowserFactory {
         // do not instantiate BrowserFactory class
     }
 
+    /**
+     * Sets up.
+     *
+     * @param type the type
+     * @return the up
+     */
     public static RemoteWebDriver setUp(final Browsers type) {
         return getWebDriver(type);
     }
 
+    /**
+     * Sets up.
+     *
+     * @param type the type
+     * @return the up
+     * @throws NamingException the naming exception
+     */
     public static RemoteWebDriver setUp(final String type) throws NamingException {
         for (Browsers t : Browsers.values()) {
             if (t.toString().equalsIgnoreCase(type)) {

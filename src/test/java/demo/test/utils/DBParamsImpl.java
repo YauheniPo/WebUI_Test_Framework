@@ -11,6 +11,9 @@ import java.util.List;
 
 import static webdriver.ConstantsFrm.PROPERTIES_DB_QUERIES;
 
+/**
+ * The type Db params.
+ */
 public class DBParamsImpl extends InitParams {
 
     @Override

@@ -8,6 +8,9 @@ import java.util.concurrent.TimeUnit;
 import static webdriver.ConstantsFrm.PROPERTIES_SELENIUM;
 import static webdriver.ConstantsFrm.PROPERTIES_STAGE;
 
+/**
+ * The type Browser.
+ */
 public final class Browser {
 	private static final String BROWSER_BY_DEFAULT = Browsers.FIREFOX.value;
 	private static final String BROWSER_PROP = "browser";
@@ -31,6 +34,11 @@ public final class Browser {
 		Logger.getInstance().info(String.format("browser %s is ready", currentBrowser.name()));
 	}
 
+	/**
+	 * Gets instance.
+	 *
+	 * @return the instance
+	 */
 	synchronized static Browser getInstance() {
 		if (instance == null) {
 			initProperties();
@@ -39,18 +47,38 @@ public final class Browser {
 		return instance;
 	}
 
+	/**
+	 * Is driver manager boolean.
+	 *
+	 * @return the boolean
+	 */
 	public static boolean isDriverManager() {
 		return isDriverManager;
 	}
 
+	/**
+	 * Gets browser name.
+	 *
+	 * @return the browser name
+	 */
 	public static String getBrowserName() {
 		return currentBrowser.name();
 	}
 
+	/**
+	 * Gets props stage.
+	 *
+	 * @return the props stage
+	 */
 	public static PropertiesResourceManager getPropsStage() {
 		return propStage;
 	}
 
+	/**
+	 * Gets driver.
+	 *
+	 * @return the driver
+	 */
 	public static RemoteWebDriver getDriver() {
 		if(driver == null){
 			driver = getNewDriver();
@@ -58,21 +86,41 @@ public final class Browser {
 		return driver;
 	}
 
+	/**
+	 * Gets timeout for condition.
+	 *
+	 * @return the timeout for condition
+	 */
 	public static String getTimeoutForCondition() {
 		return timeoutForCondition;
 	}
 
+	/**
+	 * Open start page.
+	 */
 	public static void openStartPage() {
 		getDriver().navigate().to(browserURL);
 	}
 
+	/**
+	 * Refresh.
+	 */
 	public void refresh() {
 		getDriver().navigate().refresh();
 		Logger.getInstance().info("Page was refreshed.");
 	}
 
+	/**
+	 * The enum Browsers.
+	 */
 	public enum Browsers {
+		/**
+		 * Firefox browsers.
+		 */
 		FIREFOX("firefox"),
+		/**
+		 * Chrome browsers.
+		 */
 		CHROME("chrome");
 
 		private String value;
@@ -103,10 +151,18 @@ public final class Browser {
 		return null;
 	}
 
+	/**
+	 * Gets start browser url.
+	 *
+	 * @return the start browser url
+	 */
 	static String getStartBrowserURL() {
 		return browserURL;
 	}
 
+	/**
+	 * Window maximise.
+	 */
 	void windowMaximise() {
 		try {
 			getDriver().executeScript("if (window.screen) {window.moveTo(0, 0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};");
@@ -116,10 +172,18 @@ public final class Browser {
 		}
 	}
 
+	/**
+	 * Navigate.
+	 *
+	 * @param url the url
+	 */
 	void navigate(final String url) {
 		getDriver().navigate().to(url);
 	}
 
+	/**
+	 * Exit.
+	 */
 	void exit() {
 		try {
 			getDriver().quit();

@@ -8,6 +8,8 @@ import org.testng.annotations.BeforeTest;
 import java.io.File;
 import java.nio.file.Paths;
 
+import static org.testng.AssertJUnit.fail;
+
 public abstract class BaseEntity {
     protected static Logger logger = Logger.getInstance();
 
@@ -43,6 +45,7 @@ public abstract class BaseEntity {
 
     protected void fatal(final String message) {
         logger.fatal(message);
+        fail(message);
     }
 
     void makeScreen(final Class<? extends BaseEntity> name) {

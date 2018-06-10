@@ -15,12 +15,12 @@ import static webdriver.ConstantsFrm.PROPERTIES_DB_QUERIES;
  * The type Db parameters.
  */
 public class DBParamsImpl extends InitParams {
+    private PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_DB_QUERIES);
 
     @Override
     public InitParams fetchTestData(String dataBaselocation) {
         DatabaseConnMySQL database = new DatabaseConnMySQL();
         Statement statement = database.getStatement();
-        PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_DB_QUERIES);
         String getEmailAccounts = props.getProperty("sql_get_email_accounts");
         List<String> data = new ArrayList();
         try {

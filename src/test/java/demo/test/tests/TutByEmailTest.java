@@ -6,10 +6,8 @@ import demo.test.forms.TutByHeader;
 import demo.test.forms.UserAccountDropdown;
 import demo.test.pages.EmailAccountPage;
 import demo.test.pages.TutByHomePage;
-import demo.test.utils.FactoryInitParams;
-import demo.test.utils.InitParams;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import webdriver.BaseTest;
 import webdriver.Browser;
@@ -19,8 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TutByEmailTest extends BaseTest {
-	public String senderMailLogin;
-	public String recipientMailLogin;
+    private String senderMailLogin;
+    private String recipientMailLogin;
 	private String senderMailPassword;
 	private String recipientMailPassword;
 	private String emailText;
@@ -28,25 +26,11 @@ public class TutByEmailTest extends BaseTest {
 	private String currentBrowser = Browser.getBrowserName();
 	private ArrayList<MailUtils> mailBox = new ArrayList<>();
 
-	@BeforeClass
-	@Parameters(value = { "emailText", "dataBaseLocation"})
-	public void initTestData(String emailText, String dataBaseLocation){
-		// getting test data
-		this.emailText = emailText;
-        InitParams testData = new FactoryInitParams().getTestData(dataBaseLocation);
-        if (testData == null) {
-        	logger.error(String.format("Data not received from %s", dataBaseLocation));
-		}
-		this.senderMailLogin = testData.getSenderMailLogin();
-		this.senderMailPassword = testData.getSenderMailPassword();
-		this.recipientMailLogin = testData.getRecipientMailLogin();
-		this.recipientMailPassword = testData.getRecipientMailPassword();
-		// init Email sessions
-		mailSender = getMailStore(senderMailLogin, senderMailPassword);
-		getMailStore(recipientMailLogin, recipientMailPassword);
-		// cleaning mail data
-		deleteMails();
-	}
+	@BeforeTest
+	@Parameters(value = {"emailText"})
+	public void initTestData(String emailText) {
+        this.emailText = emailText;
+    }
 
 	@AfterClass
 	public void clearEmailAndCloseMailStore() {
@@ -59,10 +43,22 @@ public class TutByEmailTest extends BaseTest {
 	}
 
 	@Override
-	public void runTest() {
+	public void runTest(String senderMailLogin, String senderMailPassword,
+                        String recipientMailLogin, String recipientMailPassword) {
+        this.senderMailLogin = senderMailLogin;
+        this.senderMailPassword = senderMailPassword;
+        this.recipientMailLogin = recipientMailLogin;
+        this.recipientMailPassword = recipientMailPassword;
+
 		String dateTimeMail = new SimpleDateFormat("HH:mm").format(new Date());
 		String subject = String.format("From %s", senderMailLogin);
 		String text = String.format("%s_%s_%s", emailText, currentBrowser, dateTimeMail);
+
+        // init Email sessions
+        this.mailSender = getMailStore(senderMailLogin, senderMailPassword);
+        getMailStore(recipientMailLogin, recipientMailPassword);
+        // cleaning mail data
+        deleteMails();
 
 		logger.step(1, "Sending a message using api");
 		Mail apiMail = new Mail(subject, text, senderMailLogin, recipientMailLogin);
@@ -89,7 +85,7 @@ public class TutByEmailTest extends BaseTest {
 		new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
 
 		logger.step(6, "Verification of the correctness of the data of the sent mail");
-		equalsMails(new LinkedList<>(Arrays.asList(senderMail, recipientMail, apiMail)));
+		equalsMails(new LinkedList<>(Arrays.asList(senderMail, recipientMail, apiMail, new Mail("","","",""))));
 	}
 
     private MailUtils getMailStore(String login, String password) {
@@ -113,4 +109,8 @@ public class TutByEmailTest extends BaseTest {
             info("Expected Mail: '" + mailFirst.toString() + "' same as Mail: '" + mail.toString() + "'");
 		}
 	}
+
+    public String getReportData() {
+        return String.format("%s, %s", this.senderMailLogin, this.recipientMailLogin);
+    }
 }

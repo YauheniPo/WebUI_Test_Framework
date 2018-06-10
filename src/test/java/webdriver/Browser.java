@@ -9,15 +9,13 @@ import static webdriver.ConstantsFrm.PROPERTIES_SELENIUM;
 import static webdriver.ConstantsFrm.PROPERTIES_STAGE;
 
 public final class Browser {
-	// имя файла с настройками Selenium
 	private static final String BROWSER_BY_DEFAULT = Browsers.FIREFOX.value;
 	private static final String BROWSER_PROP = "browser";
 	private static final String STAGE = "stage";
-	// browsers
 	private static Browser instance;
 	private static RemoteWebDriver driver;
 	private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_SELENIUM);
-	// поля класса
+	private static PropertiesResourceManager propStage;
 	private static String browserURL;
 	private static String timeoutForCondition;
 	private static final Browsers currentBrowser
@@ -41,6 +39,10 @@ public final class Browser {
 
 	public static String getBrowserName() {
 		return currentBrowser.name();
+	}
+
+	public static PropertiesResourceManager getPropsStage() {
+		return propStage;
 	}
 
 	public static RemoteWebDriver getDriver() {
@@ -76,9 +78,9 @@ public final class Browser {
 
 	private static void initProperties() {
 		timeoutForCondition = props.getProperty(DEFAULT_CONDITION_TIMEOUT);
-		PropertiesResourceManager propUrls = new PropertiesResourceManager(PROPERTIES_STAGE);
-		String choosenStage = propUrls.getProperty(STAGE);
-		browserURL = String.format(propUrls.getProperty(URL_LOGIN_PAGE), choosenStage);
+		propStage = new PropertiesResourceManager(PROPERTIES_STAGE);
+		String choosenStage = propStage.getProperty(STAGE);
+		browserURL = String.format(propStage.getProperty(URL_LOGIN_PAGE), choosenStage);
 		driver = getNewDriver();
 	}
 

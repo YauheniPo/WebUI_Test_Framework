@@ -14,9 +14,6 @@ import static org.testng.AssertJUnit.fail;
  * The type Base entity.
  */
 public abstract class BaseEntity {
-    /**
-     * The constant logger.
-     */
     protected static Logger logger = Logger.getInstance();
 
     private Browser getBrowser() {

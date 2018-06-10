@@ -21,6 +21,7 @@ public final class Browser {
 	private static PropertiesResourceManager propStage;
 	private static String browserURL;
 	private static boolean isDriverManager;
+	private static boolean isHeadless;
 	private static String timeoutForCondition;
 	private static final Browsers currentBrowser
 			= Browsers.valueOf(System.getProperty(BROWSER_PROP, props.getProperty(BROWSER_PROP, BROWSER_BY_DEFAULT).toUpperCase()));
@@ -28,6 +29,7 @@ public final class Browser {
 	private static final String DEFAULT_CONDITION_TIMEOUT = "defaultConditionTimeout";
 	private static final String URL_LOGIN_PAGE = "urlLoginPage";
 	private static final String DRIVER_MANAGER = "driverManager";
+	private static final String BROWSER_HEADLESS = "browserHeadless";
 	private static final Logger logger = Logger.getInstance();
 
 	private Browser() {
@@ -52,8 +54,17 @@ public final class Browser {
 	 *
 	 * @return the boolean
 	 */
-	public static boolean isDriverManager() {
+	static boolean isDriverManager() {
 		return isDriverManager;
+	}
+
+	/**
+	 * Is browser headless boolean.
+	 *
+	 * @return the boolean
+	 */
+	static boolean isBrowserHeadless() {
+		return isHeadless;
 	}
 
 	/**
@@ -70,7 +81,7 @@ public final class Browser {
 	 *
 	 * @return the props stage
 	 */
-	public static PropertiesResourceManager getPropsStage() {
+	static PropertiesResourceManager getPropsStage() {
 		return propStage;
 	}
 
@@ -132,6 +143,7 @@ public final class Browser {
 
 	private static void initProperties() {
 		isDriverManager = Boolean.valueOf(props.getProperty(DRIVER_MANAGER, "false"));
+		isHeadless = Boolean.valueOf(props.getProperty(BROWSER_HEADLESS, "false"));
 		timeoutForCondition = props.getProperty(DEFAULT_CONDITION_TIMEOUT);
 		propStage = new PropertiesResourceManager(PROPERTIES_STAGE);
 		String choosenStage = propStage.getProperty(STAGE);

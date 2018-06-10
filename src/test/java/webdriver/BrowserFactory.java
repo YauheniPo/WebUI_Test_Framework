@@ -109,6 +109,7 @@ final public class BrowserFactory {
 		prefs.put("profile.password_manager_enabled", false);
 		prefs.put("safebrowsing.enabled", "true"); 
 		options.setExperimentalOption("prefs", prefs);
+		options.addArguments("--headless");
         DesiredCapabilities cp1 = DesiredCapabilities.chrome();
         cp1.setCapability("chrome.switches", Collections.singletonList("--disable-popup-blocking"));
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
@@ -120,7 +121,9 @@ final public class BrowserFactory {
         System.setProperty(WEBDRIVER_CHROME, myFile.getAbsolutePath());
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
         RemoteWebDriver driver = new ChromeDriver(cp1);
-        driver.manage().window().maximize();
+        if (Browser.isBrowserHeadless()) {
+            driver.manage().window().maximize();
+        }
         return driver;
     }
 }

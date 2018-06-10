@@ -85,7 +85,7 @@ public class TutByEmailTest extends BaseTest {
 		new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
 
 		logger.step(6, "Verification of the correctness of the data of the sent mail");
-		equalsMails(new LinkedList<>(Arrays.asList(senderMail, recipientMail, apiMail, new Mail("","","",""))));
+		equalsMails(new LinkedList<>(Arrays.asList(senderMail, recipientMail, apiMail)));
 	}
 
     private MailUtils getMailStore(String login, String password) {

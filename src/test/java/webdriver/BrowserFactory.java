@@ -1,5 +1,7 @@
 package webdriver;
 
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -46,8 +48,16 @@ final public class BrowserFactory {
         DesiredCapabilities capabilitiesProxy = new DesiredCapabilities();
         switch (type) {
             case CHROME:
+                if (Browser.isDriverManager()) {
+                    ChromeDriverManager.getInstance().setup();
+                    return new ChromeDriver(capabilitiesProxy);
+                }
                 return getChromeDriver();
             case FIREFOX:
+                if (Browser.isDriverManager()) {
+                    FirefoxDriverManager.getInstance().setup();
+                    return new FirefoxDriver(capabilitiesProxy);
+                }
                 return getFirefoxDriver(capabilitiesProxy);
             default:
                 return null;

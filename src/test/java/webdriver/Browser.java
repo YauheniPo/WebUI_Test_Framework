@@ -17,12 +17,14 @@ public final class Browser {
 	private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_SELENIUM);
 	private static PropertiesResourceManager propStage;
 	private static String browserURL;
+	private static boolean isDriverManager;
 	private static String timeoutForCondition;
 	private static final Browsers currentBrowser
 			= Browsers.valueOf(System.getProperty(BROWSER_PROP, props.getProperty(BROWSER_PROP, BROWSER_BY_DEFAULT).toUpperCase()));
 	private static final long IMPLICITY_WAIT = Long.valueOf(props.getProperty("implicityWait", String.valueOf(10)));
 	private static final String DEFAULT_CONDITION_TIMEOUT = "defaultConditionTimeout";
 	private static final String URL_LOGIN_PAGE = "urlLoginPage";
+	private static final String DRIVER_MANAGER = "driverManager";
 	private static final Logger logger = Logger.getInstance();
 
 	private Browser() {
@@ -35,6 +37,10 @@ public final class Browser {
 			instance = new Browser();
 		}
 		return instance;
+	}
+
+	public static boolean isDriverManager() {
+		return isDriverManager;
 	}
 
 	public static String getBrowserName() {
@@ -77,6 +83,7 @@ public final class Browser {
 	}
 
 	private static void initProperties() {
+		isDriverManager = Boolean.valueOf(props.getProperty(DRIVER_MANAGER, "false"));
 		timeoutForCondition = props.getProperty(DEFAULT_CONDITION_TIMEOUT);
 		propStage = new PropertiesResourceManager(PROPERTIES_STAGE);
 		String choosenStage = propStage.getProperty(STAGE);

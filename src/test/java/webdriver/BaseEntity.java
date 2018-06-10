@@ -47,9 +47,8 @@ public abstract class BaseEntity {
     }
 
     protected void fatal(final String message) {
-        this.message = message;
-        logger.fatal(this.message);
-        fail(this.message);
+        logger.fatal(message);
+        fail(message);
     }
 
     void makeScreen(final Class<? extends BaseEntity> name) {

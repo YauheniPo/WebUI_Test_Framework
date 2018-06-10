@@ -10,6 +10,9 @@ import java.nio.file.Paths;
 
 import static org.testng.AssertJUnit.fail;
 
+/**
+ * The type Base entity.
+ */
 public abstract class BaseEntity {
     protected static Logger logger = Logger.getInstance();
 
@@ -17,6 +20,9 @@ public abstract class BaseEntity {
         return Browser.getInstance();
     }
 
+    /**
+     * Before.
+     */
     @BeforeTest
     public void before() {
         Browser browser = getBrowser();
@@ -24,30 +30,68 @@ public abstract class BaseEntity {
         browser.navigate(Browser.getStartBrowserURL());
     }
 
+    /**
+     * After.
+     */
     @AfterTest
     public void after() {
         getBrowser().exit();
     }
 
+    /**
+     * Assert equals.
+     *
+     * @param expected the expected
+     * @param actual   the actual
+     */
     protected void assertEquals(final Object expected, final Object actual) {
         if (!expected.equals(actual)) {
             fatal("Expected value: '" + expected.toString() + "', but was: '" + actual.toString() + "'");
         }
     }
 
+    /**
+     * Debug.
+     *
+     * @param message the message
+     */
     protected final void debug(final String message) {
         logger.debug(String.format("[%1$s] %2$s", this.getClass().getSimpleName(), (message)));
     }
 
+    /**
+     * Info.
+     *
+     * @param message the message
+     */
     protected void info(final String message) {
         logger.info(message);
     }
 
+    /**
+     * Fatal.
+     *
+     * @param message the message
+     */
     protected void fatal(final String message) {
         logger.fatal(message);
         fail(message);
     }
 
+    /**
+     * Error.
+     *
+     * @param message the message
+     */
+    protected void error(final String message) {
+        logger.error(message);
+    }
+
+    /**
+     * Make screen.
+     *
+     * @param name the name
+     */
     void makeScreen(final Class<? extends BaseEntity> name) {
         String fileName = name.getPackage().getName() + "." + name.getSimpleName();
         String pageSourcePath = String.format("surefire-reports" + File.separator + "html" +

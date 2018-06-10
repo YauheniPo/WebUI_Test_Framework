@@ -3,10 +3,19 @@ package webdriver;
 import org.openqa.selenium.By;
 import webdriver.elements.Label;
 
+/**
+ * The type Base form.
+ */
 public abstract class BaseForm extends BaseEntity {
     private By titleLocator;
     private String title;
 
+    /**
+     * Instantiates a new Base form.
+     *
+     * @param locator   the locator
+     * @param formTitle the form title
+     */
     protected BaseForm(final By locator, final String formTitle) {
         init(locator, formTitle);
         assertIsOpen();

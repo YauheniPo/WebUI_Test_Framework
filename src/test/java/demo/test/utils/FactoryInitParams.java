@@ -1,7 +1,16 @@
 package demo.test.utils;
 
+/**
+ * The type Factory init parameters.
+ */
 public class FactoryInitParams {
 
+    /**
+     * Gets test data.
+     *
+     * @param dataBaseLocation the data base location
+     * @return the test data
+     */
     public InitParams getTestData(String dataBaseLocation) {
         if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.XML.name())) {
             return new XMLParamsImpl().fetchTestData(dataBaseLocation);
@@ -13,7 +22,21 @@ public class FactoryInitParams {
         return null;
     }
 
+    /**
+     * The enum Data base type.
+     */
     public enum DataBaseType {
-        XML, CSV, DB
+        /**
+         * Xml data base type.
+         */
+        XML,
+        /**
+         * Csv data base type.
+         */
+        CSV,
+        /**
+         * Db data base type.
+         */
+        DB
     }
 }

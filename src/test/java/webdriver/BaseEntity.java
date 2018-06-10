@@ -12,7 +12,6 @@ import static org.testng.AssertJUnit.fail;
 
 public abstract class BaseEntity {
     protected static Logger logger = Logger.getInstance();
-    private String message;
 
     private Browser getBrowser() {
         return Browser.getInstance();
@@ -32,9 +31,7 @@ public abstract class BaseEntity {
 
     protected void assertEquals(final Object expected, final Object actual) {
         if (!expected.equals(actual)) {
-            this.message = "Expected value: '" + expected.toString() + "', but was: '" + actual.toString() + "'";
-            fatal(this.message);
-            fail(this.message);
+            fatal("Expected value: '" + expected.toString() + "', but was: '" + actual.toString() + "'");
         }
     }
 

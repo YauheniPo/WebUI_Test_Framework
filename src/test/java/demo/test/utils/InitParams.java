@@ -12,6 +12,7 @@ public abstract class InitParams {
     private String senderMailPassword;
     private String recipientMailLogin;
     private String recipientMailPassword;
+
     /**
      * The Logger.
      */

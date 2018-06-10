@@ -18,22 +18,22 @@ public class TutByHeader extends BaseForm {
         super(MAIN_LOCATOR, "tut.by Header Form");
     }
 
-   /**
-     * Click topbar element.
-     *
-     * @param element the element
-     */
+    /**
+        * Click topbar element.
+        *
+        * @param element the element
+        */
     public void clickTopBarElement(TopBar element) {
         new Button(By.xpath(String.format(loc_top_bar_element, element.getLoc())), String.format("Button %s", element.getLoc().toUpperCase())).click();
     }
 
-   /**
-     * The enum Topbar.
-     */
-    public enum TopBar {
     /**
-         * Email topbar.
-         */
+        * The enum Topbar.
+        */
+    public enum TopBar {
+        /**
+                 * Email topbar.
+                 */
         EMAIL("mail");
 
         private final String topBarLocator;
@@ -42,11 +42,11 @@ public class TutByHeader extends BaseForm {
             this.topBarLocator = locator;
         }
 
-    /**
-         * Gets locator.
-         *
-         * @return the locator
-         */
+        /**
+                 * Gets locator.
+                 *
+                 * @return the locator
+                 */
         public String getLoc() {
             return topBarLocator;
         }

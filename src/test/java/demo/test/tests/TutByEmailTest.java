@@ -30,19 +30,19 @@ public class TutByEmailTest extends BaseTest {
 	private ArrayList<MailUtils> mailBox = new ArrayList<>();
 
     /**
-     * Init test data.
-     *
-     * @param emailText the email text
-     */
-//    @BeforeTest
-//	@Parameters(value = {"emailText"})
+        * Init test data.
+        *
+        * @param emailText the email text
+        */
+    @BeforeTest
+	@Parameters(value = {"emailText"})
 	public void initTestData(String emailText) {
         this.emailText = emailText;
     }
 
     /**
-     * Clear email and close mail store.
-     */
+        * Clear email and close mail store.
+        */
     @AfterClass
 	public void clearEmailAndCloseMailStore() {
 		deleteMails();

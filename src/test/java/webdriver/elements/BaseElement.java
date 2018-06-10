@@ -16,9 +16,6 @@ import java.util.Objects;
  * The type Base element.
  */
 public abstract class BaseElement extends BaseEntity {
-  /**
-     * The Name.
-     */
     protected String name;
     private By locator;
     private RemoteWebElement element;

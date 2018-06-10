@@ -41,7 +41,7 @@ final public class SmartWait {
         try {
             return Boolean.class.cast(waitFor(condition, timeOutInSeconds));
         } catch (Exception e) {
-            logger.debug("SmartWait.waitForTrue", e);
+            logger.debug("Wait waitForTrue", e);
             return false;
         }
     }

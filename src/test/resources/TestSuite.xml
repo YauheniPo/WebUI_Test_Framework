@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="EPAM_e.popovich" verbose="1">
-	<parameter name="emailText" value="epam_e.popovich" />
-	<test name="Test @tut.by EMAIL">
-		<classes>
-			<class name="demo.test.tests.TutByEmailTest" />
-		</classes>
-	</test>
+    <parameter name="emailText" value="epam_e.popovich"/>
+    <test name="Test @tut.by EMAIL">
+        <classes>
+            <class name="demo.test.tests.TutByEmailTest"/>
+        </classes>
+    </test>
 </suite>

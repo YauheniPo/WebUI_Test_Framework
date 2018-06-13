@@ -35,6 +35,7 @@ final public class SmartWait {
      *
      * @param condition        the condition
      * @param timeOutInSeconds the time out in seconds
+     *
      * @return the boolean
      */
     public static boolean waitForTrue(ExpectedCondition<Boolean> condition, long timeOutInSeconds) {

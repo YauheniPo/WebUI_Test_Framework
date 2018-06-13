@@ -20,18 +20,18 @@ public abstract class BaseElement extends BaseEntity {
     private By locator;
     private RemoteWebElement element;
 
-  /**
+    /**
      * Instantiates a new Base element.
      *
-     * @param locator  the locator
-     * @param nameOf   the name of
+     * @param locator the locator
+     * @param nameOf  the name of
      */
     BaseElement(final By locator, final String nameOf) {
         this.locator = locator;
         this.name = nameOf;
     }
 
-  /**
+    /**
      * Gets element.
      *
      * @return the element
@@ -41,7 +41,7 @@ public abstract class BaseElement extends BaseEntity {
         return element;
     }
 
-  /**
+    /**
      * Gets text.
      *
      * @return the text
@@ -52,7 +52,7 @@ public abstract class BaseElement extends BaseEntity {
         return element.getText();
     }
 
-  /**
+    /**
      * Click.
      */
     public void click() {
@@ -74,7 +74,7 @@ public abstract class BaseElement extends BaseEntity {
         }
     }
 
-  /**
+    /**
      * Wait and assert is present.
      */
     public void waitAndAssertIsPresent() {

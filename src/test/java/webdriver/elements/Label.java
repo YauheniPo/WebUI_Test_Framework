@@ -13,6 +13,6 @@ public class Label extends BaseElement {
      * @param name    the name
      */
     public Label(final By locator, final String name) {
-		super(locator, name);
-	}
+        super(locator, name);
+    }
 }

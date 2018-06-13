@@ -4,8 +4,8 @@ package webdriver;
  * The type Logger.
  */
 public final class Logger {
-	private static final org.apache.log4j.Logger LOG4J = org.apache.log4j.Logger.getLogger(Logger.class);
-	private static Logger instance = null;
+    private static final org.apache.log4j.Logger LOG4J = org.apache.log4j.Logger.getLogger(Logger.class);
+    private static Logger instance = null;
 
     private Logger() {
         // do not instantiate Logger class
@@ -17,11 +17,11 @@ public final class Logger {
      * @return the instance
      */
     public static synchronized Logger getInstance() {
-		if (instance == null) {
-			instance = new Logger();
-		}
-		return instance;
-	}
+        if (instance == null) {
+            instance = new Logger();
+        }
+        return instance;
+    }
 
     /**
      * Step.
@@ -30,8 +30,8 @@ public final class Logger {
      * @param description the description
      */
     public void step(final int step, final String description) {
-		logStepMsg(String.format("%1$s. %2$s", step, description));
-	}
+        logStepMsg(String.format("%1$s. %2$s", step, description));
+    }
 
     /**
      * Debug.
@@ -39,8 +39,8 @@ public final class Logger {
      * @param message the message
      */
     public void debug(Object message) {
-		LOG4J.debug(message);
-	}
+        LOG4J.debug(message);
+    }
 
     /**
      * Error.
@@ -57,8 +57,8 @@ public final class Logger {
      * @param message the message
      */
     public void info(Object message) {
-		LOG4J.info(message);
-	}
+        LOG4J.info(message);
+    }
 
     /**
      * Fatal.
@@ -66,8 +66,8 @@ public final class Logger {
      * @param message the message
      */
     public void fatal(final String message) {
-		LOG4J.fatal(message);
-	}
+        LOG4J.fatal(message);
+    }
 
     /**
      * Debug.
@@ -76,22 +76,22 @@ public final class Logger {
      * @param throwable the throwable
      */
     public void debug(Object message, Throwable throwable) {
-		LOG4J.debug(message, throwable);
-	}
+        LOG4J.debug(message, throwable);
+    }
 
-	private void logStepMsg(final String msg) {
-		info(String.format("--------==[ %1$s.]==--------", msg));
-	}
+    private void logStepMsg(final String msg) {
+        info(String.format("--------==[ %1$s.]==--------", msg));
+    }
 
-	private void logTestEnd(final String data, final String result, final String reason) {
-		info("");
-		String leftAlignFormat = "| %-20s | %-22s | %-32s |%n";
-		info("+----------------------------------------------+------------------------+-------------------------------------+%n");
-		info("| Account                                      | Result (Passed\\Failed) | Failures reason                     |%n");
-		info("+----------------------------------------------+------------------------+-------------------------------------+%n");
-		info(String.format(leftAlignFormat, data, result, reason));
-		info("+----------------------------------------------+------------------------+-------------------------------------+%n");
-	}
+    private void logTestEnd(final String data, final String result, final String reason) {
+        info("");
+        String leftAlignFormat = "| %-20s | %-22s | %-32s |%n";
+        info("+----------------------------------------------+------------------------+-------------------------------------+%n");
+        info("| Account                                      | Result (Passed\\Failed) | Failures reason                     |%n");
+        info("+----------------------------------------------+------------------------+-------------------------------------+%n");
+        info(String.format(leftAlignFormat, data, result, reason));
+        info("+----------------------------------------------+------------------------+-------------------------------------+%n");
+    }
 
     /**
      * Log test end.
@@ -99,8 +99,8 @@ public final class Logger {
      * @param data the data
      */
     void logTestEnd(final String data) {
-		logTestEnd(data, "Passed", "");
-	}
+        logTestEnd(data, "Passed", "");
+    }
 
     /**
      * Log test end.
@@ -109,8 +109,8 @@ public final class Logger {
      * @param reason the reason
      */
     void logTestEnd(final String data, final String reason) {
-		logTestEnd(data, "Failed", reason);
-	}
+        logTestEnd(data, "Failed", reason);
+    }
 
     /**
      * Log test name.
@@ -118,12 +118,14 @@ public final class Logger {
      * @param testName the test name
      */
     void logTestName(final String testName) {
-		String formattedName = String.format("===================== '%1$s' =====================", testName);
-		StringBuilder delims = new StringBuilder();
-		int nChars = formattedName.length();
-		for (int i = 0; i < nChars; i++) {
-			delims.append("-"); }info(delims.toString());
-		info(formattedName);
-		info(delims.toString());
-	}
+        String formattedName = String.format("===================== '%1$s' =====================", testName);
+        StringBuilder delims = new StringBuilder();
+        int nChars = formattedName.length();
+        for (int i = 0; i < nChars; i++) {
+            delims.append("-");
+        }
+        info(delims.toString());
+        info(formattedName);
+        info(delims.toString());
+    }
 }

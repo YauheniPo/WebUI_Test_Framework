@@ -91,8 +91,11 @@ final public class BrowserFactory {
         ffProfile.setPreference("browser.download.manager.showWhenStarting", false);
         ffProfile.setPreference("pdfjs.disabled", true);
         ffProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
-
-        return new FirefoxDriver(new FirefoxBinary(), ffProfile, caps);
+        FirefoxBinary firefoxBinary = new FirefoxBinary();
+        if (Browser.isBrowserHeadless()) {
+            firefoxBinary.addCommandLineOptions("--headless");
+        }
+        return new FirefoxDriver(firefoxBinary, ffProfile, caps);
     }
 
     private static RemoteWebDriver getChromeDriver() {
@@ -112,6 +115,7 @@ final public class BrowserFactory {
         prefs.put("profile.password_manager_enabled", false);
         prefs.put("safebrowsing.enabled", "true");
         options.setExperimentalOption("prefs", prefs);
+		options.addArguments("--headless");
         DesiredCapabilities cp1 = DesiredCapabilities.chrome();
         cp1.setCapability("chrome.switches", Collections.singletonList("--disable-popup-blocking"));
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
@@ -124,7 +128,9 @@ final public class BrowserFactory {
         System.setProperty(WEBDRIVER_CHROME, myFile.getAbsolutePath());
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
         RemoteWebDriver driver = new ChromeDriver(cp1);
-        driver.manage().window().maximize();
+        if (Browser.isBrowserHeadless()) {
+            driver.manage().window().maximize();
+        }
         return driver;
     }
 }

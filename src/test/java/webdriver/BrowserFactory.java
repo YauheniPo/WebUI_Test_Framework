@@ -38,6 +38,7 @@ final public class BrowserFactory {
      * Sets up.
      *
      * @param type the type
+     *
      * @return the up
      */
     public static RemoteWebDriver setUp(final Browsers type) {
@@ -48,7 +49,9 @@ final public class BrowserFactory {
      * Sets up.
      *
      * @param type the type
+     *
      * @return the up
+     *
      * @throws NamingException the naming exception
      */
     public static RemoteWebDriver setUp(final String type) throws NamingException {
@@ -79,19 +82,22 @@ final public class BrowserFactory {
                 return null;
         }
     }
-    
+
     private static RemoteWebDriver getFirefoxDriver(DesiredCapabilities capabilities) {
-        DesiredCapabilities caps =  (capabilities != null) ? capabilities : new DesiredCapabilities();
+        DesiredCapabilities caps = (capabilities != null) ? capabilities : new DesiredCapabilities();
         FirefoxProfile ffProfile = new FirefoxProfile();
         ffProfile.setPreference("browser.helperApps.neverAsk.saveToDisk",
-				"application/x-debian-package; application/octet-stream");
+                "application/x-debian-package; application/octet-stream");
         ffProfile.setPreference("browser.download.manager.showWhenStarting", false);
         ffProfile.setPreference("pdfjs.disabled", true);
         ffProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
-
-        return new FirefoxDriver(new FirefoxBinary(), ffProfile, caps);
+        FirefoxBinary firefoxBinary = new FirefoxBinary();
+        if (Browser.isBrowserHeadless()) {
+            firefoxBinary.addCommandLineOptions("--headless");
+        }
+        return new FirefoxDriver(firefoxBinary, ffProfile, caps);
     }
-    
+
     private static RemoteWebDriver getChromeDriver() {
         URL myTestURL = null;
         File myFile = null;
@@ -103,24 +109,28 @@ final public class BrowserFactory {
             logger.fatal(String.format("Unsupported platform: %1$s for chrome browser %n", PLATFORM));
         }
         ChromeOptions options = new ChromeOptions();
-		Map<String, Object> prefs = new HashMap<>();
-		prefs.put("profile.default_content_settings.popups", "0");
-		prefs.put("credentials_enable_service", false);
-		prefs.put("profile.password_manager_enabled", false);
-		prefs.put("safebrowsing.enabled", "true"); 
-		options.setExperimentalOption("prefs", prefs);
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("profile.default_content_settings.popups", "0");
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        prefs.put("safebrowsing.enabled", "true");
+        options.setExperimentalOption("prefs", prefs);
+        options.addArguments("--headless");
         DesiredCapabilities cp1 = DesiredCapabilities.chrome();
         cp1.setCapability("chrome.switches", Collections.singletonList("--disable-popup-blocking"));
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
         try {
             myFile = new File(myTestURL.toURI());
         } catch (URISyntaxException e1) {
-            logger.debug(CLS_NAME + new Object(){}.getClass().getEnclosingMethod().getName(), e1);
+            logger.debug(CLS_NAME + new Object() {
+            }.getClass().getEnclosingMethod().getName(), e1);
         }
         System.setProperty(WEBDRIVER_CHROME, myFile.getAbsolutePath());
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
         RemoteWebDriver driver = new ChromeDriver(cp1);
-        driver.manage().window().maximize();
+        if (Browser.isBrowserHeadless()) {
+            driver.manage().window().maximize();
+        }
         return driver;
     }
 }

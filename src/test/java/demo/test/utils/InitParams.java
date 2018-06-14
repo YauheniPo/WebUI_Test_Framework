@@ -8,15 +8,14 @@ import java.util.List;
  * The type Init parameters.
  */
 public abstract class InitParams {
-    private String senderMailLogin;
-    private String senderMailPassword;
-    private String recipientMailLogin;
-    private String recipientMailPassword;
-
     /**
      * The Logger.
      */
     Logger LOGGER = Logger.getInstance();
+    private String senderMailLogin;
+    private String senderMailPassword;
+    private String recipientMailLogin;
+    private String recipientMailPassword;
 
     /**
      * Sets parameters.
@@ -34,6 +33,7 @@ public abstract class InitParams {
      * Fetch test data init parameters.
      *
      * @param dataBaselocation the data baselocation
+     *
      * @return the init params
      */
     public abstract InitParams fetchTestData(String dataBaselocation);

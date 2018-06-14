@@ -38,7 +38,7 @@ public class CSVParse extends BaseEntity {
                     data.addAll(Arrays.asList(row));
                 }
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             error(e.getMessage());
         }
         info(String.format("Data received from %s", filepath));

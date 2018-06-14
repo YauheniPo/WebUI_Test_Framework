@@ -35,6 +35,7 @@ public class EmailAccountPage extends BaseForm {
      * Fetch email folder email account page.
      *
      * @param folder the folder
+     *
      * @return the email account page
      */
     public EmailAccountPage fetchEmailFolder(NavBox folder) {
@@ -53,17 +54,17 @@ public class EmailAccountPage extends BaseForm {
     }
 
     /**
-        * The enum Navbox.
-        */
+     * The enum Navbox.
+     */
     public enum NavBox {
         /**
-                 * Inbox navigation box.
-                 */
+         * Inbox navigation box.
+         */
         INBOX("inbox"),
 
         /**
-                  * Sent navigation box.
-                  */
+         * Sent navigation box.
+         */
         SENT("sent");
 
         private final String navBoxLocator;
@@ -73,10 +74,10 @@ public class EmailAccountPage extends BaseForm {
         }
 
         /**
-                  * Gets locator.
-                  *
-                  * @return the locator
-                  */
+         * Gets locator.
+         *
+         * @return the locator
+         */
         public String getLoc() {
             return navBoxLocator;
         }

@@ -9,13 +9,9 @@ public class ConstantsFrm {
      */
     public static final String PROPERTIES_MAIL = "mail.properties";
     /**
-     * The constant PROPERTIES_DB.
+     * The constant CHARSET.
      */
-    public static String PROPERTIES_DB = "database.properties";
-    /**
-     * The constant PROPERTIES_DB_QUERIES.
-     */
-    public static String PROPERTIES_DB_QUERIES = "db_queries.properties";
+    public static final String CHARSET = "UTF-8";
     /**
      * The Properties selenium.
      */
@@ -24,7 +20,6 @@ public class ConstantsFrm {
      * The Properties stage.
      */
     static final String PROPERTIES_STAGE = "stage.properties";
-
     /**
      * The Webdriver chrome.
      */
@@ -33,9 +28,12 @@ public class ConstantsFrm {
      * The Chromedriver.
      */
     static final String CHROMEDRIVER = "chromedriver";
-
     /**
-     * The constant CHARSET.
+     * The constant PROPERTIES_DB.
      */
-    public static final String CHARSET = "UTF-8";
+    public static String PROPERTIES_DB = "database.properties";
+    /**
+     * The constant PROPERTIES_DB_QUERIES.
+     */
+    public static String PROPERTIES_DB_QUERIES = "db_queries.properties";
 }

@@ -9,6 +9,7 @@ public class FactoryInitParams {
      * Gets test data.
      *
      * @param dataBaseLocation the data base location
+     *
      * @return the test data
      */
     public InitParams getTestData(String dataBaseLocation) {

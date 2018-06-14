@@ -45,43 +45,6 @@ public class MailUtils extends BaseEntity {
         this(account.split("@")[1], account, password);
     }
 
-    /**
-     * The enum Mail protocols.
-     */
-    public enum MAIL_PROTOCOLS {
-        /**
-         * Pop 3 mail protocols.
-         */
-        POP3("pop3"),
-        /**
-         * Smtp mail protocols.
-         */
-        SMTP("smtp"),
-        /**
-         * Imap mail protocols.
-         */
-        IMAP("imap"),
-        /**
-         * Imaps mail protocols.
-         */
-        IMAPS("imaps"),
-        /**
-         * Pop 3 s mail protocols.
-         */
-        POP3S("pop3s");
-
-        private String protocol;
-
-        MAIL_PROTOCOLS(String name) {
-            protocol = name;
-        }
-
-        @Override
-        public String toString() {
-            return protocol;
-        }
-    }
-
     private Store getStoreConnected() {
         if (store.isConnected()) {
             return store;
@@ -214,5 +177,42 @@ public class MailUtils extends BaseEntity {
         properties.put("mail.imap.ssl.enable", "true");
         properties.put("mail.smtp.socketFactory.port", port);
         properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+    }
+
+    /**
+     * The enum Mail protocols.
+     */
+    public enum MAIL_PROTOCOLS {
+        /**
+         * Pop 3 mail protocols.
+         */
+        POP3("pop3"),
+        /**
+         * Smtp mail protocols.
+         */
+        SMTP("smtp"),
+        /**
+         * Imap mail protocols.
+         */
+        IMAP("imap"),
+        /**
+         * Imaps mail protocols.
+         */
+        IMAPS("imaps"),
+        /**
+         * Pop 3 s mail protocols.
+         */
+        POP3S("pop3s");
+
+        private String protocol;
+
+        MAIL_PROTOCOLS(String name) {
+            protocol = name;
+        }
+
+        @Override
+        public String toString() {
+            return protocol;
+        }
     }
 }

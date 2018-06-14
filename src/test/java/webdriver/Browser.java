@@ -12,25 +12,25 @@ import static webdriver.ConstantsFrm.PROPERTIES_STAGE;
  * The type Browser.
  */
 public final class Browser {
-	private static final String BROWSER_BY_DEFAULT = Browsers.FIREFOX.value;
-	private static final String BROWSER_PROP = "browser";
-	private static final String STAGE = "stage";
-	private static Browser instance;
-	private static RemoteWebDriver driver;
-	private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_SELENIUM);
-	private static PropertiesResourceManager propStage;
-	private static String browserURL;
-	private static boolean isDriverManager;
-	private static boolean isHeadless;
-	private static String timeoutForCondition;
-	private static final Browsers currentBrowser
-			= Browsers.valueOf(System.getProperty(BROWSER_PROP, props.getProperty(BROWSER_PROP, BROWSER_BY_DEFAULT).toUpperCase()));
-	private static final long IMPLICITY_WAIT = Long.valueOf(props.getProperty("implicityWait", String.valueOf(10)));
-	private static final String DEFAULT_CONDITION_TIMEOUT = "defaultConditionTimeout";
-	private static final String URL_LOGIN_PAGE = "urlLoginPage";
-	private static final String DRIVER_MANAGER = "driverManager";
-	private static final String BROWSER_HEADLESS = "browserHeadless";
-	private static final Logger logger = Logger.getInstance();
+    private static final String BROWSER_BY_DEFAULT = Browsers.FIREFOX.value;
+    private static final String BROWSER_PROP = "browser";
+    private static final String STAGE = "stage";
+    private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_SELENIUM);
+    private static final Browsers currentBrowser
+            = Browsers.valueOf(System.getProperty(BROWSER_PROP, props.getProperty(BROWSER_PROP, BROWSER_BY_DEFAULT).toUpperCase()));
+    private static final long IMPLICITY_WAIT = Long.valueOf(props.getProperty("implicityWait", String.valueOf(10)));
+    private static final String DEFAULT_CONDITION_TIMEOUT = "defaultConditionTimeout";
+    private static final String URL_LOGIN_PAGE = "urlLoginPage";
+    private static final String DRIVER_MANAGER = "driverManager";
+    private static final String BROWSER_HEADLESS = "browserHeadless";
+    private static final Logger logger = Logger.getInstance();
+    private static Browser instance;
+    private static RemoteWebDriver driver;
+    private static PropertiesResourceManager propStage;
+    private static String browserURL;
+    private static boolean isDriverManager;
+    private static boolean isHeadless;
+    private static String timeoutForCondition;
 
     private Browser() {
         logger.info(String.format("browser %s is ready", currentBrowser.name()));
@@ -113,43 +113,15 @@ public final class Browser {
         getDriver().navigate().to(browserURL);
     }
 
-    /**
-     * Refresh.
-     */
-    public void refresh() {
-        getDriver().navigate().refresh();
-        logger.info("Page was refreshed.");
+    private static void initProperties() {
+        isDriverManager = Boolean.valueOf(props.getProperty(DRIVER_MANAGER, "false"));
+        isHeadless = Boolean.valueOf(props.getProperty(BROWSER_HEADLESS, "false"));
+        timeoutForCondition = props.getProperty(DEFAULT_CONDITION_TIMEOUT);
+        propStage = new PropertiesResourceManager(PROPERTIES_STAGE);
+        String choosenStage = propStage.getProperty(STAGE);
+        browserURL = String.format(propStage.getProperty(URL_LOGIN_PAGE), choosenStage);
+        driver = getNewDriver();
     }
-
-    /**
-     * The enum Browsers.
-     */
-    public enum Browsers {
-        /**
-         * Firefox browsers.
-         */
-        FIREFOX("firefox"),
-        /**
-         * Chrome browsers.
-         */
-        CHROME("chrome");
-
-        private String value;
-
-        Browsers(final String values) {
-            value = values;
-        }
-    }
-
-	private static void initProperties() {
-		isDriverManager = Boolean.valueOf(props.getProperty(DRIVER_MANAGER, "false"));
-		isHeadless = Boolean.valueOf(props.getProperty(BROWSER_HEADLESS, "false"));
-		timeoutForCondition = props.getProperty(DEFAULT_CONDITION_TIMEOUT);
-		propStage = new PropertiesResourceManager(PROPERTIES_STAGE);
-		String choosenStage = propStage.getProperty(STAGE);
-		browserURL = String.format(propStage.getProperty(URL_LOGIN_PAGE), choosenStage);
-		driver = getNewDriver();
-	}
 
     private static RemoteWebDriver getNewDriver() {
         try {
@@ -170,6 +142,14 @@ public final class Browser {
      */
     static String getStartBrowserURL() {
         return browserURL;
+    }
+
+    /**
+     * Refresh.
+     */
+    public void refresh() {
+        getDriver().navigate().refresh();
+        logger.info("Page was refreshed.");
     }
 
     /**
@@ -202,6 +182,26 @@ public final class Browser {
             logger.info("browser driver quit");
         } catch (Exception e) {
             logger.debug(e.getMessage());
+        }
+    }
+
+    /**
+     * The enum Browsers.
+     */
+    public enum Browsers {
+        /**
+         * Firefox browsers.
+         */
+        FIREFOX("firefox"),
+        /**
+         * Chrome browsers.
+         */
+        CHROME("chrome");
+
+        private String value;
+
+        Browsers(final String values) {
+            value = values;
         }
     }
 }

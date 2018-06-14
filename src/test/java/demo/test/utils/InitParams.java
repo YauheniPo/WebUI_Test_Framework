@@ -8,15 +8,14 @@ import java.util.List;
  * The type Init parameters.
  */
 public abstract class InitParams {
-    private String senderMailLogin;
-    private String senderMailPassword;
-    private String recipientMailLogin;
-    private String recipientMailPassword;
-
     /**
      * The Logger.
      */
     Logger LOGGER = Logger.getInstance();
+    private String senderMailLogin;
+    private String senderMailPassword;
+    private String recipientMailLogin;
+    private String recipientMailPassword;
 
     /**
      * Sets parameters.

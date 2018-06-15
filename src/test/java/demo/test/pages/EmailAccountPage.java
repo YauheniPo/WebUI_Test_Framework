@@ -10,7 +10,7 @@ import webdriver.elements.Button;
  * The type Email account page.
  */
 public class EmailAccountPage extends BaseForm {
-    private static final By MAIN_LOCATOR = By.xpath("//*[@class='header-logo']");
+    private static final By MAIN_LOCATOR = By.xpath("//*[@class='mail-App-Content']");
     private final By userAccountLocator = By.xpath("//div[contains(@class, 'Header')]//*[contains(@data-key, 'user')]");
     private final String locNavBarElement = "//div[contains(@data-key, 'left-box')]//a[contains(@href, '%s')]";
     private MailsForm mailsForm = new MailsForm();

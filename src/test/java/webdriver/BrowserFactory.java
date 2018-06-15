@@ -108,7 +108,7 @@ final public class BrowserFactory {
         ffProfile.setPreference("pdfjs.disabled", true);
         ffProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
         FirefoxBinary firefoxBinary = new FirefoxBinary();
-        if (!Browser.isBrowserHeadless()) {
+        if (Browser.isBrowserHeadless()) {
             firefoxBinary.addCommandLineOptions("--headless");
         }
         return new FirefoxDriver(firefoxBinary, ffProfile, caps);
@@ -131,22 +131,21 @@ final public class BrowserFactory {
         prefs.put("profile.password_manager_enabled", false);
         prefs.put("safebrowsing.enabled", "true");
         options.setExperimentalOption("prefs", prefs);
-        options.addArguments("--headless");
+        if (Browser.isBrowserHeadless()) {
+            options.addArguments("--headless");
+        }
         DesiredCapabilities cp1 = DesiredCapabilities.chrome();
         cp1.setCapability("chrome.switches", Collections.singletonList("--disable-popup-blocking"));
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
         try {
             myFile = new File(myTestURL.toURI());
         } catch (URISyntaxException e1) {
-            logger.debug(CLS_NAME + new Object() {
-            }.getClass().getEnclosingMethod().getName(), e1);
+            logger.debug(CLS_NAME + new Object(){}.getClass().getEnclosingMethod().getName(), e1);
         }
         System.setProperty(WEBDRIVER_CHROME, myFile.getAbsolutePath());
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
         RemoteWebDriver driver = new ChromeDriver(cp1);
-        if (!Browser.isBrowserHeadless()) {
-            driver.manage().window().maximize();
-        }
+        driver.manage().window().maximize();
         return driver;
     }
 }

@@ -1,5 +1,6 @@
 package webdriver.elements;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -67,11 +68,15 @@ public abstract class BaseElement extends BaseEntity {
 
     private void waitForIsElementPresent() {
         isPresent(Integer.valueOf(Browser.getTimeoutForCondition()));
+        boolean isVisible;
         try {
-            element.isDisplayed();
+            isVisible = element.isDisplayed();
         } catch (Exception | AssertionError ex) {
-            debug(ex.getMessage());
+            logger.debug(this, ex);
+            isVisible = false;
         }
+        Assert.assertTrue("Locator is absent", isVisible);
+
     }
 
     /**

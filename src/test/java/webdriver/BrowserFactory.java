@@ -13,6 +13,7 @@ import webdriver.Browser.Browsers;
 
 import javax.naming.NamingException;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
@@ -65,14 +66,19 @@ final public class BrowserFactory {
 
     private static RemoteWebDriver getWebDriver(final Browsers type) {
         DesiredCapabilities capabilitiesProxy = new DesiredCapabilities();
+        boolean isGrid = Browser.getGridUrl() != null;
         switch (type) {
             case CHROME:
+                if (isGrid)
+                    return getGridRemoteDriver(DesiredCapabilities.chrome());
                 if (Browser.isDriverManager()) {
                     ChromeDriverManager.getInstance().setup();
                     return new ChromeDriver(capabilitiesProxy);
                 }
                 return getChromeDriver();
             case FIREFOX:
+                if (isGrid)
+                    return getGridRemoteDriver(DesiredCapabilities.firefox());
                 if (Browser.isDriverManager()) {
                     FirefoxDriverManager.getInstance().setup();
                     return new FirefoxDriver(capabilitiesProxy);
@@ -81,6 +87,16 @@ final public class BrowserFactory {
             default:
                 return null;
         }
+    }
+
+    private static RemoteWebDriver getGridRemoteDriver(DesiredCapabilities capabilities) {
+        logger.info("Set selenium grid driver");
+        try {
+            return new RemoteWebDriver(new URL(Browser.getGridUrl()), capabilities);
+        } catch (MalformedURLException exception) {
+            logger.debug("Grid Remote Driver Initialization is fall", exception);
+        }
+        return null;
     }
 
     private static RemoteWebDriver getFirefoxDriver(DesiredCapabilities capabilities) {
@@ -115,22 +131,21 @@ final public class BrowserFactory {
         prefs.put("profile.password_manager_enabled", false);
         prefs.put("safebrowsing.enabled", "true");
         options.setExperimentalOption("prefs", prefs);
-        options.addArguments("--headless");
+        if (Browser.isBrowserHeadless()) {
+            options.addArguments("--headless");
+        }
         DesiredCapabilities cp1 = DesiredCapabilities.chrome();
         cp1.setCapability("chrome.switches", Collections.singletonList("--disable-popup-blocking"));
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
         try {
             myFile = new File(myTestURL.toURI());
         } catch (URISyntaxException e1) {
-            logger.debug(CLS_NAME + new Object() {
-            }.getClass().getEnclosingMethod().getName(), e1);
+            logger.debug(CLS_NAME + new Object(){}.getClass().getEnclosingMethod().getName(), e1);
         }
         System.setProperty(WEBDRIVER_CHROME, myFile.getAbsolutePath());
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
         RemoteWebDriver driver = new ChromeDriver(cp1);
-        if (Browser.isBrowserHeadless()) {
-            driver.manage().window().maximize();
-        }
+        driver.manage().window().maximize();
         return driver;
     }
 }

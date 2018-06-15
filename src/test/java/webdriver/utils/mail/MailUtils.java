@@ -63,16 +63,16 @@ public class MailUtils extends BaseEntity {
      *
      * @param text                  the text
      * @param subject               the subject
-     * @param recipientEmsilAddress the recipient emsil address
+     * @param recipientEmailAddress the recipient emsil address
      */
-    public void sendMail(String text, String subject, String recipientEmsilAddress) {
+    public void sendMail(String text, String subject, String recipientEmailAddress) {
         message = new MimeMessage(session);
         try {
             message.setHeader("Content-Type", String.format("text/plain; charset=%s", CHARSET));
             message.setSubject(subject, CHARSET);
             message.setText(text, CHARSET);
             message.setFrom(new InternetAddress(fromAddress));
-            InternetAddress toAddress = new InternetAddress(recipientEmsilAddress);
+            InternetAddress toAddress = new InternetAddress(recipientEmailAddress);
             message.addRecipient(Message.RecipientType.TO, toAddress);
             Transport.send(message);
             info(String.format("Sent a email Subject: %s Text: %s", subject, text));

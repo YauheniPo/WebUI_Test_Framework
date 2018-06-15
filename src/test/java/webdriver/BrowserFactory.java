@@ -108,7 +108,7 @@ final public class BrowserFactory {
         ffProfile.setPreference("pdfjs.disabled", true);
         ffProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
         FirefoxBinary firefoxBinary = new FirefoxBinary();
-        if (Browser.isBrowserHeadless()) {
+        if (!Browser.isBrowserHeadless()) {
             firefoxBinary.addCommandLineOptions("--headless");
         }
         return new FirefoxDriver(firefoxBinary, ffProfile, caps);
@@ -144,7 +144,7 @@ final public class BrowserFactory {
         System.setProperty(WEBDRIVER_CHROME, myFile.getAbsolutePath());
         cp1.setCapability(ChromeOptions.CAPABILITY, options);
         RemoteWebDriver driver = new ChromeDriver(cp1);
-        if (Browser.isBrowserHeadless()) {
+        if (!Browser.isBrowserHeadless()) {
             driver.manage().window().maximize();
         }
         return driver;

@@ -76,7 +76,6 @@ public abstract class BaseElement extends BaseEntity {
             isVisible = false;
         }
         Assert.assertTrue("Locator is absent", isVisible);
-
     }
 
     /**

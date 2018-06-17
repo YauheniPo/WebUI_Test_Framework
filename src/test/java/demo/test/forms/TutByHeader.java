@@ -31,9 +31,6 @@ public class TutByHeader extends BaseForm {
      * The enum Topbar.
      */
     public enum TopBar {
-        /**
-         * Email topbar.
-         */
         EMAIL("mail");
 
         private final String topBarLocator;

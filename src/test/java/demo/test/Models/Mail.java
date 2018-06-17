@@ -26,6 +26,13 @@ public class Mail {
         this.toAddress = toAddress;
     }
 
+    /**
+     * Equals boolean.
+     *
+     * @param o the o
+     *
+     * @return the boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,6 +44,11 @@ public class Mail {
                 Objects.equals(toAddress, mail.toAddress);
     }
 
+    /**
+     * To string string.
+     *
+     * @return the string
+     */
     @Override
     public String toString() {
         return "Mail{" +

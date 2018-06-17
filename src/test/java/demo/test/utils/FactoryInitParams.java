@@ -27,17 +27,8 @@ public class FactoryInitParams {
      * The enum Data base type.
      */
     public enum DataBaseType {
-        /**
-         * Xml data base type.
-         */
         XML,
-        /**
-         * Csv data base type.
-         */
         CSV,
-        /**
-         * Db data base type.
-         */
         DB
     }
 }

@@ -7,6 +7,9 @@ public final class Logger {
     private static final org.apache.log4j.Logger LOG4J = org.apache.log4j.Logger.getLogger(Logger.class);
     private static Logger instance = null;
 
+    /**
+     * Instantiates a new Logger.
+     */
     private Logger() {
         // do not instantiate Logger class
     }
@@ -79,10 +82,22 @@ public final class Logger {
         LOG4J.debug(message, throwable);
     }
 
+    /**
+     * Log step msg.
+     *
+     * @param msg the msg
+     */
     private void logStepMsg(final String msg) {
         info(String.format("--------==[ %1$s.]==--------", msg));
     }
 
+    /**
+     * Log test end.
+     *
+     * @param data   the data
+     * @param result the result
+     * @param reason the reason
+     */
     private void logTestEnd(final String data, final String result, final String reason) {
         info("");
         String leftAlignFormat = "| %-20s | %-22s | %-32s |%n";

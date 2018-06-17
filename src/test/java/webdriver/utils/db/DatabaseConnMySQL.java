@@ -17,6 +17,11 @@ public class DatabaseConnMySQL extends BaseEntity {
     private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_DB);
     private Connection connection;
 
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     */
     private Connection getConnection() {
         if (connection == null) {
             try {

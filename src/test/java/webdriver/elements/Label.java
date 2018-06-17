@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
  * The type Label.
  */
 public class Label extends BaseElement {
+
     /**
      * Instantiates a new Label.
      *

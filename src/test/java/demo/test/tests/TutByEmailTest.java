@@ -55,14 +55,22 @@ public class TutByEmailTest extends BaseTest {
         }
     }
 
+    /**
+     * Return base page.
+     */
     @AfterMethod
     public void returnBasePage() {
         Browser.openStartPage();
     }
 
+    /**
+     * Run test.
+     *
+     * @param testData the test data
+     */
     @Override
     public void runTest(Object testData) {
-        TestDataMails testDataMails = (TestDataMails)testData;
+        TestDataMails testDataMails = (TestDataMails) testData;
         this.senderMailLogin = testDataMails.getSenderMailLogin();
         this.senderMailPassword = testDataMails.getSenderMailPassword();
         this.recipientMailLogin = testDataMails.getRecipientMailLogin();
@@ -104,21 +112,44 @@ public class TutByEmailTest extends BaseTest {
         equalsMails(apiMail, new LinkedList<>(Arrays.asList(senderMail, recipientMail)));
     }
 
+    /**
+     * Fetch account mail mail.
+     *
+     * @param folder        the folder
+     * @param emailLogin    the email login
+     * @param emailPassword the email password
+     *
+     * @return the mail
+     */
     private Mail fetchAccountMail(EmailAccountPage.NavBox folder, String emailLogin, String emailPassword) {
         return new AuthorizeEmailForm().signIn(emailLogin, emailPassword).
                 fetchEmailFolder(folder).getMailsForm().choiceLastMail().getMail();
     }
 
+    /**
+     * Logout account.
+     */
     private void logoutAccount() {
         new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
     }
 
+    /**
+     * Gets mail store.
+     *
+     * @param login    the login
+     * @param password the password
+     *
+     * @return the mail store
+     */
     private MailUtils getMailStore(String login, String password) {
         MailUtils mail = new MailUtils(login, password);
         mailBox.add(mail);
         return mail;
     }
 
+    /**
+     * Delete mails.
+     */
     private void deleteMails() {
         for (MailUtils mail : mailBox) {
             if (mail != null) {
@@ -127,6 +158,12 @@ public class TutByEmailTest extends BaseTest {
         }
     }
 
+    /**
+     * Equals mails.
+     *
+     * @param apiMail the api mail
+     * @param mails   the mails
+     */
     private void equalsMails(Mail apiMail, List<Mail> mails) {
         for (Mail mail : mails) {
             assertEquals(apiMail, mail);
@@ -134,6 +171,11 @@ public class TutByEmailTest extends BaseTest {
         }
     }
 
+    /**
+     * Gets report data.
+     *
+     * @return the report data
+     */
     public String getReportData() {
         return String.format("%s, %s", this.senderMailLogin, this.recipientMailLogin);
     }

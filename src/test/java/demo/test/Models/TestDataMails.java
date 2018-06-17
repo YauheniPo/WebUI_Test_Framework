@@ -6,6 +6,14 @@ public class TestDataMails {
     private String recipientMailLogin;
     private String recipientMailPassword;
 
+    /**
+     * Instantiates a new Test data mails.
+     *
+     * @param senderMailLogin       the sender mail login
+     * @param senderMailPassword    the sender mail password
+     * @param recipientMailLogin    the recipient mail login
+     * @param recipientMailPassword the recipient mail password
+     */
     public TestDataMails(String senderMailLogin, String senderMailPassword, String recipientMailLogin, String recipientMailPassword) {
         this.senderMailLogin = senderMailLogin;
         this.senderMailPassword = senderMailPassword;

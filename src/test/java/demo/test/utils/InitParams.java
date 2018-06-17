@@ -9,9 +9,6 @@ import java.util.List;
  * The type Init parameters.
  */
 public abstract class InitParams {
-    /**
-     * The Logger.
-     */
     Logger LOGGER = Logger.getInstance();
 
     /**

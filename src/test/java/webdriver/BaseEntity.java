@@ -16,6 +16,11 @@ import static org.testng.AssertJUnit.fail;
 public abstract class BaseEntity {
     protected static Logger logger = Logger.getInstance();
 
+    /**
+     * Gets browser.
+     *
+     * @return the browser
+     */
     private Browser getBrowser() {
         return Browser.getInstance();
     }

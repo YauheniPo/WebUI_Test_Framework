@@ -15,9 +15,6 @@ import static webdriver.ConstantsFrm.PROPERTIES_DB_QUERIES;
  * The type Db parameters.
  */
 public class DBParamsImpl extends InitParams {
-    /**
-     * The Props.
-     */
     private PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_DB_QUERIES);
 
     /**

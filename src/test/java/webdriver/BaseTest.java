@@ -1,6 +1,5 @@
 package webdriver;
 
-import demo.test.Models.TestDataMails;
 import demo.test.utils.FactoryInitParams;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

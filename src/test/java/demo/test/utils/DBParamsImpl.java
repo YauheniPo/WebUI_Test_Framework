@@ -18,7 +18,7 @@ public class DBParamsImpl extends InitParams {
     private PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_DB_QUERIES);
 
     @Override
-    public InitParams fetchTestData(String dataBaselocation) {
+    public Object[] fetchTestData(String dataBaselocation) {
         DatabaseConnMySQL database = new DatabaseConnMySQL();
         Statement statement = database.getStatement();
         String getEmailAccounts = props.getProperty("sql_get_email_accounts");
@@ -34,8 +34,7 @@ public class DBParamsImpl extends InitParams {
         } finally {
             database.close();
         }
-        setParams(data);
         LOGGER.info(String.format("Вata received from %s", dataBaselocation));
-        return this;
+        return getTestDataMails(data);
     }
 }

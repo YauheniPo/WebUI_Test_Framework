@@ -8,8 +8,7 @@ import webdriver.utils.CSVParse;
 public class CSVParamsImpl extends InitParams {
 
     @Override
-    public InitParams fetchTestData(String dataBaselocation) {
-        setParams(new CSVParse(dataBaselocation).fetchCSVData());
-        return this;
+    public Object[] fetchTestData(String dataBaselocation) {
+        return getTestDataMails(new CSVParse(dataBaselocation).fetchCSVData());
     }
 }

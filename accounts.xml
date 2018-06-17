@@ -8,4 +8,12 @@
         <login>epam2.popovich@tut.by</login>
         <password>epam2popovich</password>
     </account>
+    <account>
+        <login>epam2.popovich@tut.by</login>
+        <password>epam2popovich</password>
+    </account>
+    <account>
+        <login>epam1.popovich@tut.by</login>
+        <password>epampopovich</password>
+    </account>
 </accounts>

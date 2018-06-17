@@ -1,12 +1,14 @@
 package demo.test.tests;
 
 import demo.test.Models.Mail;
+import demo.test.Models.TestDataMails;
 import demo.test.forms.AuthorizeEmailForm;
 import demo.test.forms.TutByHeader;
 import demo.test.forms.UserAccountDropdown;
 import demo.test.pages.EmailAccountPage;
 import demo.test.pages.TutByHomePage;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import webdriver.BaseTest;
@@ -53,27 +55,31 @@ public class TutByEmailTest extends BaseTest {
         }
     }
 
+    @AfterMethod
+    public void returnBasePage() {
+        Browser.openStartPage();
+    }
+
     @Override
-    public void runTest(String senderMailLogin, String senderMailPassword,
-                        String recipientMailLogin, String recipientMailPassword) {
-        this.senderMailLogin = senderMailLogin;
-        this.senderMailPassword = senderMailPassword;
-        this.recipientMailLogin = recipientMailLogin;
-        this.recipientMailPassword = recipientMailPassword;
+    public void runTest(TestDataMails testData) {
+        this.senderMailLogin = testData.getSenderMailLogin();
+        this.senderMailPassword = testData.getSenderMailPassword();
+        this.recipientMailLogin = testData.getRecipientMailLogin();
+        this.recipientMailPassword = testData.getRecipientMailPassword();
 
         String dateTimeMail = new SimpleDateFormat("HH:mm").format(new Date());
-        String subject = String.format("From %s", senderMailLogin);
+        String subject = String.format("From %s", this.senderMailLogin);
         String text = String.format("%s_%s_%s", emailText, currentBrowser, dateTimeMail);
 
         // init Email sessions
-        this.mailSender = getMailStore(senderMailLogin, senderMailPassword);
-        getMailStore(recipientMailLogin, recipientMailPassword);
+        this.mailSender = getMailStore(this.senderMailLogin, this.senderMailPassword);
+        getMailStore(this.recipientMailLogin, this.recipientMailPassword);
         // cleaning mail data
         deleteMails();
 
         logger.step(1, "Sending a message using api");
-        Mail apiMail = new Mail(subject, text, senderMailLogin, recipientMailLogin);
-        mailSender.sendMail(text, subject, recipientMailLogin);
+        Mail apiMail = new Mail(subject, text, this.senderMailLogin, this.recipientMailLogin);
+        mailSender.sendMail(text, subject, this.recipientMailLogin);
         mailSender.addMsgInSentFolder();
 
         logger.step(2, "Opening the main page");
@@ -81,7 +87,7 @@ public class TutByEmailTest extends BaseTest {
 
         logger.step(3, "Receiving data from the sender's mail");
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
-        Mail senderMail = fetchAccountMail(EmailAccountPage.NavBox.SENT, senderMailLogin, senderMailPassword);
+        Mail senderMail = fetchAccountMail(EmailAccountPage.NavBox.SENT, this.senderMailLogin, this.senderMailPassword);
         logoutAccount();
 
         logger.step(4, "Opening the main page");
@@ -90,7 +96,7 @@ public class TutByEmailTest extends BaseTest {
 
         logger.step(5, "Receiving data from the sender's mail");
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
-        Mail recipientMail = fetchAccountMail(EmailAccountPage.NavBox.INBOX, recipientMailLogin, recipientMailPassword);
+        Mail recipientMail = fetchAccountMail(EmailAccountPage.NavBox.INBOX, this.recipientMailLogin, this.recipientMailPassword);
         logoutAccount();
 
         logger.step(6, "Verification of the correctness of the data of the sent mail");

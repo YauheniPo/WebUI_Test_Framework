@@ -12,7 +12,7 @@ public class FactoryInitParams {
      *
      * @return the test data
      */
-    public InitParams getTestData(String dataBaseLocation) {
+    public Object[] getTestData(String dataBaseLocation) {
         if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.XML.name())) {
             return new XMLParamsImpl().fetchTestData(dataBaseLocation);
         } else if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.CSV.name())) {

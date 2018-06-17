@@ -23,6 +23,13 @@ public abstract class InitParams {
      */
     public abstract Object[] fetchTestData(String dataBaselocation);
 
+    /**
+     * Get test data mails object [ ].
+     *
+     * @param testData the test data
+     *
+     * @return the object [ ]
+     */
     Object[] getTestDataMails(List<String> testData) {
         Object[] dataProvider = new Object[testData.size() / 4];
         for (int i = 0, j = 0, l = testData.size(); i + 4 <= l; i += 4, ++j) {

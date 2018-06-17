@@ -15,8 +15,18 @@ import static webdriver.ConstantsFrm.PROPERTIES_DB_QUERIES;
  * The type Db parameters.
  */
 public class DBParamsImpl extends InitParams {
+    /**
+     * The Props.
+     */
     private PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_DB_QUERIES);
 
+    /**
+     * Fetch test data object [ ].
+     *
+     * @param dataBaselocation the data baselocation
+     *
+     * @return the object [ ]
+     */
     @Override
     public Object[] fetchTestData(String dataBaselocation) {
         DatabaseConnMySQL database = new DatabaseConnMySQL();

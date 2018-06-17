@@ -14,6 +14,13 @@ import java.util.List;
  */
 public class XMLParamsImpl extends InitParams {
 
+    /**
+     * Fetch test data object [ ].
+     *
+     * @param dataBaselocation the data baselocation
+     *
+     * @return the object [ ]
+     */
     @Override
     public Object[] fetchTestData(String dataBaselocation) {
         Document doc = new XMLParse(dataBaselocation).fetchDocument();

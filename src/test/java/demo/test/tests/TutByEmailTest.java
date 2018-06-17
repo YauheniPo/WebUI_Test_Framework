@@ -61,11 +61,12 @@ public class TutByEmailTest extends BaseTest {
     }
 
     @Override
-    public void runTest(TestDataMails testData) {
-        this.senderMailLogin = testData.getSenderMailLogin();
-        this.senderMailPassword = testData.getSenderMailPassword();
-        this.recipientMailLogin = testData.getRecipientMailLogin();
-        this.recipientMailPassword = testData.getRecipientMailPassword();
+    public void runTest(Object testData) {
+        TestDataMails testDataMails = (TestDataMails)testData;
+        this.senderMailLogin = testDataMails.getSenderMailLogin();
+        this.senderMailPassword = testDataMails.getSenderMailPassword();
+        this.recipientMailLogin = testDataMails.getRecipientMailLogin();
+        this.recipientMailPassword = testDataMails.getRecipientMailPassword();
 
         String dateTimeMail = new SimpleDateFormat("HH:mm").format(new Date());
         String subject = String.format("From %s", this.senderMailLogin);

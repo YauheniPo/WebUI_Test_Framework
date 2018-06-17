@@ -9,12 +9,13 @@ import org.testng.annotations.Test;
  * The type Base test.
  */
 public abstract class BaseTest extends BaseEntity {
+
     /**
      * Run Test
      *
      * @param testData emails test data
      */
-    public abstract void runTest(TestDataMails testData);
+    public abstract void runTest(Object testData);
 
     /**
      * Gets report data.
@@ -45,7 +46,7 @@ public abstract class BaseTest extends BaseEntity {
      * @param testData emails test data
      */
     @Test(dataProvider = "initParams")
-    public void xTest(TestDataMails testData) {
+    public void xTest(Object testData) {
         Class<? extends BaseTest> currentClass = this.getClass();
         try {
             logger.logTestName(currentClass.getName());

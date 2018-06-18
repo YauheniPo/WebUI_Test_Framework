@@ -31,9 +31,6 @@ public class UserAccountDropdown extends BaseForm {
      * The enum User dropdown.
      */
     public enum UserDropdown {
-        /**
-         * Logout user dropdown.
-         */
         LOGOUT("logout");
 
         private final String userLocator;

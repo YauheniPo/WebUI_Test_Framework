@@ -66,6 +66,9 @@ public abstract class BaseElement extends BaseEntity {
         element.click();
     }
 
+    /**
+     * Wait for is element present.
+     */
     private void waitForIsElementPresent() {
         isPresent(Integer.valueOf(Browser.getTimeoutForCondition()));
         boolean isVisible;

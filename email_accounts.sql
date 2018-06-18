@@ -24,14 +24,17 @@ CREATE TABLE IF NOT EXISTS `email_accounts` (
   `login` varchar(50) COLLATE utf8_bin NOT NULL,
   `password` varchar(50) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`email_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Дамп данных таблицы mailbox.email_accounts: ~2 rows (приблизительно)
+-- Дамп данных таблицы mailbox.email_accounts: ~5 rows (приблизительно)
 DELETE FROM `email_accounts`;
 /*!40000 ALTER TABLE `email_accounts` DISABLE KEYS */;
 INSERT INTO `email_accounts` (`email_id`, `login`, `password`) VALUES
 	(1, 'epam1.popovich@tut.by', 'epampopovich'),
-	(2, 'epam2.popovich@tut.by', 'epam2popovich');
+	(2, 'epam2.popovich@tut.by', 'epam2popovich'),
+	(3, 'epam2.popovich@tut.by', 'epam2popovich'),
+	(4, 'epam1.popovich@tut.by', 'epampopovich'),
+	(5, 'epam1.popovich@tut.by', 'epampopovich');
 /*!40000 ALTER TABLE `email_accounts` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

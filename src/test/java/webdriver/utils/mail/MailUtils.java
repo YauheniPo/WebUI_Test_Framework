@@ -26,6 +26,13 @@ public class MailUtils extends BaseEntity {
     private String sentFolder;
     private MimeMessage message;
 
+    /**
+     * Instantiates a new Mail utils.
+     *
+     * @param host     the host
+     * @param username the username
+     * @param password the password
+     */
     private MailUtils(String host, String username, String password) {
         this.fromAddress = username;
         this.password = password;
@@ -45,6 +52,11 @@ public class MailUtils extends BaseEntity {
         this(account.split("@")[1], account, password);
     }
 
+    /**
+     * Gets store connected.
+     *
+     * @return the store connected
+     */
     private Store getStoreConnected() {
         if (store.isConnected()) {
             return store;
@@ -53,6 +65,9 @@ public class MailUtils extends BaseEntity {
         return store;
     }
 
+    /**
+     * Init session.
+     */
     private void initSession() {
         Authenticator auth = new EmailAuthenticator(fromAddress, password);
         session = Session.getInstance(properties, auth);
@@ -81,6 +96,11 @@ public class MailUtils extends BaseEntity {
         }
     }
 
+    /**
+     * Add msg in folder.
+     *
+     * @param folderName the folder name
+     */
     private void addMsgInFolder(String folderName) {
         try {
             Folder folder = getStoreConnected().getFolder(folderName);
@@ -99,6 +119,11 @@ public class MailUtils extends BaseEntity {
         addMsgInFolder(sentFolder);
     }
 
+    /**
+     * Connect store.
+     *
+     * @return the store
+     */
     private Store connect() {
         int delay = 1000;
         for (int i = 0; i <= 10; i++) {
@@ -159,6 +184,11 @@ public class MailUtils extends BaseEntity {
         }
     }
 
+    /**
+     * Read config.
+     *
+     * @param host the host
+     */
     private void readConfig(String host) {
         String prop = props.getProperty(host);
         String hostProtoc = prop.split(";")[0];
@@ -169,6 +199,9 @@ public class MailUtils extends BaseEntity {
         this.protocol = MAIL_PROTOCOLS.valueOf(prop.split(";")[2].toUpperCase());
     }
 
+    /**
+     * Fetch properties.
+     */
     private void fetchProperties() {
         properties.setProperty("mail.store.protocol", protocol.toString());
         properties.put("mail.smtp.host", String.format("smtp.%s", service));
@@ -183,33 +216,28 @@ public class MailUtils extends BaseEntity {
      * The enum Mail protocols.
      */
     public enum MAIL_PROTOCOLS {
-        /**
-         * Pop 3 mail protocols.
-         */
         POP3("pop3"),
-        /**
-         * Smtp mail protocols.
-         */
         SMTP("smtp"),
-        /**
-         * Imap mail protocols.
-         */
         IMAP("imap"),
-        /**
-         * Imaps mail protocols.
-         */
         IMAPS("imaps"),
-        /**
-         * Pop 3 s mail protocols.
-         */
         POP3S("pop3s");
 
         private String protocol;
 
+        /**
+         * Instantiates a new Mail protocols.
+         *
+         * @param name the name
+         */
         MAIL_PROTOCOLS(String name) {
             protocol = name;
         }
 
+        /**
+         * To string string.
+         *
+         * @return the string
+         */
         @Override
         public String toString() {
             return protocol;

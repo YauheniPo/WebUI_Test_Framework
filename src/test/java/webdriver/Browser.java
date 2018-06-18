@@ -37,6 +37,9 @@ public final class Browser {
     private static boolean isHeadless;
     private static String timeoutForCondition;
 
+    /**
+     * Instantiates a new Browser.
+     */
     private Browser() {
         logger.info(String.format("browser %s is ready", currentBrowser.name()));
     }
@@ -140,6 +143,11 @@ public final class Browser {
         driver = getNewDriver();
     }
 
+    /**
+     * Gets new driver.
+     *
+     * @return the new driver
+     */
     private static RemoteWebDriver getNewDriver() {
         try {
             RemoteWebDriver driver = BrowserFactory.setUp(currentBrowser.toString());
@@ -206,13 +214,7 @@ public final class Browser {
      * The enum Browsers.
      */
     public enum Browsers {
-        /**
-         * Firefox browsers.
-         */
         FIREFOX("firefox"),
-        /**
-         * Chrome browsers.
-         */
         CHROME("chrome");
 
         private String value;

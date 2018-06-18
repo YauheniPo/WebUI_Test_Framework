@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
  * The type Button.
  */
 public class Button extends BaseElement {
+
     /**
      * Instantiates a new Button.
      *

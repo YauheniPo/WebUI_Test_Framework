@@ -1,5 +1,6 @@
 package demo.test.utils;
 
+import demo.test.Models.TestDataMails;
 import webdriver.Logger;
 
 import java.util.List;
@@ -8,26 +9,7 @@ import java.util.List;
  * The type Init parameters.
  */
 public abstract class InitParams {
-    /**
-     * The Logger.
-     */
     Logger LOGGER = Logger.getInstance();
-    private String senderMailLogin;
-    private String senderMailPassword;
-    private String recipientMailLogin;
-    private String recipientMailPassword;
-
-    /**
-     * Sets parameters.
-     *
-     * @param params the parameters
-     */
-    void setParams(List<String> params) {
-        senderMailLogin = params.get(0);
-        senderMailPassword = params.get(1);
-        recipientMailLogin = params.get(2);
-        recipientMailPassword = params.get(3);
-    }
 
     /**
      * Fetch test data init parameters.
@@ -36,41 +18,20 @@ public abstract class InitParams {
      *
      * @return the init params
      */
-    public abstract InitParams fetchTestData(String dataBaselocation);
+    public abstract Object[] fetchTestData(String dataBaselocation);
 
     /**
-     * Gets sender mail login.
+     * Get test data mails object [ ].
      *
-     * @return the sender mail login
-     */
-    public String getSenderMailLogin() {
-        return senderMailLogin;
-    }
-
-    /**
-     * Gets sender mail password.
+     * @param testData the test data
      *
-     * @return the sender mail password
+     * @return the object [ ]
      */
-    public String getSenderMailPassword() {
-        return senderMailPassword;
-    }
-
-    /**
-     * Gets recipient mail login.
-     *
-     * @return the recipient mail login
-     */
-    public String getRecipientMailLogin() {
-        return recipientMailLogin;
-    }
-
-    /**
-     * Gets recipient mail password.
-     *
-     * @return the recipient mail password
-     */
-    public String getRecipientMailPassword() {
-        return recipientMailPassword;
+    Object[] getTestDataMails(List<String> testData) {
+        Object[] dataProvider = new Object[testData.size() / 4];
+        for (int i = 0, j = 0, l = testData.size(); i + 4 <= l; i += 4, ++j) {
+            dataProvider[j] = new TestDataMails(testData.get(i), testData.get(i + 1), testData.get(i + 2), testData.get(i + 3));
+        }
+        return dataProvider;
     }
 }

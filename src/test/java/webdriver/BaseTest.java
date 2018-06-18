@@ -1,7 +1,6 @@
 package webdriver;
 
 import demo.test.utils.FactoryInitParams;
-import demo.test.utils.InitParams;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -9,16 +8,13 @@ import org.testng.annotations.Test;
  * The type Base test.
  */
 public abstract class BaseTest extends BaseEntity {
+
     /**
-     * Run test.
+     * Run Test
      *
-     * @param senderMailLogin       the sender mail login
-     * @param senderMailPassword    the sender mail password
-     * @param recipientMailLogin    the recipient mail login
-     * @param recipientMailPassword the recipient mail password
+     * @param testData emails test data
      */
-    public abstract void runTest(String senderMailLogin, String senderMailPassword,
-                                 String recipientMailLogin, String recipientMailPassword);
+    public abstract void runTest(Object testData);
 
     /**
      * Gets report data.
@@ -28,37 +24,32 @@ public abstract class BaseTest extends BaseEntity {
     public abstract String getReportData();
 
     /**
-     * Get params object [ ] [ ].
+     * Get params object [ ]
      *
-     * @return the object [ ] [ ]
+     * @return the object [ ]
      */
     @DataProvider(name = "initParams")
-    public Object[][] getParams() {
+    public Object[] getParams() {
         String dataBaseLocation = "dataBaseLocation";
         dataBaseLocation = Browser.getPropsStage().getProperty(dataBaseLocation);
-        InitParams testData = new FactoryInitParams().getTestData(dataBaseLocation);
-        if (testData == null) {
+        Object[] dataProvider = new FactoryInitParams().getTestData(dataBaseLocation);
+        if (dataProvider == null) {
             logger.error(String.format("Data not received from %s", dataBaseLocation));
         }
-        return new Object[][]{{testData.getSenderMailLogin(), testData.getSenderMailPassword(),
-                testData.getRecipientMailLogin(), testData.getRecipientMailPassword()}};
+        return dataProvider;
     }
 
     /**
-     * Unit test.
+     * Test method
      *
-     * @param senderMailLogin       the sender mail login
-     * @param senderMailPassword    the sender mail password
-     * @param recipientMailLogin    the recipient mail login
-     * @param recipientMailPassword the recipient mail password
+     * @param testData emails test data
      */
     @Test(dataProvider = "initParams")
-    public void xTest(String senderMailLogin, String senderMailPassword,
-                      String recipientMailLogin, String recipientMailPassword) {
+    public void xTest(Object testData) {
         Class<? extends BaseTest> currentClass = this.getClass();
         try {
             logger.logTestName(currentClass.getName());
-            runTest(senderMailLogin, senderMailPassword, recipientMailLogin, recipientMailPassword);
+            runTest(testData);
             logger.logTestEnd(getReportData());
         } catch (Exception ex) {
             logger.debug(ex.getMessage());

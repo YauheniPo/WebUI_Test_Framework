@@ -14,8 +14,15 @@ import java.util.List;
  */
 public class XMLParamsImpl extends InitParams {
 
+    /**
+     * Fetch test data object [ ].
+     *
+     * @param dataBaselocation the data baselocation
+     *
+     * @return the object [ ]
+     */
     @Override
-    public InitParams fetchTestData(String dataBaselocation) {
+    public Object[] fetchTestData(String dataBaselocation) {
         Document doc = new XMLParse(dataBaselocation).fetchDocument();
         NodeList nList = doc.getElementsByTagName("account");
         List<String> data = new ArrayList();
@@ -27,7 +34,6 @@ public class XMLParamsImpl extends InitParams {
                 data.add(eElement.getElementsByTagName("password").item(0).getTextContent());
             }
         }
-        setParams(data);
-        return this;
+        return getTestDataMails(data);
     }
 }

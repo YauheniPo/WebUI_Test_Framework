@@ -57,14 +57,7 @@ public class EmailAccountPage extends BaseForm {
      * The enum Navbox.
      */
     public enum NavBox {
-        /**
-         * Inbox navigation box.
-         */
         INBOX("inbox"),
-
-        /**
-         * Sent navigation box.
-         */
         SENT("sent");
 
         private final String navBoxLocator;

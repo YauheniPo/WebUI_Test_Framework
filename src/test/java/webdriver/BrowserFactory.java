@@ -31,6 +31,9 @@ final public class BrowserFactory {
     private static final Logger logger = Logger.getInstance();
     private static final String CLS_NAME = BrowserFactory.class.getName();
 
+    /**
+     * Instantiates a new Browser factory.
+     */
     private BrowserFactory() {
         // do not instantiate BrowserFactory class
     }
@@ -64,6 +67,13 @@ final public class BrowserFactory {
         throw new NamingException("browser name wrong" + ":\nchrome\nfirefox\niexplore\nopera\nsafari");
     }
 
+    /**
+     * Gets web driver.
+     *
+     * @param type the type
+     *
+     * @return the web driver
+     */
     private static RemoteWebDriver getWebDriver(final Browsers type) {
         DesiredCapabilities capabilitiesProxy = new DesiredCapabilities();
         boolean isGrid = Browser.getGridUrl() != null;
@@ -89,6 +99,13 @@ final public class BrowserFactory {
         }
     }
 
+    /**
+     * Gets grid remote driver.
+     *
+     * @param capabilities the capabilities
+     *
+     * @return the grid remote driver
+     */
     private static RemoteWebDriver getGridRemoteDriver(DesiredCapabilities capabilities) {
         logger.info("Set selenium grid driver");
         try {
@@ -99,6 +116,13 @@ final public class BrowserFactory {
         return null;
     }
 
+    /**
+     * Gets firefox driver.
+     *
+     * @param capabilities the capabilities
+     *
+     * @return the firefox driver
+     */
     private static RemoteWebDriver getFirefoxDriver(DesiredCapabilities capabilities) {
         DesiredCapabilities caps = (capabilities != null) ? capabilities : new DesiredCapabilities();
         FirefoxProfile ffProfile = new FirefoxProfile();
@@ -114,6 +138,11 @@ final public class BrowserFactory {
         return new FirefoxDriver(firefoxBinary, ffProfile, caps);
     }
 
+    /**
+     * Gets chrome driver.
+     *
+     * @return the chrome driver
+     */
     private static RemoteWebDriver getChromeDriver() {
         URL myTestURL = null;
         File myFile = null;

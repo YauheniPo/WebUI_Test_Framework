@@ -21,12 +21,21 @@ public abstract class BaseForm extends BaseEntity {
         assertIsOpen();
     }
 
+    /**
+     * Init.
+     *
+     * @param locator   the locator
+     * @param formTitle the form title
+     */
     private void init(final By locator, final String formTitle) {
         titleLocator = locator;
         title = formTitle;
         info(String.format("locator form '%1$s'", this.title));
     }
 
+    /**
+     * Assert is open.
+     */
     private void assertIsOpen() {
         Label elem = new Label(titleLocator, title);
         try {

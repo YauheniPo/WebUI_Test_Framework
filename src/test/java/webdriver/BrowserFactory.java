@@ -19,8 +19,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import static webdriver.ConstantsFrm.CHROMEDRIVER;
-import static webdriver.ConstantsFrm.WEBDRIVER_CHROME;
+import static webdriver.ConstantsFrm.*;
 
 /**
  * The type Browser factory.
@@ -81,7 +80,11 @@ final public class BrowserFactory {
                     return getGridRemoteDriver(DesiredCapabilities.chrome());
                 if (Browser.isDriverManager()) {
                     ChromeDriverManager.getInstance().setup();
-                    return new ChromeDriver();
+                    ChromeOptions options = new ChromeOptions();
+                    if (Browser.isBrowserHeadless()) {
+                        options.setHeadless(true);
+                    }
+                    return new ChromeDriver(options);
                 }
                 return getChromeDriver();
             case FIREFOX:
@@ -89,7 +92,13 @@ final public class BrowserFactory {
                     return getGridRemoteDriver(DesiredCapabilities.firefox());
                 if (Browser.isDriverManager()) {
                     FirefoxDriverManager.getInstance().setup();
-                    return new FirefoxDriver();
+                    FirefoxBinary firefoxBinary = new FirefoxBinary();
+                    if (Browser.isBrowserHeadless()) {
+                        firefoxBinary.addCommandLineOptions("--headless");
+                    }
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    firefoxOptions.setBinary(firefoxBinary);
+                    return new FirefoxDriver(firefoxOptions);
                 }
                 return getFirefoxDriver();
             default:
@@ -120,12 +129,21 @@ final public class BrowserFactory {
      * @return the firefox driver
      */
     private static RemoteWebDriver getFirefoxDriver() {
-//        FirefoxProfile ffProfile = new FirefoxProfile();
-//        ffProfile.setPreference("browser.helperApps.neverAsk.saveToDisk",
-//                "application/x-debian-package; application/octet-stream");
-//        ffProfile.setPreference("browser.download.manager.showWhenStarting", false);
-//        ffProfile.setPreference("pdfjs.disabled", true);
-//        ffProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
+        URL myTestURL = null;
+        File myFile = null;
+        if (PLATFORM.contains("win")) {
+            myTestURL = ClassLoader.getSystemResource(String.format("%s.exe", GECKODRIVER));
+        } else if (PLATFORM.contains("linux") || PLATFORM.contains("mac")) {
+            myTestURL = ClassLoader.getSystemResource(GECKODRIVER);
+        } else {
+            logger.fatal(String.format("Unsupported platform: %1$s for chrome browser %n", PLATFORM));
+        }
+        try {
+            myFile = new File(myTestURL.toURI());
+        } catch (URISyntaxException e1) {
+            logger.debug(CLS_NAME + new Object(){}.getClass().getEnclosingMethod().getName(), e1);
+        }
+        System.setProperty(WEBDRIVER_GECKODRIVER, myFile.getAbsolutePath());
         FirefoxBinary firefoxBinary = new FirefoxBinary();
         if (Browser.isBrowserHeadless()) {
             firefoxBinary.addCommandLineOptions("--headless");
@@ -164,16 +182,12 @@ final public class BrowserFactory {
         if (Browser.isBrowserHeadless()) {
             options.setHeadless(true);
         }
-//        DesiredCapabilities cp1 = DesiredCapabilities.chrome();
-//        cp1.setCapability("chrome.switches", Collections.singletonList("--disable-popup-blocking"));
-//        cp1.setCapability(ChromeOptions.CAPABILITY, options);
         try {
             myFile = new File(myTestURL.toURI());
         } catch (URISyntaxException e1) {
             logger.debug(CLS_NAME + new Object(){}.getClass().getEnclosingMethod().getName(), e1);
         }
         System.setProperty(WEBDRIVER_CHROME, myFile.getAbsolutePath());
-//        cp1.setCapability(ChromeOptions.CAPABILITY, options);
         RemoteWebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         return driver;

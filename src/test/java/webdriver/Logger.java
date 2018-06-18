@@ -1,10 +1,12 @@
 package webdriver;
 
+import org.apache.logging.log4j.LogManager;
+
 /**
  * The type Logger.
  */
 public final class Logger {
-    private static final org.apache.log4j.Logger LOG4J = org.apache.log4j.Logger.getLogger(Logger.class);
+    private static final org.apache.logging.log4j.Logger LOG4J = LogManager.getLogger(Logger.class);
     private static Logger instance = null;
 
     /**

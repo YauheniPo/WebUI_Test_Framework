@@ -16,8 +16,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import static webdriver.ConstantsFrm.*;
 
@@ -80,11 +78,7 @@ final public class BrowserFactory {
                     return getGridRemoteDriver(DesiredCapabilities.chrome());
                 if (Browser.isDriverManager()) {
                     ChromeDriverManager.getInstance().setup();
-                    ChromeOptions options = new ChromeOptions();
-                    if (Browser.isBrowserHeadless()) {
-                        options.setHeadless(true);
-                    }
-                    return new ChromeDriver(options);
+                    return new ChromeDriver(getChromeOptionsHeadless());
                 }
                 return getChromeDriver();
             case FIREFOX:
@@ -92,13 +86,7 @@ final public class BrowserFactory {
                     return getGridRemoteDriver(DesiredCapabilities.firefox());
                 if (Browser.isDriverManager()) {
                     FirefoxDriverManager.getInstance().setup();
-                    FirefoxBinary firefoxBinary = new FirefoxBinary();
-                    if (Browser.isBrowserHeadless()) {
-                        firefoxBinary.addCommandLineOptions("--headless");
-                    }
-                    FirefoxOptions firefoxOptions = new FirefoxOptions();
-                    firefoxOptions.setBinary(firefoxBinary);
-                    return new FirefoxDriver(firefoxOptions);
+                    return new FirefoxDriver(getFirefoxOptionsHeadless());
                 }
                 return getFirefoxDriver();
             default:
@@ -144,17 +132,7 @@ final public class BrowserFactory {
             logger.debug(CLS_NAME + new Object(){}.getClass().getEnclosingMethod().getName(), e1);
         }
         System.setProperty(WEBDRIVER_GECKODRIVER, myFile.getAbsolutePath());
-        FirefoxBinary firefoxBinary = new FirefoxBinary();
-        if (Browser.isBrowserHeadless()) {
-            firefoxBinary.addCommandLineOptions("--headless");
-        }
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setBinary(firefoxBinary)
-                .addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-debian-package; application/octet-stream")
-                .addPreference("browser.download.manager.showWhenStarting", false)
-                .addPreference("pdfjs.disabled", true)
-                .addPreference("browser.helperApps.alwaysAsk.force", false);
-        return new FirefoxDriver(firefoxOptions);
+        return new FirefoxDriver(getFirefoxOptionsHeadless());
     }
 
     /**
@@ -172,24 +150,42 @@ final public class BrowserFactory {
         } else {
             logger.fatal(String.format("Unsupported platform: %1$s for chrome browser %n", PLATFORM));
         }
-        ChromeOptions options = new ChromeOptions();
-        Map<String, Object> prefs = new HashMap<>();
-        prefs.put("profile.default_content_settings.popups", "0");
-        prefs.put("credentials_enable_service", false);
-        prefs.put("profile.password_manager_enabled", false);
-        prefs.put("safebrowsing.enabled", "true");
-        options.setExperimentalOption("prefs", prefs);
-        if (Browser.isBrowserHeadless()) {
-            options.setHeadless(true);
-        }
         try {
             myFile = new File(myTestURL.toURI());
         } catch (URISyntaxException e1) {
             logger.debug(CLS_NAME + new Object(){}.getClass().getEnclosingMethod().getName(), e1);
         }
         System.setProperty(WEBDRIVER_CHROME, myFile.getAbsolutePath());
-        RemoteWebDriver driver = new ChromeDriver(options);
+        RemoteWebDriver driver = new ChromeDriver(getChromeOptionsHeadless());
         driver.manage().window().maximize();
         return driver;
+    }
+
+    /**
+     * Gets chrome options headless.
+     *
+     * @return the chrome options headless
+     */
+    private static ChromeOptions getChromeOptionsHeadless() {
+        ChromeOptions options = new ChromeOptions();
+        if (Browser.isBrowserHeadless()) {
+            options.setHeadless(true);
+        }
+        return options;
+    }
+
+    /**
+     * Gets firefox options headless.
+     *
+     * @return the firefox options headless
+     */
+    private static FirefoxOptions getFirefoxOptionsHeadless() {
+        FirefoxBinary firefoxBinary = new FirefoxBinary();
+        if (Browser.isBrowserHeadless()) {
+            firefoxBinary.addCommandLineOptions("--headless");
+        }
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setBinary(firefoxBinary);
+        return firefoxOptions;
     }
 }

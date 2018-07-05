@@ -9,7 +9,7 @@ import webdriver.elements.Button;
  */
 public class TutByHeader extends BaseForm {
     private static final By MAIN_LOCATOR = By.xpath("//*[contains(@id, '_mainmenu')]");
-    private final String loc_top_bar_element = "//*[contains(@id, '_mainmenu')]//ul[contains(@class, 'topbar-i')]//a[contains(@href, '%s')]";
+    private final String locTopBarElement = "//*[contains(@id, '_mainmenu')]//ul[contains(@class, 'topbar-i')]//a[contains(@href, '%s')]";
 
     /**
      * Instantiates a new Tut by header.
@@ -24,7 +24,7 @@ public class TutByHeader extends BaseForm {
      * @param element the element
      */
     public void clickTopBarElement(TopBar element) {
-        new Button(By.xpath(String.format(loc_top_bar_element, element.getLoc())), String.format("Button %s", element.getLoc().toUpperCase())).click();
+        new Button(By.xpath(String.format(locTopBarElement, element.getLoc())), String.format("Button %s", element.getLoc().toUpperCase())).click();
     }
 
     /**

@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Wait;
 import webdriver.Browser;
 import webdriver.Logger;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,8 +28,7 @@ final public class SmartWait {
     private static <T> T waitFor(ExpectedCondition<T> condition, long timeOutInSeconds) {
         Browser.getDriver().manage().timeouts().implicitlyWait(0L, TimeUnit.MILLISECONDS);
         Wait<WebDriver> wait = new FluentWait<>((WebDriver) Browser.getDriver())
-                .withTimeout(timeOutInSeconds, TimeUnit.SECONDS)
-                .pollingEvery(300, TimeUnit.MILLISECONDS);
+            .withTimeout(Duration.ofSeconds(timeOutInSeconds)).pollingEvery(Duration.ofMillis(300));
         try {
             return wait.until(condition);
         } catch (Exception | AssertionError e) {
@@ -49,7 +49,7 @@ final public class SmartWait {
      */
     public static boolean waitForTrue(ExpectedCondition<Boolean> condition, long timeOutInSeconds) {
         try {
-            return Boolean.class.cast(waitFor(condition, timeOutInSeconds));
+            return waitFor(condition, timeOutInSeconds) != null;
         } catch (Exception e) {
             logger.debug("Wait waitForTrue", e);
             return false;

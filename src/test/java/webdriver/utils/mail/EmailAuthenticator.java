@@ -5,9 +5,9 @@ import javax.mail.PasswordAuthentication;
 /**
  * The type Email authenticator.
  */
-public class EmailAuthenticator extends javax.mail.Authenticator {
-    private String login;
-    private String password;
+class EmailAuthenticator extends javax.mail.Authenticator {
+    private final String login;
+    private final String password;
 
     /**
      * Instantiates a new Email authenticator.

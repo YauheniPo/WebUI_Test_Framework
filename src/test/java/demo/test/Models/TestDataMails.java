@@ -1,10 +1,10 @@
-package demo.test.Models;
+package demo.test.models;
 
 public class TestDataMails {
-    private String senderMailLogin;
-    private String senderMailPassword;
-    private String recipientMailLogin;
-    private String recipientMailPassword;
+    private final String senderMailLogin;
+    private final String senderMailPassword;
+    private final String recipientMailLogin;
+    private final String recipientMailPassword;
 
     /**
      * Instantiates a new Test data mails.

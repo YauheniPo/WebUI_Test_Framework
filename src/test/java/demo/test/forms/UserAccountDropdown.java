@@ -9,7 +9,7 @@ import webdriver.elements.Button;
  */
 public class UserAccountDropdown extends BaseForm {
     private static final By MAIN_LOCATOR = By.xpath("//div[@role='dialog']");
-    private final String locUserDropdown = "//div[@role='dialog']//*[contains(@href, '%s')]";
+    private static final String LOC_USER_DROPDOWN = "//div[@role='dialog']//*[contains(@href, '%s')]";
 
     /**
      * Instantiates a new User account dropdown.
@@ -24,7 +24,7 @@ public class UserAccountDropdown extends BaseForm {
      * @param element the element
      */
     public void clickUserDropdownField(UserDropdown element) {
-        new Button(By.xpath(String.format(locUserDropdown, element.getLoc())), element.name()).click();
+        new Button(By.xpath(String.format(LOC_USER_DROPDOWN, element.getLoc())), element.name()).click();
     }
 
     /**
@@ -35,6 +35,11 @@ public class UserAccountDropdown extends BaseForm {
 
         private final String userLocator;
 
+        /**
+         * Instantiates a new User Dropdown.
+         *
+         * @param locator the locator
+         */
         UserDropdown(String locator) {
             this.userLocator = locator;
         }
@@ -44,7 +49,7 @@ public class UserAccountDropdown extends BaseForm {
          *
          * @return the locator
          */
-        public String getLoc() {
+        String getLoc() {
             return userLocator;
         }
     }

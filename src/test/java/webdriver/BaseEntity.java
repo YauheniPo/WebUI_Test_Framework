@@ -6,6 +6,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.nio.file.Paths;
 
 import static org.testng.AssertJUnit.fail;
@@ -14,7 +15,7 @@ import static org.testng.AssertJUnit.fail;
  * The type Base entity.
  */
 public abstract class BaseEntity {
-    protected static Logger logger = Logger.getInstance();
+    protected static final Logger logger = Logger.getInstance();
 
     /**
      * Gets browser.
@@ -105,7 +106,7 @@ public abstract class BaseEntity {
                 File.separator + "Screenshots/%1$s.png", fileName);
         try {
             String pageSource = Browser.getDriver().getPageSource();
-            FileUtils.writeStringToFile(new File(Paths.get(pageSourcePath).toUri()), pageSource);
+            FileUtils.writeStringToFile(new File(Paths.get(pageSourcePath).toUri()), pageSource, Charset.defaultCharset());
         } catch (Exception e1) {
             logger.debug(e1.getMessage());
         }

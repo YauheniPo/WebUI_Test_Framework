@@ -12,8 +12,8 @@ import webdriver.elements.Button;
 public class EmailAccountPage extends BaseForm {
     private static final By MAIN_LOCATOR = By.xpath("//*[@class='mail-App-Content']");
     private final By userAccountLocator = By.xpath("//div[contains(@class, 'Header')]//*[contains(@data-key, 'user')]");
-    private final String locNavBarElement = "//div[contains(@data-key, 'left-box')]//a[contains(@href, '%s')]";
-    private MailsForm mailsForm = new MailsForm();
+    private static final String LOC_NAV_BAR_ELEMENT = "//div[contains(@data-key, 'left-box')]//a[contains(@href, '%s')]";
+    private final MailsForm mailsForm = new MailsForm();
 
     /**
      * Instantiates a new Email account page.
@@ -39,7 +39,7 @@ public class EmailAccountPage extends BaseForm {
      * @return the email account page
      */
     public EmailAccountPage fetchEmailFolder(NavBox folder) {
-        new Button(By.xpath(String.format(locNavBarElement, folder.getLoc())), String.format("Folder %s", folder.getLoc().toUpperCase())).click();
+        new Button(By.xpath(String.format(LOC_NAV_BAR_ELEMENT, folder.getLoc())), String.format("Folder %s", folder.getLoc().toUpperCase())).click();
         return this;
     }
 
@@ -62,6 +62,11 @@ public class EmailAccountPage extends BaseForm {
 
         private final String navBoxLocator;
 
+        /**
+         * Instantiates a new NavBox.
+         *
+         * @param locator the locator
+         */
         NavBox(String locator) {
             this.navBoxLocator = locator;
         }
@@ -71,7 +76,7 @@ public class EmailAccountPage extends BaseForm {
          *
          * @return the locator
          */
-        public String getLoc() {
+        String getLoc() {
             return navBoxLocator;
         }
     }

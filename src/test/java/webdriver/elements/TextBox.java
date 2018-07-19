@@ -1,7 +1,6 @@
 package webdriver.elements;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import webdriver.Browser;
 
 /**
@@ -38,7 +37,7 @@ public class TextBox extends BaseElement {
     private void type(final String value) {
         waitAndAssertIsPresent();
         info(String.format("text sending" + " '%1$s'", value));
-        if (Browser.getDriver() instanceof JavascriptExecutor) {
+        if (Browser.getDriver() != null) {
             Browser.getDriver().executeScript("arguments[0].style.border='3px solid red'", getElement());
         }
         getElement().sendKeys(value);

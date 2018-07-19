@@ -12,6 +12,6 @@ public class ConstantsFrm {
     static final String WEBDRIVER_GECKODRIVER = "webdriver.gecko.driver";
     static final String CHROMEDRIVER = "chromedriver";
     static final String GECKODRIVER = "geckodriver";
-    public static String PROPERTIES_DB = "database.properties";
-    public static String PROPERTIES_DB_QUERIES = "db_queries.properties";
+    public static final String PROPERTIES_DB = "database.properties";
+    public static final String PROPERTIES_DB_QUERIES = "db_queries.properties";
 }

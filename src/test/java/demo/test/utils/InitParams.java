@@ -1,6 +1,6 @@
 package demo.test.utils;
 
-import demo.test.Models.TestDataMails;
+import demo.test.models.TestDataMails;
 import webdriver.Logger;
 
 import java.util.List;
@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * The type Init parameters.
  */
-public abstract class InitParams {
-    Logger LOGGER = Logger.getInstance();
+abstract class InitParams {
+    final Logger LOGGER = Logger.getInstance();
 
     /**
      * Fetch test data init parameters.

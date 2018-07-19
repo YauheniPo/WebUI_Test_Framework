@@ -25,11 +25,11 @@ public final class Browser {
     private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_SELENIUM);
     private static final Browsers currentBrowser
             = Browsers.valueOf(System.getProperty(BROWSER_PROP, props.getProperty(BROWSER_PROP, BROWSER_BY_DEFAULT).toUpperCase()));
-    private static final long IMPLICITY_WAIT = Long.valueOf(props.getProperty("implicityWait", String.valueOf(10)));
+    private static final long IMPLICITY_WAIT = Long.parseLong(props.getProperty("implicityWait", String.valueOf(10)));
     private static final String DEFAULT_CONDITION_TIMEOUT = "defaultConditionTimeout";
     private static final Logger logger = Logger.getInstance();
     private static Browser instance;
-    private static RemoteWebDriver driver;
+    private volatile static RemoteWebDriver driver;
     private static PropertiesResourceManager propStage;
     private static String browserURL;
     private static boolean isDriverManager;
@@ -62,7 +62,7 @@ public final class Browser {
      *
      * @return the boolean
      */
-    public static boolean isDriverManager() {
+    static boolean isDriverManager() {
         return isDriverManager;
     }
 
@@ -98,7 +98,7 @@ public final class Browser {
      *
      * @return the props stage
      */
-    public static PropertiesResourceManager getPropsStage() {
+    static PropertiesResourceManager getPropsStage() {
         return propStage;
     }
 
@@ -217,7 +217,7 @@ public final class Browser {
         FIREFOX("firefox"),
         CHROME("chrome");
 
-        private String value;
+        private final String value;
 
         Browsers(final String values) {
             value = values;

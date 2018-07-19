@@ -14,7 +14,7 @@ import java.io.IOException;
  * The type Xml parse.
  */
 public class XMLParse extends BaseEntity {
-    private String filepath;
+    private final String filepath;
 
     /**
      * Instantiates a new Xml parse.
@@ -41,11 +41,15 @@ public class XMLParse extends BaseEntity {
         }
         Document doc = null;
         try {
-            doc = dBuilder.parse(fXmlFile);
+            if (dBuilder != null) {
+                doc = dBuilder.parse(fXmlFile);
+            }
         } catch (SAXException | IOException e) {
             error(e.getMessage());
         }
-        doc.getDocumentElement().normalize();
+        if (doc != null) {
+            doc.getDocumentElement().normalize();
+        }
         info(String.format("Data received from %s", filepath));
         return doc;
     }

@@ -25,7 +25,7 @@ public class XMLParamsImpl extends InitParams {
     public Object[] fetchTestData(String dataBaselocation) {
         Document doc = new XMLParse(dataBaselocation).fetchDocument();
         NodeList nList = doc.getElementsByTagName("account");
-        List<String> data = new ArrayList();
+        List<String> data = new ArrayList<>();
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp);
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {

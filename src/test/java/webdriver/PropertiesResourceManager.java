@@ -9,7 +9,7 @@ import java.util.Properties;
  */
 public final class PropertiesResourceManager {
     private static final Logger logger = Logger.getInstance();
-    private Properties properties = new Properties();
+    private Properties properties;
 
     /**
      * Instantiates a new Properties resource manager.
@@ -17,6 +17,7 @@ public final class PropertiesResourceManager {
      * @param resourceName the resource name
      */
     public PropertiesResourceManager(final String resourceName) {
+        properties= new Properties();
         properties = appendFromResource(properties, resourceName);
     }
 

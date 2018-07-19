@@ -1,7 +1,7 @@
 package demo.test.tests;
 
-import demo.test.Models.Mail;
-import demo.test.Models.TestDataMails;
+import demo.test.models.Mail;
+import demo.test.models.TestDataMails;
 import demo.test.forms.AuthorizeEmailForm;
 import demo.test.forms.TutByHeader;
 import demo.test.forms.UserAccountDropdown;
@@ -28,8 +28,8 @@ public class TutByEmailTest extends BaseTest {
     private String recipientMailPassword;
     private String emailText;
     private MailUtils mailSender;
-    private String currentBrowser = Browser.getBrowserName();
-    private ArrayList<MailUtils> mailBox = new ArrayList<>();
+    private final String currentBrowser = Browser.getBrowserName();
+    private final ArrayList<MailUtils> mailBox = new ArrayList<>();
 
     /**
      * Init test data.

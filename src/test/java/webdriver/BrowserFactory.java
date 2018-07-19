@@ -117,21 +117,7 @@ final public class BrowserFactory {
      * @return the firefox driver
      */
     private static RemoteWebDriver getFirefoxDriver() {
-        URL myTestURL = null;
-        File myFile = null;
-        if (PLATFORM.contains("win")) {
-            myTestURL = ClassLoader.getSystemResource(String.format("%s.exe", GECKODRIVER));
-        } else if (PLATFORM.contains("linux") || PLATFORM.contains("mac")) {
-            myTestURL = ClassLoader.getSystemResource(GECKODRIVER);
-        } else {
-            logger.fatal(String.format("Unsupported platform: %1$s for chrome browser %n", PLATFORM));
-        }
-        try {
-            myFile = new File(myTestURL.toURI());
-        } catch (URISyntaxException e1) {
-            logger.debug(CLS_NAME + new Object(){}.getClass().getEnclosingMethod().getName(), e1);
-        }
-        System.setProperty(WEBDRIVER_GECKODRIVER, myFile.getAbsolutePath());
+        setDriverProperty(GECKODRIVER, WEBDRIVER_GECKODRIVER);
         return new FirefoxDriver(getFirefoxOptionsHeadless());
     }
 
@@ -141,24 +127,36 @@ final public class BrowserFactory {
      * @return the chrome driver
      */
     private static RemoteWebDriver getChromeDriver() {
+        setDriverProperty(CHROMEDRIVER, WEBDRIVER_CHROME);
+        return new ChromeDriver(getChromeOptionsHeadless());
+    }
+
+    /**
+     * Set Driver Property
+     *
+     * @param browsDriver the browser driver name
+     * @param webBrowsDriver the browser webdriver name
+     */
+    private static void setDriverProperty(String browsDriver, String webBrowsDriver) {
         URL myTestURL = null;
         File myFile = null;
         if (PLATFORM.contains("win")) {
-            myTestURL = ClassLoader.getSystemResource(String.format("%s.exe", CHROMEDRIVER));
+            myTestURL = ClassLoader.getSystemResource(String.format("%s.exe", browsDriver));
         } else if (PLATFORM.contains("linux") || PLATFORM.contains("mac")) {
-            myTestURL = ClassLoader.getSystemResource(CHROMEDRIVER);
+            myTestURL = ClassLoader.getSystemResource(browsDriver);
         } else {
-            logger.fatal(String.format("Unsupported platform: %1$s for chrome browser %n", PLATFORM));
+            logger.fatal(String.format("Unsupported platform: %s for browser for %s", browsDriver, PLATFORM));
         }
         try {
-            myFile = new File(myTestURL.toURI());
+            if (myTestURL != null) {
+                myFile = new File(myTestURL.toURI());
+            }
         } catch (URISyntaxException e1) {
             logger.debug(CLS_NAME + new Object(){}.getClass().getEnclosingMethod().getName(), e1);
         }
-        System.setProperty(WEBDRIVER_CHROME, myFile.getAbsolutePath());
-        RemoteWebDriver driver = new ChromeDriver(getChromeOptionsHeadless());
-        driver.manage().window().maximize();
-        return driver;
+        if (myFile != null) {
+            System.setProperty(webBrowsDriver, myFile.getAbsolutePath());
+        }
     }
 
     /**

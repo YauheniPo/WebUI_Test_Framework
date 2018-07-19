@@ -14,14 +14,14 @@ public abstract class BaseTest extends BaseEntity {
      *
      * @param testData emails test data
      */
-    public abstract void runTest(Object testData);
+    protected abstract void runTest(Object testData);
 
     /**
      * Gets report data.
      *
      * @return the report data
      */
-    public abstract String getReportData();
+    protected abstract String getReportData();
 
     /**
      * Get params object [ ]
@@ -30,8 +30,7 @@ public abstract class BaseTest extends BaseEntity {
      */
     @DataProvider(name = "initParams")
     public Object[] getParams() {
-        String dataBaseLocation = "dataBaseLocation";
-        dataBaseLocation = Browser.getPropsStage().getProperty(dataBaseLocation);
+        String dataBaseLocation = Browser.getPropsStage().getProperty("dataBaseLocation");
         Object[] dataProvider = new FactoryInitParams().getTestData(dataBaseLocation);
         if (dataProvider == null) {
             logger.error(String.format("Data not received from %s", dataBaseLocation));

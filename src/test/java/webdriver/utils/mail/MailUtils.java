@@ -16,9 +16,11 @@ import static webdriver.ConstantsFrm.PROPERTIES_MAIL;
  */
 public class MailUtils extends BaseEntity {
     private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_MAIL);
-    private String host, fromAddress, password;
-    private Properties properties = new Properties();
-    private MAIL_PROTOCOLS protocol;
+    private String host;
+    private final String fromAddress;
+    private final String password;
+    private final Properties properties = new Properties();
+    private MailProtocols protocol;
     private Store store;
     private Session session;
     private String port;
@@ -196,7 +198,7 @@ public class MailUtils extends BaseEntity {
         this.host = String.format("%s.%s", hostProtoc, service);
         this.port = props.getProperty("port");
         this.sentFolder = props.getProperty("seltFolder", "Sent");
-        this.protocol = MAIL_PROTOCOLS.valueOf(prop.split(";")[2].toUpperCase());
+        this.protocol = MailProtocols.valueOf(prop.split(";")[2].toUpperCase());
     }
 
     /**
@@ -215,21 +217,21 @@ public class MailUtils extends BaseEntity {
     /**
      * The enum Mail protocols.
      */
-    public enum MAIL_PROTOCOLS {
+    public enum MailProtocols {
         POP3("pop3"),
         SMTP("smtp"),
         IMAP("imap"),
         IMAPS("imaps"),
         POP3S("pop3s");
 
-        private String protocol;
+        private final String protocol;
 
         /**
          * Instantiates a new Mail protocols.
          *
          * @param name the name
          */
-        MAIL_PROTOCOLS(String name) {
+        MailProtocols(String name) {
             protocol = name;
         }
 

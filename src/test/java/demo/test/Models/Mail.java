@@ -1,4 +1,4 @@
-package demo.test.Models;
+package demo.test.models;
 
 import java.util.Objects;
 
@@ -6,10 +6,10 @@ import java.util.Objects;
  * The type Mail.
  */
 public class Mail {
-    private String subject;
-    private String text;
-    private String fromAddress;
-    private String toAddress;
+    private final String subject;
+    private final String text;
+    private final String fromAddress;
+    private final String toAddress;
 
     /**
      * Instantiates a new Mail.
@@ -42,6 +42,16 @@ public class Mail {
                 Objects.equals(text, mail.text) &&
                 Objects.equals(fromAddress, mail.fromAddress) &&
                 Objects.equals(toAddress, mail.toAddress);
+    }
+
+    /**
+     * Hashcode
+     *
+     * @return the hashCode
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(subject, text, fromAddress, toAddress);
     }
 
     /**

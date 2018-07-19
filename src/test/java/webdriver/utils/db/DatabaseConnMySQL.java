@@ -14,7 +14,7 @@ import static webdriver.ConstantsFrm.PROPERTIES_DB;
  * The type Database conn my sql.
  */
 public class DatabaseConnMySQL extends BaseEntity {
-    private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_DB);
+    private final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_DB);
     private Connection connection;
 
     /**

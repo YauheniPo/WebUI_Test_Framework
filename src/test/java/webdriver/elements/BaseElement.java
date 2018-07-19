@@ -17,8 +17,8 @@ import java.util.Objects;
  * The type Base element.
  */
 public abstract class BaseElement extends BaseEntity {
-    protected String name;
-    private By locator;
+    private final String name;
+    private final By locator;
     private RemoteWebElement element;
 
     /**
@@ -70,15 +70,18 @@ public abstract class BaseElement extends BaseEntity {
      * Wait for is element present.
      */
     private void waitForIsElementPresent() {
-        isPresent(Integer.valueOf(Browser.getTimeoutForCondition()));
-        boolean isVisible;
-        try {
-            isVisible = element.isDisplayed();
-        } catch (Exception | AssertionError ex) {
-            logger.debug(this, ex);
-            isVisible = false;
+        if (isPresent(Integer.parseInt(Browser.getTimeoutForCondition()))) {
+            boolean isVisible;
+            try {
+                isVisible = element.isDisplayed();
+            } catch (Exception | AssertionError ex) {
+                logger.debug(this, ex);
+                isVisible = false;
+            }
+            Assert.assertTrue("Locator is absent", isVisible);
+        } else {
+            fatal(String.format("Element %s didn't find", name));
         }
-        Assert.assertTrue("Locator is absent", isVisible);
     }
 
     /**

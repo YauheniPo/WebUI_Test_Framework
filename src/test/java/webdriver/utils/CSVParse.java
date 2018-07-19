@@ -13,7 +13,7 @@ import java.util.List;
  * The type Csv parameters.
  */
 public class CSVParse extends BaseEntity {
-    private String filepath;
+    private final String filepath;
 
     /**
      * Instantiates a new Csv params.
@@ -30,7 +30,7 @@ public class CSVParse extends BaseEntity {
      * @return the list
      */
     public List<String> fetchCSVData() {
-        List<String> data = new ArrayList();
+        List<String> data = new ArrayList<>();
         try {
             List<String[]> allRows = new CSVReader(new FileReader(filepath), ';').readAll();
             if (!allRows.isEmpty()) {

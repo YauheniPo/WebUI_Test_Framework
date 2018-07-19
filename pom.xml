@@ -9,10 +9,18 @@
 
     <name>e.popovich_task</name>
 
+    <url>jenkins.demohoster.com</url>
+    <ciManagement>
+        <system>Jenkins</system>
+    </ciManagement>
+
     <properties>
         <project.reporting.outputEncoding>Cp1251</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <selenium.version>3.12.0</selenium.version>
+        <allure.version>1.5.4</allure.version>
+        <aspectj.version>1.9.1</aspectj.version>
+        <allure.maven.version>2.6</allure.maven.version>
     </properties>
 
     <dependencies>
@@ -22,7 +30,24 @@
             <artifactId>javax.mail</artifactId>
             <version>1.6.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.0-BETA14</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.allure</groupId>
+            <artifactId>allure-junit-adaptor</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -110,6 +135,36 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/TestSuite.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>ru.yandex.qatools.allure</groupId>
+                <artifactId>allure-maven-plugin</artifactId>
+                <version>${allure.maven.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.8.v20171121</version>
+                <configuration>
+                    <webAppSourceDirectory>${project.build.directory}/site/allure-maven-plugin</webAppSourceDirectory>
+                    <stopKey>stop</stopKey>
+                    <stopPort>1234</stopPort>
                 </configuration>
             </plugin>
         </plugins>

@@ -152,7 +152,7 @@ final public class BrowserFactory {
                 myFile = new File(myTestURL.toURI());
             }
         } catch (URISyntaxException e1) {
-            logger.debug(CLS_NAME + new Object(){}.getClass().getEnclosingMethod().getName(), e1);
+            logger.debug(CLS_NAME + BrowserFactory.class.getEnclosingMethod().getName(), e1);
         }
         if (myFile != null) {
             System.setProperty(webBrowsDriver, myFile.getAbsolutePath());

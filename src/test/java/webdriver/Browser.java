@@ -23,8 +23,9 @@ public final class Browser {
     private static final String GRID_IP = "gridIp";
     private static final String GRID_PORT = "gridPort";
     private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_SELENIUM);
-    private static final Browsers currentBrowser
-            = Browsers.valueOf(System.getProperty(BROWSER_PROP, props.getProperty(BROWSER_PROP, BROWSER_BY_DEFAULT).toUpperCase()));
+    private static final Browsers currentBrowser = Browsers.valueOf((System.getenv("browser") == null
+                                                                     ? System.getProperty(BROWSER_PROP, props.getProperty(BROWSER_PROP, BROWSER_BY_DEFAULT))
+                                                                     : System.getenv("browser")).toUpperCase());
     private static final long IMPLICITY_WAIT = Long.parseLong(props.getProperty("implicityWait", String.valueOf(10)));
     private static final String DEFAULT_CONDITION_TIMEOUT = "defaultConditionTimeout";
     private static final Logger logger = Logger.getInstance();
@@ -131,7 +132,9 @@ public final class Browser {
     }
 
     private static void initProperties() {
-        isDriverManager = Boolean.valueOf(props.getProperty(DRIVER_MANAGER, "false"));
+        isDriverManager = Boolean.valueOf((System.getenv("driver_manager") == null
+                                           ? props.getProperty(DRIVER_MANAGER, "false")
+                                           : System.getenv("driver_manager")));
         isHeadless = Boolean.valueOf(props.getProperty(BROWSER_HEADLESS, "false"));
         if (Boolean.valueOf(props.getProperty(GRID, "false"))) {
             gridUrl = String.format(props.getProperty(GRID_URL), props.getProperty(GRID_IP, "localhost"), props.getProperty(GRID_PORT));

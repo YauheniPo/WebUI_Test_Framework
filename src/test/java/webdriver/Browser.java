@@ -99,7 +99,7 @@ public final class Browser {
      *
      * @return the props stage
      */
-    static PropertiesResourceManager getPropsStage() {
+    public static PropertiesResourceManager getPropsStage() {
         return propStage;
     }
 
@@ -131,6 +131,9 @@ public final class Browser {
         getDriver().navigate().to(browserURL);
     }
 
+    /**
+     * Init properties.
+     */
     private static void initProperties() {
         isDriverManager = Boolean.valueOf((System.getenv("driver_manager") == null
                                            ? props.getProperty(DRIVER_MANAGER, "false")
@@ -222,6 +225,11 @@ public final class Browser {
 
         private final String value;
 
+        /**
+         * Instantiates a new Browsers.
+         *
+         * @param values the values
+         */
         Browsers(final String values) {
             value = values;
         }

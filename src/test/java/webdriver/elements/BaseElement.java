@@ -1,6 +1,5 @@
 package webdriver.elements;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -30,6 +29,7 @@ public abstract class BaseElement extends BaseEntity {
     BaseElement(final By locator, final String nameOf) {
         this.locator = locator;
         this.name = nameOf;
+        info(String.format("Locator of '%1$s' Element", this.name));
     }
 
     /**
@@ -69,28 +69,26 @@ public abstract class BaseElement extends BaseEntity {
     /**
      * Wait for is element present.
      */
-    private void waitForIsElementPresent() {
+    public void waitForIsElementPresent() {
+        boolean isVisible = false;
         if (isPresent(Integer.parseInt(Browser.getTimeoutForCondition()))) {
-            boolean isVisible;
             try {
                 isVisible = element.isDisplayed();
-            } catch (Exception | AssertionError ex) {
+            } catch (Exception ex) {
                 logger.debug(this, ex);
-                isVisible = false;
             }
-            Assert.assertTrue("Locator is absent", isVisible);
-        } else {
+        }
+        if (!isVisible) {
             fatal(String.format("Element %s didn't find", name));
         }
     }
 
     /**
-     * Wait and assert is present.
+     * Is present boolean.
+     *
+     * @param timeout the timeout
+     * @return the boolean
      */
-    public void waitAndAssertIsPresent() {
-        waitForIsElementPresent();
-    }
-
     private boolean isPresent(long timeout) {
         ExpectedCondition<Boolean> condition = driver -> {
             try {
@@ -102,7 +100,7 @@ public abstract class BaseElement extends BaseEntity {
                     }
                 }
                 return false;
-            } catch (Exception | AssertionError e) {
+            } catch (Exception e) {
                 debug(e.getMessage());
                 return false;
             }

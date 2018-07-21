@@ -17,32 +17,22 @@ public abstract class BaseForm extends BaseEntity {
      * @param formTitle the form title
      */
     protected BaseForm(final By locator, final String formTitle) {
-        init(locator, formTitle);
-        assertIsOpen();
+        this.titleLocator = locator;
+        this.title = formTitle;
+        info(String.format("Locator of '%1$s' Form", this.title));
+        checkFormIsDisplayed();
     }
 
     /**
-     * Init.
-     *
-     * @param locator   the locator
-     * @param formTitle the form title
+     * Check form is displayed.
      */
-    private void init(final By locator, final String formTitle) {
-        titleLocator = locator;
-        title = formTitle;
-        info(String.format("locator form '%1$s'", this.title));
-    }
-
-    /**
-     * Assert is open.
-     */
-    private void assertIsOpen() {
-        Label elem = new Label(titleLocator, title);
+    private void checkFormIsDisplayed() {
         try {
-            elem.waitAndAssertIsPresent();
-        } catch (Exception | AssertionError e) {
+            new Label(titleLocator, title).waitForIsElementPresent();
+        } catch (Exception e) {
             debug(e.getMessage());
-            fatal(String.format("locator form %1$s doesn't appears", this.title));
+            fatal(String.format("locator form %1$s doesn't appear", this.title));
         }
+        info(String.format("Locator of %1$s Form appears", this.title));
     }
 }

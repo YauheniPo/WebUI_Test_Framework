@@ -6,6 +6,7 @@ import webdriver.PropertiesResourceManager;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
 import java.util.Properties;
 
 import static webdriver.Constants.CHARSET;
@@ -77,12 +78,25 @@ public class MailUtils extends BaseEntity {
 
     /**
      * Send mail.
+     */
+    public void sendMail() {
+        try {
+            Transport.send(message);
+            info(String.format("Sent a email Subject: %s Text: %s", message.getSubject(), message.getContent()));
+        } catch (MessagingException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Message generation mail utils.
      *
      * @param text                  the text
      * @param subject               the subject
-     * @param recipientEmailAddress the recipient emsil address
+     * @param recipientEmailAddress the recipient email address
+     * @return the mail utils
      */
-    public void sendMail(String text, String subject, String recipientEmailAddress) {
+    public MailUtils messageGeneration(String text, String subject, String recipientEmailAddress) {
         message = new MimeMessage(session);
         try {
             message.setHeader("Content-Type", String.format("text/plain; charset=%s", CHARSET));
@@ -91,11 +105,10 @@ public class MailUtils extends BaseEntity {
             message.setFrom(new InternetAddress(fromAddress));
             InternetAddress toAddress = new InternetAddress(recipientEmailAddress);
             message.addRecipient(Message.RecipientType.TO, toAddress);
-            Transport.send(message);
-            info(String.format("Sent a email Subject: %s Text: %s", subject, text));
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+        return this;
     }
 
     /**

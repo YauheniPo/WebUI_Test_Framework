@@ -88,7 +88,7 @@ public class TutByEmailTest extends BaseTest {
 
         LOGGER.step(1, "Sending a message using api");
         Mail apiMail = new Mail(subject, text, this.senderMailLogin, this.recipientMailLogin);
-        mailSender.sendMail(text, subject, this.recipientMailLogin);
+        mailSender.messageGeneration(apiMail.getText(), apiMail.getSubject(), apiMail.getToAddress()).sendMail();
         mailSender.addMsgInSentFolder();
 
         LOGGER.step(2, "Opening the main page");

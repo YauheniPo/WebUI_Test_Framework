@@ -3,9 +3,12 @@ Feature: Check recipient and sender email letter
 
   Background:
     Given test data
-#    And a blog named "Greg's anti-tax rants"
-#    And a customer named "Dr. Bill"
-#    And a blog named "Expensive Therapy" owned by "Dr. Bill"
+    And 'sender' connecting email store
+    And 'recipient' connecting email store
+    And deleting email data
+    And generation letter with text 'epam_e_popovich'
+    And sending letter to recipient
+    And sending letter in send folder
 
   Scenario: Checking email data of letter
     Given tut.by Home Page is opened

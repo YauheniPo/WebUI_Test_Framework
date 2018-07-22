@@ -27,6 +27,42 @@ public class Mail {
     }
 
     /**
+     * Gets subject.
+     *
+     * @return the subject
+     */
+    public String getSubject() {
+        return subject;
+    }
+
+    /**
+     * Gets text.
+     *
+     * @return the text
+     */
+    public String getText() {
+        return text;
+    }
+
+    /**
+     * Gets from address.
+     *
+     * @return the from address
+     */
+    public String getFromAddress() {
+        return fromAddress;
+    }
+
+    /**
+     * Gets to address.
+     *
+     * @return the to address
+     */
+    public String getToAddress() {
+        return toAddress;
+    }
+
+    /**
      * Equals boolean.
      *
      * @param o the o

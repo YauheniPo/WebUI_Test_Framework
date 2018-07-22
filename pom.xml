@@ -110,7 +110,7 @@
                 <version>2.12.4</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/TestSuiteCucumber.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/${suite}.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
                 <dependencies>

@@ -8,14 +8,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-import static webdriver.ConstantsFrm.CHARSET;
-import static webdriver.ConstantsFrm.PROPERTIES_MAIL;
+import static webdriver.Constants.CHARSET;
+import static webdriver.Constants.PROPERTIES_MAIL;
 
 /**
  * The type Mail utils.
  */
 public class MailUtils extends BaseEntity {
-    private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_MAIL);
+    private static final PropertiesResourceManager PROPS = new PropertiesResourceManager(PROPERTIES_MAIL);
     private String host;
     private final String fromAddress;
     private final String password;
@@ -192,12 +192,12 @@ public class MailUtils extends BaseEntity {
      * @param host the host
      */
     private void readConfig(String host) {
-        String prop = props.getProperty(host);
+        String prop = PROPS.getProperty(host);
         String hostProtoc = prop.split(";")[0];
         this.service = prop.split(";")[1];
         this.host = String.format("%s.%s", hostProtoc, service);
-        this.port = props.getProperty("port");
-        this.sentFolder = props.getProperty("seltFolder", "Sent");
+        this.port = PROPS.getProperty("port");
+        this.sentFolder = PROPS.getProperty("seltFolder", "Sent");
         this.protocol = MailProtocols.valueOf(prop.split(";")[2].toUpperCase());
     }
 
@@ -207,7 +207,7 @@ public class MailUtils extends BaseEntity {
     private void fetchProperties() {
         properties.setProperty("mail.store.protocol", protocol.toString());
         properties.put("mail.smtp.host", String.format("smtp.%s", service));
-        properties.put("mail.smtp.auth", props.getProperty("smtp.auth"));
+        properties.put("mail.smtp.auth", PROPS.getProperty("smtp.auth"));
         properties.put("mail.smtp.port", port);
         properties.put("mail.imap.ssl.enable", "true");
         properties.put("mail.smtp.socketFactory.port", port);

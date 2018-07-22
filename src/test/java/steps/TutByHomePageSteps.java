@@ -3,12 +3,10 @@ package steps;
 import cucumber.api.java.en.Given;
 import demo.test.pages.TutByHomePage;
 
-public class TutByHomePageSteps {
-    private String emailText;
+public class TutByHomePageSteps extends BaseSteps {
 
-    @Given("^url is opened '(.*)'$")
-    public void testIsOpened(String s) {
-        System.out.println(s);
+    @Given("^tut.by Home Page is opened$")
+    public void homePageIsOpened() {
         TutByHomePage tutByHomePage = new TutByHomePage();
     }
 }

@@ -33,7 +33,7 @@ public abstract class BaseTest extends BaseEntity {
         String dataBaseLocation = Browser.getPropsStage().getProperty("dataBaseLocation");
         Object[] dataProvider = new FactoryInitParams().getTestData(dataBaseLocation);
         if (dataProvider == null) {
-            logger.error(String.format("Data not received from %s", dataBaseLocation));
+            LOGGER.error(String.format("Data not received from %s", dataBaseLocation));
         }
         return dataProvider;
     }
@@ -47,14 +47,14 @@ public abstract class BaseTest extends BaseEntity {
     public void xTest(Object testData) {
         Class<? extends BaseTest> currentClass = this.getClass();
         try {
-            logger.logTestName(currentClass.getName());
+            LOGGER.logTestName(currentClass.getName());
             runTest(testData);
-            logger.logTestEnd(getReportData());
+            LOGGER.logTestEnd(getReportData());
         } catch (Exception ex) {
-            logger.debug(ex.getMessage());
+            LOGGER.debug(ex.getMessage());
             throw ex;
         } catch (AssertionError as) {
-            logger.logTestEnd(getReportData(), as.getMessage());
+            LOGGER.logTestEnd(getReportData(), as.getMessage());
             makeScreen(currentClass);
             throw as;
         }

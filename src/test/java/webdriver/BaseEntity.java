@@ -15,7 +15,7 @@ import static org.testng.AssertJUnit.fail;
  * The type Base entity.
  */
 public abstract class BaseEntity {
-    protected static final Logger logger = Logger.getInstance();
+    protected static final Logger LOGGER = Logger.getInstance();
 
     /**
      * Gets browser.
@@ -62,7 +62,7 @@ public abstract class BaseEntity {
      * @param message the message
      */
     protected final void debug(final String message) {
-        logger.debug(String.format("[%1$s] %2$s", this.getClass().getSimpleName(), (message)));
+        LOGGER.debug(String.format("[%1$s] %2$s", this.getClass().getSimpleName(), (message)));
     }
 
     /**
@@ -71,7 +71,7 @@ public abstract class BaseEntity {
      * @param message the message
      */
     protected void info(final String message) {
-        logger.info(message);
+        LOGGER.info(message);
     }
 
     /**
@@ -80,7 +80,7 @@ public abstract class BaseEntity {
      * @param message the message
      */
     protected void fatal(final String message) {
-        logger.fatal(message);
+        LOGGER.fatal(message);
         fail(message);
     }
 
@@ -90,7 +90,7 @@ public abstract class BaseEntity {
      * @param message the message
      */
     protected void error(final String message) {
-        logger.error(message);
+        LOGGER.error(message);
     }
 
     /**
@@ -108,18 +108,18 @@ public abstract class BaseEntity {
             String pageSource = Browser.getDriver().getPageSource();
             FileUtils.writeStringToFile(new File(Paths.get(pageSourcePath).toUri()), pageSource, Charset.defaultCharset());
         } catch (Exception e1) {
-            logger.debug(e1.getMessage());
+            LOGGER.debug(e1.getMessage());
         }
         try {
             File screen = Browser.getDriver().getScreenshotAs(OutputType.FILE);
             File addedNewFile = new File(new File(screenshotPath).toURI());
             FileUtils.copyFile(screen, addedNewFile);
         } catch (Exception e) {
-            logger.debug(e.getMessage());
+            LOGGER.debug(e.getMessage());
         }
         String formattedName = String.format("'Screenshots/%1$s.png'>ScreenShot", fileName);
         String formattedNamePageSource = String.format("'Screenshots/%1$s.txt'>Page Source", fileName);
-        logger.info(formattedName);
-        logger.info(formattedNamePageSource);
+        LOGGER.info(formattedName);
+        LOGGER.info(formattedNamePageSource);
     }
 }

@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static webdriver.ConstantsFrm.PROPERTIES_DB;
+import static webdriver.Constants.PROPERTIES_DB;
 
 /**
  * The type Database conn my sql.

@@ -9,7 +9,7 @@ import java.util.List;
  * The type Init parameters.
  */
 abstract class InitParams {
-    final Logger LOGGER = Logger.getInstance();
+    final Logger logger = Logger.getInstance();
 
     /**
      * Fetch test data init parameters.

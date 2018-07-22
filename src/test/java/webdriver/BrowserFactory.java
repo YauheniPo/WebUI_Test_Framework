@@ -17,7 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import static webdriver.ConstantsFrm.*;
+import static webdriver.Constants.*;
 
 /**
  * The type Browser factory.

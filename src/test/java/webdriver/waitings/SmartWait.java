@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * The type Smart wait.
  */
 final public class SmartWait {
-    private static final Logger logger = Logger.getInstance();
+    private static final Logger LOGGER = Logger.getInstance();
 
     /**
      * Wait for t.
@@ -32,7 +32,7 @@ final public class SmartWait {
         try {
             return wait.until(condition);
         } catch (Exception | AssertionError e) {
-            logger.debug("SmartWait.waitFor", e);
+            LOGGER.debug("SmartWait.waitFor", e);
         } finally {
             Browser.getDriver().manage().timeouts().implicitlyWait(Long.parseLong(Browser.getTimeoutForCondition()), TimeUnit.SECONDS);
         }
@@ -51,7 +51,7 @@ final public class SmartWait {
         try {
             return waitFor(condition, timeOutInSeconds) != null;
         } catch (Exception e) {
-            logger.debug("Wait waitForTrue", e);
+            LOGGER.debug("Wait waitForTrue", e);
             return false;
         }
     }

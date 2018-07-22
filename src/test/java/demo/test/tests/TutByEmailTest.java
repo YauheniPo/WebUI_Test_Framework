@@ -86,29 +86,29 @@ public class TutByEmailTest extends BaseTest {
         // cleaning mail data
         deleteMails();
 
-        logger.step(1, "Sending a message using api");
+        LOGGER.step(1, "Sending a message using api");
         Mail apiMail = new Mail(subject, text, this.senderMailLogin, this.recipientMailLogin);
         mailSender.sendMail(text, subject, this.recipientMailLogin);
         mailSender.addMsgInSentFolder();
 
-        logger.step(2, "Opening the main page");
+        LOGGER.step(2, "Opening the main page");
         TutByHomePage tutByHomePage = new TutByHomePage();
 
-        logger.step(3, "Receiving data from the sender's mail");
+        LOGGER.step(3, "Receiving data from the sender's mail");
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
         Mail senderMail = fetchAccountMail(EmailAccountPage.NavBox.SENT, this.senderMailLogin, this.senderMailPassword);
         logoutAccount();
 
-        logger.step(4, "Opening the main page");
+        LOGGER.step(4, "Opening the main page");
         Browser.openStartPage();
         tutByHomePage = new TutByHomePage();
 
-        logger.step(5, "Receiving data from the sender's mail");
+        LOGGER.step(5, "Receiving data from the sender's mail");
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
         Mail recipientMail = fetchAccountMail(EmailAccountPage.NavBox.INBOX, this.recipientMailLogin, this.recipientMailPassword);
         logoutAccount();
 
-        logger.step(6, "Verification of the correctness of the data of the sent mail");
+        LOGGER.step(6, "Verification of the correctness of the data of the sent mail");
         equalsMails(apiMail, new LinkedList<>(Arrays.asList(senderMail, recipientMail)));
     }
 

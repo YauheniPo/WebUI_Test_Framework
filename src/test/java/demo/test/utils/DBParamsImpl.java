@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static webdriver.ConstantsFrm.PROPERTIES_DB_QUERIES;
+import static webdriver.Constants.PROPERTIES_DB_QUERIES;
 
 /**
  * The type Db parameters.
@@ -38,11 +38,11 @@ public class DBParamsImpl extends InitParams {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         } finally {
             database.close();
         }
-        LOGGER.info(String.format("Вata received from %s", dataBaselocation));
+        logger.info(String.format("Data received from %s", dataBaselocation));
         return getTestDataMails(data);
     }
 }

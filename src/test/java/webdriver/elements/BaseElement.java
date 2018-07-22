@@ -75,7 +75,7 @@ public abstract class BaseElement extends BaseEntity {
             try {
                 isVisible = element.isDisplayed();
             } catch (Exception ex) {
-                logger.debug(this, ex);
+                LOGGER.debug(this, ex);
             }
         }
         if (!isVisible) {

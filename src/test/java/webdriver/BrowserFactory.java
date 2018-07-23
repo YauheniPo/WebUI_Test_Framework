@@ -2,6 +2,9 @@ package webdriver;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -22,17 +25,11 @@ import static webdriver.Constants.*;
 /**
  * The type Browser factory.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 final public class BrowserFactory {
     private static final String PLATFORM = System.getProperty("os.name").toLowerCase();
     private static final Logger logger = Logger.getInstance();
     private static final String CLS_NAME = BrowserFactory.class.getName();
-
-    /**
-     * Instantiates a new Browser factory.
-     */
-    private BrowserFactory() {
-        // do not instantiate BrowserFactory class
-    }
 
     /**
      * Sets up.
@@ -41,7 +38,7 @@ final public class BrowserFactory {
      *
      * @return the up
      */
-    public static RemoteWebDriver setUp(final Browsers type) {
+    public static RemoteWebDriver setUp(@NonNull Browsers type) {
         return getWebDriver(type);
     }
 
@@ -54,7 +51,7 @@ final public class BrowserFactory {
      *
      * @throws NamingException the naming exception
      */
-    public static RemoteWebDriver setUp(final String type) throws NamingException {
+    public static RemoteWebDriver setUp(@NonNull String type) throws NamingException {
         for (Browsers t : Browsers.values()) {
             if (t.toString().equalsIgnoreCase(type)) {
                 return setUp(t);
@@ -70,7 +67,7 @@ final public class BrowserFactory {
      *
      * @return the web driver
      */
-    private static RemoteWebDriver getWebDriver(final Browsers type) {
+    private static RemoteWebDriver getWebDriver(@NonNull Browsers type) {
         boolean isGrid = Browser.getGridUrl() != null;
         switch (type) {
             case CHROME:
@@ -137,7 +134,7 @@ final public class BrowserFactory {
      * @param browsDriver the browser driver name
      * @param webBrowsDriver the browser webdriver name
      */
-    private static void setDriverProperty(String browsDriver, String webBrowsDriver) {
+    private static void setDriverProperty(@NonNull String browsDriver, @NonNull String webBrowsDriver) {
         URL myTestURL = null;
         File myFile = null;
         if (PLATFORM.contains("win")) {
@@ -166,7 +163,7 @@ final public class BrowserFactory {
      */
     private static ChromeOptions getChromeOptionsHeadless() {
         ChromeOptions options = new ChromeOptions();
-        if (Browser.isBrowserHeadless()) {
+        if (Browser.isHeadless()) {
             options.setHeadless(true);
         }
         return options;
@@ -179,7 +176,7 @@ final public class BrowserFactory {
      */
     private static FirefoxOptions getFirefoxOptionsHeadless() {
         FirefoxBinary firefoxBinary = new FirefoxBinary();
-        if (Browser.isBrowserHeadless()) {
+        if (Browser.isHeadless()) {
             firefoxBinary.addCommandLineOptions("--headless");
         }
         FirefoxOptions firefoxOptions = new FirefoxOptions();

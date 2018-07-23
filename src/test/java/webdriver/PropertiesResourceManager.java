@@ -1,5 +1,7 @@
 package webdriver;
 
+import lombok.NonNull;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -16,7 +18,7 @@ public final class PropertiesResourceManager {
      *
      * @param resourceName the resource name
      */
-    public PropertiesResourceManager(final String resourceName) {
+    public PropertiesResourceManager(@NonNull String resourceName) {
         properties= new Properties();
         properties = appendFromResource(properties, resourceName);
     }
@@ -28,7 +30,7 @@ public final class PropertiesResourceManager {
      *
      * @return the property
      */
-    public String getProperty(final String key) {
+    public String getProperty(@NonNull String key) {
         return properties.getProperty(key);
     }
 

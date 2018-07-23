@@ -1,11 +1,15 @@
 package webdriver;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * The type Scenario context.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ScenarioContext {
     private static volatile ScenarioContext contextInstance = null;
     private static final Map<String, Object> context = new HashMap<>();
@@ -23,12 +27,6 @@ public class ScenarioContext {
             }
         }
         return contextInstance;
-    }
-
-    /**
-     * Instantiates a new Scenario context.
-     */
-    private ScenarioContext() {
     }
 
     /**

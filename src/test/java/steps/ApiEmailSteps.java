@@ -24,7 +24,7 @@ public class ApiEmailSteps extends BaseSteps {
      * @return the object [ ]
      */
     private Object[] getParams() {
-        String dataBaseLocation = Browser.getPropsStage().getProperty("dataBaseLocation");
+        String dataBaseLocation = Browser.getPropStage().getProperty("dataBaseLocation");
         Object[] dataProvider = new FactoryInitParams().getTestData(dataBaseLocation);
         if (dataProvider == null) {
             Logger.getInstance().error(String.format("Data not received from %s", dataBaseLocation));
@@ -46,9 +46,6 @@ public class ApiEmailSteps extends BaseSteps {
         return mail;
     }
 
-    /**
-     * Clear email and close mail store.
-     */
     @After(order = 2)
     public void clearEmailAndCloseMailStore() {
         deleteMails();
@@ -77,14 +74,14 @@ public class ApiEmailSteps extends BaseSteps {
         }
     }
 
-    @And("^'(.*)' connecting email store$")
+    @And("^connecting '(.*)' email store$")
     public void connectingEmailStore(String account) {
         MailUtils email = getMailStore((String) scenarioContext.getContextObj(account + "MailLogin"),
                 (String) scenarioContext.getContextObj(account + "MailPassword"));
         scenarioContext.setContext(account, email);
     }
 
-    @And("^generation letter with text '(.*)'$")
+    @And("^creating letter with text '(.*)'$")
     public void generationLetter(String emailText) {
         String dateTimeMail = new SimpleDateFormat("HH:mm").format(new Date());
         String subject = String.format("From %s", scenarioContext.getContextObj("senderMailLogin"));
@@ -101,7 +98,7 @@ public class ApiEmailSteps extends BaseSteps {
                 apiMail.getSubject(), apiMail.getToAddress()).sendMail();
     }
 
-    @And("^sending letter in send folder$")
+    @And("^sending letter in sender send folder$")
     public void sendingLetterInSendFolder() {
         ((MailUtils) scenarioContext.getContextObj("sender")).addMsgInSentFolder();
     }

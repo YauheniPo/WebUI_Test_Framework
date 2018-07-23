@@ -8,5 +8,4 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
         format = {"pretty", "html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"}
 )
 public class CucumberRunner extends AbstractTestNGCucumberTests{
-
 }

@@ -31,7 +31,7 @@ public abstract class BaseForm extends BaseEntity {
             new Label(titleLocator, title).waitForIsElementPresent();
         } catch (Exception e) {
             debug(e.getMessage());
-            fatal(String.format("Locator form %1$s doesn't appear", this.title));
+            assertWrapper.fatal(String.format("Locator form %1$s doesn't appear", this.title));
         }
         info(String.format("Locator of %1$s Form appears", this.title));
     }

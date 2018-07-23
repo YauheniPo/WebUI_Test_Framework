@@ -1,6 +1,7 @@
 package demo.test.pages;
 
 import demo.test.forms.TutByHeader;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import webdriver.BaseForm;
 
@@ -9,21 +10,12 @@ import webdriver.BaseForm;
  */
 public class TutByHomePage extends BaseForm {
     private static final By MAIN_LOCATOR = By.xpath("//*[@class='header-logo']");
-    private final TutByHeader header = new TutByHeader();
+    @Getter private final TutByHeader header = new TutByHeader();
 
     /**
      * Instantiates a new Tut by home page.
      */
     public TutByHomePage() {
         super(MAIN_LOCATOR, "tut.by Home Page ");
-    }
-
-    /**
-     * Gets header.
-     *
-     * @return the header
-     */
-    public TutByHeader getHeader() {
-        return header;
     }
 }

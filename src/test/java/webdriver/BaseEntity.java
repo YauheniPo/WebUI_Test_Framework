@@ -4,18 +4,18 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import webdriver.common.SoftAssertWrapper;
 
 import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
 
-import static org.testng.AssertJUnit.fail;
-
 /**
  * The type Base entity.
  */
 public abstract class BaseEntity {
-    protected static final Logger LOGGER = Logger.getInstance();
+    protected static Logger LOGGER = Logger.getInstance();
+    protected static SoftAssertWrapper assertWrapper = SoftAssertWrapper.getInstance();
 
     /**
      * Gets browser.
@@ -33,7 +33,7 @@ public abstract class BaseEntity {
     public void before() {
         Browser browser = getBrowser();
         browser.windowMaximise();
-        browser.navigate(Browser.getStartBrowserURL());
+        browser.navigate(Browser.getBrowserURL());
     }
 
     /**
@@ -42,18 +42,6 @@ public abstract class BaseEntity {
     @AfterTest
     public void after() {
         getBrowser().exit();
-    }
-
-    /**
-     * Assert equals.
-     *
-     * @param expected the expected
-     * @param actual   the actual
-     */
-    protected void assertEquals(final Object expected, final Object actual) {
-        if (!expected.equals(actual)) {
-            fatal("Expected value: '" + expected.toString() + "', but was: '" + actual.toString() + "'");
-        }
     }
 
     /**
@@ -72,16 +60,6 @@ public abstract class BaseEntity {
      */
     protected void info(final String message) {
         LOGGER.info(message);
-    }
-
-    /**
-     * Fatal.
-     *
-     * @param message the message
-     */
-    protected void fatal(final String message) {
-        LOGGER.fatal(message);
-        fail(message);
     }
 
     /**

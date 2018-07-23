@@ -10,17 +10,11 @@ import webdriver.ScenarioContext;
  */
 public class BeforeAndAfterSteps extends BaseEntity {
 
-    /**
-     * Before scenario.
-     */
     @Before(order = 1)
     public void beforeScenario() {
         before();
     }
 
-    /**
-     * After scenario.
-     */
     @After(order = 1)
     public void afterScenario() {
         after();

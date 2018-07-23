@@ -166,7 +166,7 @@ public class TutByEmailTest extends BaseTest {
      */
     private void equalsMails(Mail apiMail, List<Mail> mails) {
         for (Mail mail : mails) {
-            assertEquals(apiMail, mail);
+            assertWrapper.assertEquals(apiMail, mail);
             info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
         }
     }

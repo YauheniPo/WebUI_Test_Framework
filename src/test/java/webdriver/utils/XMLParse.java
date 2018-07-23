@@ -1,5 +1,6 @@
 package webdriver.utils;
 
+import lombok.AllArgsConstructor;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import webdriver.BaseEntity;
@@ -13,17 +14,9 @@ import java.io.IOException;
 /**
  * The type Xml parse.
  */
+@AllArgsConstructor
 public class XMLParse extends BaseEntity {
     private final String filepath;
-
-    /**
-     * Instantiates a new Xml parse.
-     *
-     * @param filepath the filepath
-     */
-    public XMLParse(String filepath) {
-        this.filepath = filepath;
-    }
 
     /**
      * Fetch document document.

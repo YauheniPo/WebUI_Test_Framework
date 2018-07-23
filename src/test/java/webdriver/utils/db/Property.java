@@ -1,8 +1,14 @@
 package webdriver.utils.db;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * The enum Property.
  */
+@Getter
+@AllArgsConstructor(access = AccessLevel.MODULE)
 public enum Property {
     MYSQL_PASSWORD("mysql_password"),
     MYSQL_USERNAME("mysql_username"),
@@ -10,12 +16,4 @@ public enum Property {
     MYSQL_URL("mysql_url");
 
     private final String property;
-
-    Property(String property) {
-        this.property = property;
-    }
-
-    public String toString() {
-        return property;
-    }
 }

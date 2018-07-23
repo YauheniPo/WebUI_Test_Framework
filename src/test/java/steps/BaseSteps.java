@@ -2,11 +2,13 @@ package steps;
 
 import webdriver.Logger;
 import webdriver.ScenarioContext;
+import webdriver.common.SoftAssertWrapper;
 
 /**
  * The type Base steps.
  */
 public class BaseSteps {
-    protected static ScenarioContext scenarioContext = ScenarioContext.getInstance();
-    protected static final Logger LOGGER = Logger.getInstance();
+    static ScenarioContext scenarioContext = ScenarioContext.getInstance();
+    static final Logger LOGGER = Logger.getInstance();
+    static SoftAssertWrapper assertWrapper = SoftAssertWrapper.getInstance();
 }

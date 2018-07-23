@@ -79,8 +79,17 @@ public abstract class BaseElement extends BaseEntity {
             }
         }
         if (!isVisible) {
-            fatal(String.format("Element %s didn't find", name));
+            assertWrapper.fatal(String.format("Element %s didn't find", name));
         }
+    }
+
+    /**
+     * Check for is element present on the page.
+     *
+     * @return Is element present
+     */
+    public boolean isPresent() {
+        return isPresent(Long.parseLong(Browser.getTimeoutForCondition()));
     }
 
     /**

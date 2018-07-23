@@ -1,5 +1,6 @@
 package demo.test.utils;
 
+import lombok.Cleanup;
 import webdriver.PropertiesResourceManager;
 import webdriver.utils.db.DatabaseConnMySQL;
 
@@ -21,7 +22,6 @@ public class DBParamsImpl extends InitParams {
      * Fetch test data object [ ].
      *
      * @param dataBaselocation the data baselocation
-     *
      * @return the object [ ]
      */
     @Override
@@ -31,11 +31,10 @@ public class DBParamsImpl extends InitParams {
         String getEmailAccounts = props.getProperty("sql_get_email_accounts");
         List<String> data = new ArrayList<>();
         try {
-            try (ResultSet rs = statement.executeQuery(getEmailAccounts)) {
-                while (rs.next()) {
-                    data.add(rs.getString("login"));
-                    data.add(rs.getString("password"));
-                }
+            @Cleanup ResultSet rs = statement.executeQuery(getEmailAccounts);
+            while (rs.next()) {
+                data.add(rs.getString("login"));
+                data.add(rs.getString("password"));
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());

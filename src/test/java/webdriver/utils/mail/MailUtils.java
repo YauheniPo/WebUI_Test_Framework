@@ -1,5 +1,7 @@
 package webdriver.utils.mail;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import webdriver.BaseEntity;
 import webdriver.PropertiesResourceManager;
 
@@ -40,7 +42,7 @@ public class MailUtils extends BaseEntity {
         this.fromAddress = username;
         this.password = password;
         readConfig(host);
-        fetchProperties();
+        setProperties();
         initSession();
         store = connect();
     }
@@ -217,7 +219,7 @@ public class MailUtils extends BaseEntity {
     /**
      * Fetch properties.
      */
-    private void fetchProperties() {
+    private void setProperties() {
         properties.setProperty("mail.store.protocol", protocol.toString());
         properties.put("mail.smtp.host", String.format("smtp.%s", service));
         properties.put("mail.smtp.auth", PROPS.getProperty("smtp.auth"));
@@ -230,6 +232,7 @@ public class MailUtils extends BaseEntity {
     /**
      * The enum Mail protocols.
      */
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
     public enum MailProtocols {
         POP3("pop3"),
         SMTP("smtp"),
@@ -238,15 +241,6 @@ public class MailUtils extends BaseEntity {
         POP3S("pop3s");
 
         private final String protocol;
-
-        /**
-         * Instantiates a new Mail protocols.
-         *
-         * @param name the name
-         */
-        MailProtocols(String name) {
-            protocol = name;
-        }
 
         /**
          * To string string.

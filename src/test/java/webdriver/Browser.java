@@ -1,5 +1,9 @@
 package webdriver;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Synchronized;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import javax.naming.NamingException;
@@ -31,12 +35,12 @@ public final class Browser {
     private static final Logger LOGGER = Logger.getInstance();
     private static Browser instance;
     private volatile static RemoteWebDriver driver;
-    private static PropertiesResourceManager propStage;
-    private static String browserURL;
-    private static boolean isDriverManager;
-    private static String gridUrl = null;
-    private static boolean isHeadless;
-    private static String timeoutForCondition;
+    @Getter private static PropertiesResourceManager propStage;
+    @Getter private static String browserURL;
+    @Getter private static boolean isDriverManager;
+    @Getter private static String gridUrl = null;
+    @Getter private static boolean isHeadless;
+    @Getter private static String timeoutForCondition;
 
     /**
      * Instantiates a new Browser.
@@ -50,39 +54,13 @@ public final class Browser {
      *
      * @return the instance
      */
-    synchronized static Browser getInstance() {
+    @Synchronized
+    static Browser getInstance() {
         if (instance == null) {
             initProperties();
             instance = new Browser();
         }
         return instance;
-    }
-
-    /**
-     * Is driver manager boolean.
-     *
-     * @return the boolean
-     */
-    static boolean isDriverManager() {
-        return isDriverManager;
-    }
-
-    /**
-     * Is browser headless boolean.
-     *
-     * @return the boolean
-     */
-    static boolean isBrowserHeadless() {
-        return isHeadless;
-    }
-
-    /**
-     * Is Grid URL.
-     *
-     * @return the boolean
-     */
-    static String getGridUrl() {
-        return gridUrl;
     }
 
     /**
@@ -95,15 +73,6 @@ public final class Browser {
     }
 
     /**
-     * Gets PROPS stage.
-     *
-     * @return the PROPS stage
-     */
-    public static PropertiesResourceManager getPropsStage() {
-        return propStage;
-    }
-
-    /**
      * Gets driver.
      *
      * @return the driver
@@ -113,15 +82,6 @@ public final class Browser {
             driver = getNewDriver();
         }
         return driver;
-    }
-
-    /**
-     * Gets timeout for condition.
-     *
-     * @return the timeout for condition
-     */
-    public static String getTimeoutForCondition() {
-        return timeoutForCondition;
     }
 
     /**
@@ -164,15 +124,6 @@ public final class Browser {
             LOGGER.debug("Browser: getting New Driver", e);
         }
         return null;
-    }
-
-    /**
-     * Gets start browser url.
-     *
-     * @return the start browser url
-     */
-    static String getStartBrowserURL() {
-        return browserURL;
     }
 
     /**
@@ -219,19 +170,11 @@ public final class Browser {
     /**
      * The enum Browsers.
      */
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
     public enum Browsers {
         FIREFOX("firefox"),
         CHROME("chrome");
 
         private final String value;
-
-        /**
-         * Instantiates a new Browsers.
-         *
-         * @param values the values
-         */
-        Browsers(final String values) {
-            value = values;
-        }
     }
 }

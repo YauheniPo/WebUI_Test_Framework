@@ -3,7 +3,7 @@ package steps;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import demo.test.forms.TutByHeader;
-import demo.test.forms.UserAccountDropdown;
+import demo.test.forms.AccountForm;
 import demo.test.pages.EmailAccountPage;
 import demo.test.pages.TutByHomePage;
 
@@ -16,6 +16,6 @@ public class HeaderSteps extends BaseSteps {
 
     @Then("^I chose '(.*)' in account menu$")
     public void clickAccountDropdownLabel(String label) {
-        new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.valueOf(label.toUpperCase()));
+        new EmailAccountPage().getAccountForm().clickUserAccount().clickUserDropdownField(AccountForm.UserDropdown.valueOf(label.toUpperCase()));
     }
 }

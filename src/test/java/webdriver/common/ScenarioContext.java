@@ -1,4 +1,4 @@
-package webdriver;
+package webdriver.common;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

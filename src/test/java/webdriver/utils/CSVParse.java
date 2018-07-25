@@ -27,9 +27,7 @@ public class CSVParse extends BaseEntity {
         try {
             List<String[]> allRows = new CSVReader(new FileReader(filepath), ';').readAll();
             if (!allRows.isEmpty()) {
-                for (String[] row : allRows) {
-                    data.addAll(Arrays.asList(row));
-                }
+                allRows.forEach(row -> {data.addAll(Arrays.asList(row));});
             }
         } catch (IOException e) {
             error(e.getMessage());

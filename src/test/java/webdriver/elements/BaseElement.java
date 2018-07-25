@@ -16,8 +16,6 @@ import java.util.Objects;
  * The type Base element.
  */
 public abstract class BaseElement extends BaseEntity {
-    private final String name;
-    private final By locator;
     private RemoteWebElement element;
 
     /**
@@ -27,9 +25,8 @@ public abstract class BaseElement extends BaseEntity {
      * @param nameOf  the name of
      */
     BaseElement(final By locator, final String nameOf) {
-        this.locator = locator;
-        this.name = nameOf;
-        info(String.format("Locator of '%1$s' Element", this.name));
+        super(locator, nameOf);
+        info(String.format("Locator of '%1$s' Element", this.title));
     }
 
     /**
@@ -49,7 +46,7 @@ public abstract class BaseElement extends BaseEntity {
      */
     public String getText() {
         waitForIsElementPresent();
-        info(String.format("Getting text of element %s", this.name));
+        info(String.format("Getting text of element %s", this.title));
         return element.getText();
     }
 
@@ -58,7 +55,7 @@ public abstract class BaseElement extends BaseEntity {
      */
     public void click() {
         waitForIsElementPresent();
-        info(String.format("clicking %s", this.name));
+        info(String.format("clicking %s", this.title));
         Browser.getDriver().getMouse().mouseMove(element.getCoordinates());
         if (Browser.getDriver() instanceof JavascriptExecutor) {
             Browser.getDriver().executeScript("arguments[0].style.border='3px solid red'", element);
@@ -79,7 +76,7 @@ public abstract class BaseElement extends BaseEntity {
             }
         }
         if (!isVisible) {
-            assertWrapper.fatal(String.format("Element %s didn't find", name));
+            ASSERT_WRAPPER.fatal(String.format("Element %s didn't find", title));
         }
     }
 
@@ -101,7 +98,7 @@ public abstract class BaseElement extends BaseEntity {
     private boolean isPresent(long timeout) {
         ExpectedCondition<Boolean> condition = driver -> {
             try {
-                List<WebElement> elems = Objects.requireNonNull(driver).findElements(locator);
+                List<WebElement> elems = Objects.requireNonNull(driver).findElements(this.titleLocator);
                 for (WebElement elem : elems) {
                     if (elem.isDisplayed()) {
                         element = (RemoteWebElement) elem;

@@ -1,22 +1,28 @@
 package demo.test.tests;
 
-import demo.test.models.Mail;
-import demo.test.models.TestDataMails;
+import demo.test.forms.AccountForm;
 import demo.test.forms.AuthorizeEmailForm;
 import demo.test.forms.TutByHeader;
-import demo.test.forms.UserAccountDropdown;
+import demo.test.models.Mail;
+import demo.test.models.TestDataMails;
 import demo.test.pages.EmailAccountPage;
 import demo.test.pages.TutByHomePage;
+import io.qameta.allure.Step;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import webdriver.BaseTest;
 import webdriver.Browser;
 import webdriver.utils.mail.MailUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The type Tut by email test.
@@ -38,7 +44,7 @@ public class TutByEmailTest extends BaseTest {
      */
     @BeforeTest
     @Parameters(value = {"emailText"})
-    public void initTestData(String emailText) {
+    public void initTestData(@Optional("epam_e.popovich")String emailText) {
         this.emailText = emailText;
     }
 
@@ -98,6 +104,7 @@ public class TutByEmailTest extends BaseTest {
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
         Mail senderMail = fetchAccountMail(EmailAccountPage.NavBox.SENT, this.senderMailLogin, this.senderMailPassword);
         logoutAccount();
+        checkAuthorization(this.senderMailLogin, false);
 
         LOGGER.step(4, "Opening the main page");
         Browser.openStartPage();
@@ -107,6 +114,7 @@ public class TutByEmailTest extends BaseTest {
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
         Mail recipientMail = fetchAccountMail(EmailAccountPage.NavBox.INBOX, this.recipientMailLogin, this.recipientMailPassword);
         logoutAccount();
+        checkAuthorization(this.recipientMailLogin, false);
 
         LOGGER.step(6, "Verification of the correctness of the data of the sent mail");
         equalsMails(apiMail, new LinkedList<>(Arrays.asList(senderMail, recipientMail)));
@@ -121,16 +129,30 @@ public class TutByEmailTest extends BaseTest {
      *
      * @return the mail
      */
+    @Step("{0} {1} {2}")
     private Mail fetchAccountMail(EmailAccountPage.NavBox folder, String emailLogin, String emailPassword) {
-        return new AuthorizeEmailForm().signIn(emailLogin, emailPassword).
-                fetchEmailFolder(folder).getMailsForm().choiceLastMail().getMail();
+        EmailAccountPage emailAccountPage = new AuthorizeEmailForm().signIn(emailLogin, emailPassword);
+        checkAuthorization(emailLogin, true);
+        return emailAccountPage.fetchEmailFolder(folder).getMailsForm().choiceLastMail().getMail();
+    }
+
+    /**
+     * Check Authorization
+     *
+     * @param login          login
+     * @param expectedResult expected result
+     */
+    @Step("{0} {1}")
+    private void checkAuthorization(String login, Boolean expectedResult) {
+        LOGGER.info("Verify authorization");
+        ASSERT_WRAPPER.assertEquals(new AccountForm().isAuthorized(login), expectedResult);
     }
 
     /**
      * Logout account.
      */
     private void logoutAccount() {
-        new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
+        new EmailAccountPage().getAccountForm().clickUserAccount().clickUserDropdownField(AccountForm.UserDropdown.LOGOUT);
     }
 
     /**
@@ -141,6 +163,7 @@ public class TutByEmailTest extends BaseTest {
      *
      * @return the mail store
      */
+    @Step("{0} {1}")
     private MailUtils getMailStore(String login, String password) {
         MailUtils mail = new MailUtils(login, password);
         mailBox.add(mail);
@@ -166,7 +189,7 @@ public class TutByEmailTest extends BaseTest {
      */
     private void equalsMails(Mail apiMail, List<Mail> mails) {
         for (Mail mail : mails) {
-            assertWrapper.assertEquals(apiMail, mail);
+            ASSERT_WRAPPER.assertEquals(apiMail, mail);
             info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
         }
     }

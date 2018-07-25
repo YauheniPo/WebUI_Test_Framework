@@ -11,12 +11,12 @@ public class CheckingSteps extends BaseSteps {
 
     @And("^I checked letters data$")
     public void checkedLettersData() {
-        List<Mail> mails = new LinkedList<>(Arrays.asList((Mail) scenarioContext.getContextObj("senderMail"),
-                                                          (Mail) scenarioContext.getContextObj("recipientMail")));
-        Mail apiMail = (Mail) scenarioContext.getContextObj("apiMail");
-        for (Mail mail : mails) {
-            assertWrapper.assertEquals(apiMail, mail);
+        List<Mail> mails = new LinkedList<>(Arrays.asList((Mail) SCENARIO_CONTEXT.getContextObj("senderMail"),
+                                                          (Mail) SCENARIO_CONTEXT.getContextObj("recipientMail")));
+        Mail apiMail = (Mail) SCENARIO_CONTEXT.getContextObj("apiMail");
+        mails.forEach(mail -> {
+            ASSERT_WRAPPER.assertEquals(apiMail, mail);
             LOGGER.info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
-        }
+        });
     }
 }

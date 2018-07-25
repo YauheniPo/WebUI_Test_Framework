@@ -1,4 +1,4 @@
-package webdriver.common;
+package webdriver.asserts;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -15,8 +15,8 @@ import webdriver.Logger;
  * The type Soft assert wrapper.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SoftAssertWrapper {
-    private static SoftAssertWrapper softAssert = null;
+public class AssertWrapper {
+    private static AssertWrapper softAssert = null;
     private static final Logger LOGGER = Logger.getInstance();
 
     /**
@@ -25,13 +25,12 @@ public class SoftAssertWrapper {
      * @return the instance
      */
     @Synchronized
-    public static SoftAssertWrapper getInstance() {
+    public static AssertWrapper getInstance() {
         if (softAssert == null) {
-            softAssert = new SoftAssertWrapper();
+            softAssert = new AssertWrapper();
         }
         return softAssert;
     }
-
 
     /**
      * Assert equals.
@@ -39,8 +38,17 @@ public class SoftAssertWrapper {
      * @param expected the expected
      * @param actual   the actual
      */
-    public void assertEquals(@NonNull Object expected, @NonNull Object actual) {
+    public void assertEquals(@NonNull final Object expected, @NonNull final Object actual) {
         assertThat("Expected value: '" + expected.toString() + "', but was: '" + actual.toString() + "'", expected, is(equalTo(actual)));
+    }
+
+    /**
+     * Assert true.
+     *
+     * @param assertion the assertion
+     */
+    public void assertTrue(boolean assertion) {
+        assertThat("Expected value doesn't TRUE", assertion);
     }
 
     /**

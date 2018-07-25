@@ -1,7 +1,7 @@
 package demo.test.pages;
 
+import demo.test.forms.AccountForm;
 import demo.test.forms.MailsForm;
-import demo.test.forms.UserAccountDropdown;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,9 +14,9 @@ import webdriver.elements.Button;
  */
 public class EmailAccountPage extends BaseForm {
     private static final By MAIN_LOCATOR = By.xpath("//*[@class='mail-App-Content']");
-    private final By userAccountLocator = By.xpath("//div[contains(@class, 'Header')]//*[contains(@data-key, 'user')]");
-    private static final String LOC_NAV_BAR_ELEMENT = "//div[contains(@data-key, 'left-box')]//a[contains(@href, '%s')]";
+    private final String locNavBarElement = "//div[contains(@data-key, 'left-box')]//a[contains(@href, '%s')]";
     @Getter private final MailsForm mailsForm = new MailsForm();
+    @Getter private final AccountForm accountForm = new AccountForm();
 
     /**
      * Instantiates a new Email account page.
@@ -33,19 +33,9 @@ public class EmailAccountPage extends BaseForm {
      * @return the email account page
      */
     public EmailAccountPage fetchEmailFolder(NavBox folder) {
-        new Button(By.xpath(String.format(LOC_NAV_BAR_ELEMENT, folder.getNavBoxLocator())),
+        new Button(By.xpath(String.format(locNavBarElement, folder.getNavBoxLocator())),
                 String.format("Folder %s", folder.getNavBoxLocator().toUpperCase())).click();
         return this;
-    }
-
-    /**
-     * Click user account user account dropdown.
-     *
-     * @return the user account dropdown
-     */
-    public UserAccountDropdown clickUserAccount() {
-        new Button(userAccountLocator, "User Account").click();
-        return new UserAccountDropdown();
     }
 
     /**

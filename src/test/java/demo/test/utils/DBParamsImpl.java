@@ -21,11 +21,11 @@ public class DBParamsImpl extends InitParams {
     /**
      * Fetch test data object [ ].
      *
-     * @param dataBaselocation the data baselocation
+     * @param dataBaseLocation the data baselocation
      * @return the object [ ]
      */
     @Override
-    public Object[] fetchTestData(String dataBaselocation) {
+    public Object[] fetchTestData(String dataBaseLocation) {
         DatabaseConnMySQL database = new DatabaseConnMySQL();
         Statement statement = database.getStatement();
         String getEmailAccounts = props.getProperty("sql_get_email_accounts");
@@ -41,7 +41,7 @@ public class DBParamsImpl extends InitParams {
         } finally {
             database.close();
         }
-        logger.info(String.format("Data received from %s", dataBaselocation));
+        logger.info(String.format("Data received from %s", dataBaseLocation));
         return getTestDataMails(data);
     }
 }

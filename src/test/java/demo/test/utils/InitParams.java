@@ -14,11 +14,11 @@ abstract class InitParams {
     /**
      * Fetch test data init parameters.
      *
-     * @param dataBaselocation the data baselocation
+     * @param dataBaseLocation the data baselocation
      *
      * @return the init params
      */
-    public abstract Object[] fetchTestData(String dataBaselocation);
+    public abstract Object[] fetchTestData(String dataBaseLocation);
 
     /**
      * Get test data mails object [ ].

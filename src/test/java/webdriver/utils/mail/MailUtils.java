@@ -86,7 +86,7 @@ public class MailUtils extends BaseEntity {
             Transport.send(message);
             info(String.format("Sent a email Subject: %s Text: %s", message.getSubject(), message.getContent()));
         } catch (MessagingException | IOException e) {
-            e.printStackTrace();
+            debug(e.getMessage());
         }
     }
 
@@ -108,7 +108,7 @@ public class MailUtils extends BaseEntity {
             InternetAddress toAddress = new InternetAddress(recipientEmailAddress);
             message.addRecipient(Message.RecipientType.TO, toAddress);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            debug(e.getMessage());
         }
         return this;
     }
@@ -133,7 +133,12 @@ public class MailUtils extends BaseEntity {
      * Add msg in sent folder.
      */
     public void addMsgInSentFolder() {
-        addMsgInFolder(sentFolder);
+        try {
+            info(String.format("Sent a email Subject: %s Text: %s to %s folder", this.message.getSubject(), message.getContent(), sentFolder));
+            addMsgInFolder(sentFolder);
+        } catch (MessagingException | IOException e) {
+            debug(e.getMessage());
+        }
     }
 
     /**

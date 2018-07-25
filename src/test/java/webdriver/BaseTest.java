@@ -1,8 +1,7 @@
 package webdriver;
 
-import demo.test.utils.FactoryInitParams;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import webdriver.common.ProviderData;
 
 /**
  * The type Base test.
@@ -24,26 +23,11 @@ public abstract class BaseTest extends BaseEntity {
     protected abstract String getReportData();
 
     /**
-     * Get params object [ ]
-     *
-     * @return the object [ ]
-     */
-    @DataProvider(name = "initParams")
-    public Object[] getParams() {
-        String dataBaseLocation = Browser.getPropStage().getProperty("dataBaseLocation");
-        Object[] dataProvider = new FactoryInitParams().getTestData(dataBaseLocation);
-        if (dataProvider == null) {
-            LOGGER.error(String.format("Data not received from %s", dataBaseLocation));
-        }
-        return dataProvider;
-    }
-
-    /**
      * Test method
      *
      * @param testData emails test data
      */
-    @Test(dataProvider = "initParams")
+    @Test(dataProvider = "initParams", dataProviderClass = ProviderData.class)
     public void xTest(Object testData) {
         Class<? extends BaseTest> currentClass = this.getClass();
         try {
@@ -55,7 +39,6 @@ public abstract class BaseTest extends BaseEntity {
             throw ex;
         } catch (AssertionError as) {
             LOGGER.logTestEnd(getReportData(), as.getMessage());
-            makeScreen(currentClass);
             throw as;
         }
     }

@@ -38,7 +38,7 @@ final public class BrowserFactory {
      *
      * @return the up
      */
-    public static RemoteWebDriver setUp(@NonNull Browsers type) {
+    public static RemoteWebDriver setUp(@NonNull final Browsers type) {
         return getWebDriver(type);
     }
 
@@ -51,7 +51,7 @@ final public class BrowserFactory {
      *
      * @throws NamingException the naming exception
      */
-    public static RemoteWebDriver setUp(@NonNull String type) throws NamingException {
+    public static RemoteWebDriver setUp(@NonNull final String type) throws NamingException {
         for (Browsers t : Browsers.values()) {
             if (t.toString().equalsIgnoreCase(type)) {
                 return setUp(t);
@@ -67,7 +67,7 @@ final public class BrowserFactory {
      *
      * @return the web driver
      */
-    private static RemoteWebDriver getWebDriver(@NonNull Browsers type) {
+    private static RemoteWebDriver getWebDriver(@NonNull final Browsers type) {
         boolean isGrid = Browser.getGridUrl() != null;
         switch (type) {
             case CHROME:
@@ -134,7 +134,7 @@ final public class BrowserFactory {
      * @param browsDriver the browser driver name
      * @param webBrowsDriver the browser webdriver name
      */
-    private static void setDriverProperty(@NonNull String browsDriver, @NonNull String webBrowsDriver) {
+    private static void setDriverProperty(@NonNull final String browsDriver, @NonNull final String webBrowsDriver) {
         URL myTestURL = null;
         File myFile = null;
         if (PLATFORM.contains("win")) {

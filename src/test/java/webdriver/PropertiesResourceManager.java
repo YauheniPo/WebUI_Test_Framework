@@ -1,5 +1,6 @@
 package webdriver;
 
+import lombok.Cleanup;
 import lombok.NonNull;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.util.Properties;
  * The type Properties resource manager.
  */
 public final class PropertiesResourceManager {
-    private static final Logger logger = Logger.getInstance();
+    private static final Logger LOGGER = Logger.getInstance();
     private Properties properties;
 
     /**
@@ -18,7 +19,7 @@ public final class PropertiesResourceManager {
      *
      * @param resourceName the resource name
      */
-    public PropertiesResourceManager(@NonNull String resourceName) {
+    public PropertiesResourceManager(@NonNull final String resourceName) {
         properties= new Properties();
         properties = appendFromResource(properties, resourceName);
     }
@@ -30,7 +31,7 @@ public final class PropertiesResourceManager {
      *
      * @return the property
      */
-    public String getProperty(@NonNull String key) {
+    public String getProperty(@NonNull final String key) {
         return properties.getProperty(key);
     }
 
@@ -58,16 +59,15 @@ public final class PropertiesResourceManager {
 
     private Properties appendFromResource(final Properties objProperties, final String resourceName) {
         InputStream inStream = this.getClass().getClassLoader().getResourceAsStream(resourceName);
-
         if (inStream != null) {
             try {
                 objProperties.load(inStream);
                 inStream.close();
             } catch (IOException e) {
-                logger.info(e.getMessage());
+                LOGGER.info(e.getMessage());
             }
         } else {
-            logger.error(String.format("Resource \"%1$s\" could not be found", resourceName));
+            LOGGER.error(String.format("Resource \"%1$s\" could not be found", resourceName));
         }
         return objProperties;
     }

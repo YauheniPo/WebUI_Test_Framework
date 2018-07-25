@@ -5,41 +5,21 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import demo.test.models.Mail;
 import demo.test.models.TestDataMails;
-import demo.test.utils.FactoryInitParams;
 import webdriver.Browser;
-import webdriver.Logger;
+import webdriver.common.ProviderData;
 import webdriver.utils.mail.MailUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 public class ApiEmailSteps extends BaseSteps {
     private final String currentBrowser = Browser.getBrowserName();
     private final ArrayList<MailUtils> mailBox = new ArrayList<>();
+    private Predicate<Object> elIsNull = Objects::nonNull;
 
-    /**
-     * Get params object [ ]
-     *
-     * @return the object [ ]
-     */
-    private Object[] getParams() {
-        String dataBaseLocation = Browser.getPropStage().getProperty("dataBaseLocation");
-        Object[] dataProvider = new FactoryInitParams().getTestData(dataBaseLocation);
-        if (dataProvider == null) {
-            Logger.getInstance().error(String.format("Data not received from %s", dataBaseLocation));
-        }
-        return dataProvider;
-    }
-
-    /**
-     * Gets mail store.
-     *
-     * @param login    the login
-     * @param password the password
-     *
-     * @return the mail store
-     */
     private MailUtils getMailStore(String login, String password) {
         MailUtils mail = new MailUtils(login, password);
         mailBox.add(mail);
@@ -49,57 +29,49 @@ public class ApiEmailSteps extends BaseSteps {
     @After(order = 2)
     public void clearEmailAndCloseMailStore() {
         deleteMails();
-        for (MailUtils mail : mailBox) {
-            if (mail != null) {
-                mail.closeStore();
-            }
-        }
+        mailBox.forEach(mail -> {if(elIsNull.test(mail)) {mail.closeStore();}});
     }
 
-    @Given("^test data$")
-    public void getTestData() {
-        TestDataMails testDataMails = (TestDataMails) (getParams()[0]);
-        scenarioContext.setContext("senderMailLogin", testDataMails.getSenderMailLogin());
-        scenarioContext.setContext("senderMailPassword", testDataMails.getSenderMailPassword());
-        scenarioContext.setContext("recipientMailLogin", testDataMails.getRecipientMailLogin());
-        scenarioContext.setContext("recipientMailPassword", testDataMails.getRecipientMailPassword());
+    @Given("^test data from \"([^\"]*)\"$")
+    public void testDataFrom(String datafile) {
+        TestDataMails testDataMails = (TestDataMails) (new ProviderData(datafile).getParams()[0]);
+        SCENARIO_CONTEXT.setContext("senderMailLogin", testDataMails.getSenderMailLogin());
+        SCENARIO_CONTEXT.setContext("senderMailPassword", testDataMails.getSenderMailPassword());
+        SCENARIO_CONTEXT.setContext("recipientMailLogin", testDataMails.getRecipientMailLogin());
+        SCENARIO_CONTEXT.setContext("recipientMailPassword", testDataMails.getRecipientMailPassword());
     }
 
     @And("^deleting email data$")
     public void deleteMails() {
-        for (MailUtils mail : mailBox) {
-            if (mail != null) {
-                mail.deleteAllMessages();
-            }
-        }
+        mailBox.forEach(mail -> {if(elIsNull.test(mail)) {mail.deleteAllMessages();}});
     }
 
     @And("^connecting '(.*)' email store$")
     public void connectingEmailStore(String account) {
-        MailUtils email = getMailStore((String) scenarioContext.getContextObj(account + "MailLogin"),
-                (String) scenarioContext.getContextObj(account + "MailPassword"));
-        scenarioContext.setContext(account, email);
+        MailUtils email = getMailStore((String) SCENARIO_CONTEXT.getContextObj(account + "MailLogin"),
+                (String) SCENARIO_CONTEXT.getContextObj(account + "MailPassword"));
+        SCENARIO_CONTEXT.setContext(account, email);
     }
 
     @And("^creating letter with text '(.*)'$")
     public void generationLetter(String emailText) {
         String dateTimeMail = new SimpleDateFormat("HH:mm").format(new Date());
-        String subject = String.format("From %s", scenarioContext.getContextObj("senderMailLogin"));
+        String subject = String.format("From %s", SCENARIO_CONTEXT.getContextObj("senderMailLogin"));
         String text = String.format("%s_%s_%s", emailText, currentBrowser, dateTimeMail);
-        Mail apiMail = new Mail(subject, text, (String) scenarioContext.getContextObj("senderMailLogin"),
-                (String) scenarioContext.getContextObj("recipientMailLogin"));
-        scenarioContext.setContext("apiMail", apiMail);
+        Mail apiMail = new Mail(subject, text, (String) SCENARIO_CONTEXT.getContextObj("senderMailLogin"),
+                (String) SCENARIO_CONTEXT.getContextObj("recipientMailLogin"));
+        SCENARIO_CONTEXT.setContext("apiMail", apiMail);
     }
 
     @And("^sending letter to recipient$")
     public void sendingLetterToRecipient() {
-        Mail apiMail = (Mail) scenarioContext.getContextObj("apiMail");
-        ((MailUtils) scenarioContext.getContextObj("sender")).messageGeneration(apiMail.getText(),
-                apiMail.getSubject(), apiMail.getToAddress()).sendMail();
+        Mail apiMail = (Mail) SCENARIO_CONTEXT.getContextObj("apiMail");
+        ((MailUtils) SCENARIO_CONTEXT.getContextObj("sender")).messageGeneration(apiMail.getText(),
+                                                                                 apiMail.getSubject(), apiMail.getToAddress()).sendMail();
     }
 
     @And("^sending letter in sender send folder$")
     public void sendingLetterInSendFolder() {
-        ((MailUtils) scenarioContext.getContextObj("sender")).addMsgInSentFolder();
+        ((MailUtils) SCENARIO_CONTEXT.getContextObj("sender")).addMsgInSentFolder();
     }
 }

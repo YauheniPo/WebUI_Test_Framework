@@ -161,6 +161,7 @@ public final class Browser {
     void exit() {
         try {
             getDriver().quit();
+            instance = null;
             LOGGER.info("browser driver quit");
         } catch (Exception e) {
             LOGGER.debug(e.getMessage());

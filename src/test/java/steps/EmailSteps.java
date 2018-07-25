@@ -17,8 +17,8 @@ public class EmailSteps extends BaseSteps {
 
     @When("^I was authorized as '(.*)'$")
     public void authorized(String account) {
-        authorizeEmailForm.signIn((String) scenarioContext.getContextObj(account + "MailLogin"),
-                                  (String) scenarioContext.getContextObj(account + "MailPassword"));
+        authorizeEmailForm.signIn((String) SCENARIO_CONTEXT.getContextObj(account + "MailLogin"),
+                                  (String) SCENARIO_CONTEXT.getContextObj(account + "MailPassword"));
     }
 
     @Then("^Email Page is opened$")
@@ -34,6 +34,6 @@ public class EmailSteps extends BaseSteps {
     @And("^I chose '(.*)' last letter$")
     public void choiceLastLetter(String account) {
         demo.test.models.Mail mail = emailAccountPage.getMailsForm().choiceLastMail().getMail();
-        scenarioContext.setContext(account + "Mail", mail);
+        SCENARIO_CONTEXT.setContext(account + "Mail", mail);
     }
 }

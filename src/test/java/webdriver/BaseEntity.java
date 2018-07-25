@@ -1,21 +1,34 @@
 package webdriver;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import org.openqa.selenium.By;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
-import webdriver.common.SoftAssertWrapper;
-
-import java.io.File;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
+import webdriver.asserts.AssertWrapper;
+import webdriver.elements.Label;
 
 /**
  * The type Base entity.
  */
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class BaseEntity {
-    protected static Logger LOGGER = Logger.getInstance();
-    protected static SoftAssertWrapper assertWrapper = SoftAssertWrapper.getInstance();
+    protected By titleLocator;
+    protected String title;
+    protected static final Logger LOGGER = Logger.getInstance();
+    protected static final AssertWrapper ASSERT_WRAPPER = AssertWrapper.getInstance();
+
+    /**
+     * Instantiates a new Base entity.
+     *
+     * @param locator   the locator
+     * @param formTitle the form title
+     */
+    protected BaseEntity(@NonNull final By locator, @NonNull final String formTitle) {
+        this.titleLocator = locator;
+        this.title = formTitle;
+    }
 
     /**
      * Gets browser.
@@ -72,32 +85,15 @@ public abstract class BaseEntity {
     }
 
     /**
-     * Make screen.
-     *
-     * @param name the name
+     * Check form is displayed.
      */
-    void makeScreen(final Class<? extends BaseEntity> name) {
-        String fileName = name.getPackage().getName() + "." + name.getSimpleName();
-        String pageSourcePath = String.format("surefire-reports" + File.separator + "html" +
-                File.separator + "Screenshots/%1$s.txt", fileName);
-        String screenshotPath = String.format("surefire-reports" + File.separator + "html" +
-                File.separator + "Screenshots/%1$s.png", fileName);
+    void checkIsDisplayed() {
         try {
-            String pageSource = Browser.getDriver().getPageSource();
-            FileUtils.writeStringToFile(new File(Paths.get(pageSourcePath).toUri()), pageSource, Charset.defaultCharset());
-        } catch (Exception e1) {
-            LOGGER.debug(e1.getMessage());
-        }
-        try {
-            File screen = Browser.getDriver().getScreenshotAs(OutputType.FILE);
-            File addedNewFile = new File(new File(screenshotPath).toURI());
-            FileUtils.copyFile(screen, addedNewFile);
+            new Label(this.titleLocator, title).waitForIsElementPresent();
         } catch (Exception e) {
-            LOGGER.debug(e.getMessage());
+            debug(e.getMessage());
+            ASSERT_WRAPPER.fatal(String.format("Locator form %1$s doesn't appear", this.title));
         }
-        String formattedName = String.format("'Screenshots/%1$s.png'>ScreenShot", fileName);
-        String formattedNamePageSource = String.format("'Screenshots/%1$s.txt'>Page Source", fileName);
-        LOGGER.info(formattedName);
-        LOGGER.info(formattedNamePageSource);
+        info(String.format("Locator of %1$s Form appears", this.title));
     }
 }

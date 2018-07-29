@@ -5,6 +5,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import demo.test.forms.AuthorizeEmailForm;
 import demo.test.pages.EmailAccountPage;
+import demo.test.testModels.Mail;
 
 public class EmailSteps extends BaseSteps {
     private AuthorizeEmailForm authorizeEmailForm;
@@ -16,7 +17,7 @@ public class EmailSteps extends BaseSteps {
     }
 
     @When("^I was authorized as '(.*)'$")
-    public void authorized(String account) {
+    public void authorization(String account) {
         authorizeEmailForm.signIn((String) SCENARIO_CONTEXT.getContextObj(account + "MailLogin"),
                                   (String) SCENARIO_CONTEXT.getContextObj(account + "MailPassword"));
     }
@@ -33,7 +34,7 @@ public class EmailSteps extends BaseSteps {
 
     @And("^I chose '(.*)' last letter$")
     public void choiceLastLetter(String account) {
-        demo.test.models.Mail mail = emailAccountPage.getMailsForm().choiceLastMail().getMail();
+        Mail mail = emailAccountPage.getMailsForm().choiceLastMail().getMail();
         SCENARIO_CONTEXT.setContext(account + "Mail", mail);
     }
 }

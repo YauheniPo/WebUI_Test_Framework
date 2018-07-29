@@ -16,7 +16,7 @@ import static webdriver.Constants.PROPERTIES_STAGE;
  * The type Browser.
  */
 public final class Browser {
-    private static final String BROWSER_BY_DEFAULT = Browsers.FIREFOX.value;
+    private static final String BROWSER_BY_DEFAULT = Browsers.CHROME.value;
     private static final String URL_LOGIN_PAGE = "urlLoginPage";
     private static final String DRIVER_MANAGER = "driverManager";
     private static final String BROWSER_HEADLESS = "browserHeadless";

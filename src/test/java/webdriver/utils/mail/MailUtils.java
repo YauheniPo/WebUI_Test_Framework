@@ -2,6 +2,7 @@ package webdriver.utils.mail;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import webdriver.BaseEntity;
 import webdriver.PropertiesResourceManager;
 
@@ -18,6 +19,7 @@ import static webdriver.Constants.PROPERTIES_MAIL;
  * The type Mail utils.
  */
 public class MailUtils extends BaseEntity {
+
     private static final PropertiesResourceManager PROPS = new PropertiesResourceManager(PROPERTIES_MAIL);
     private String host;
     private final String fromAddress;
@@ -81,13 +83,10 @@ public class MailUtils extends BaseEntity {
     /**
      * Send mail.
      */
+    @SneakyThrows({MessagingException.class, IOException.class})
     public void sendMail() {
-        try {
-            Transport.send(message);
-            info(String.format("Sent a email Subject: %s Text: %s", message.getSubject(), message.getContent()));
-        } catch (MessagingException | IOException e) {
-            debug(e.getMessage());
-        }
+        Transport.send(message);
+        info(String.format("Sent a email Subject: %s Text: %s", message.getSubject(), message.getContent()));
     }
 
     /**
@@ -98,18 +97,15 @@ public class MailUtils extends BaseEntity {
      * @param recipientEmailAddress the recipient email address
      * @return the mail utils
      */
+    @SneakyThrows({MessagingException.class})
     public MailUtils messageGeneration(String text, String subject, String recipientEmailAddress) {
         message = new MimeMessage(session);
-        try {
-            message.setHeader("Content-Type", String.format("text/plain; charset=%s", CHARSET));
-            message.setSubject(subject, CHARSET);
-            message.setText(text, CHARSET);
-            message.setFrom(new InternetAddress(fromAddress));
-            InternetAddress toAddress = new InternetAddress(recipientEmailAddress);
-            message.addRecipient(Message.RecipientType.TO, toAddress);
-        } catch (MessagingException e) {
-            debug(e.getMessage());
-        }
+        message.setHeader("Content-Type", String.format("text/plain; charset=%s", CHARSET));
+        message.setSubject(subject, CHARSET);
+        message.setText(text, CHARSET);
+        message.setFrom(new InternetAddress(fromAddress));
+        InternetAddress toAddress = new InternetAddress(recipientEmailAddress);
+        message.addRecipient(Message.RecipientType.TO, toAddress);
         return this;
     }
 
@@ -118,27 +114,22 @@ public class MailUtils extends BaseEntity {
      *
      * @param folderName the folder name
      */
+    @SneakyThrows({MessagingException.class})
     private void addMsgInFolder(String folderName) {
-        try {
-            Folder folder = getStoreConnected().getFolder(folderName);
-            folder.open(Folder.READ_WRITE);
-            folder.appendMessages(new Message[]{message});
-            folder.close(true);
-        } catch (MessagingException e) {
-            debug(e.getMessage());
-        }
+        Folder folder = getStoreConnected().getFolder(folderName);
+        folder.open(Folder.READ_WRITE);
+        folder.appendMessages(new Message[]{message});
+        folder.close(true);
     }
 
     /**
      * Add msg in sent folder.
      */
+    @SneakyThrows({MessagingException.class, IOException.class})
     public void addMsgInSentFolder() {
-        try {
-            info(String.format("Sent a email Subject: %s Text: %s to %s folder", this.message.getSubject(), message.getContent(), sentFolder));
-            addMsgInFolder(sentFolder);
-        } catch (MessagingException | IOException e) {
-            debug(e.getMessage());
-        }
+        info(String.format("Sent a email Subject: %s Text: %s to %s folder", this.message.getSubject(),
+                           message.getContent(), sentFolder));
+        addMsgInFolder(sentFolder);
     }
 
     /**
@@ -197,13 +188,10 @@ public class MailUtils extends BaseEntity {
     /**
      * Close store.
      */
+    @SneakyThrows(Exception.class)
     public void closeStore() {
-        try {
-            store.close();
-            info(String.format("MailStore %s is close", fromAddress));
-        } catch (Exception e) {
-            debug(e.getMessage());
-        }
+        store.close();
+        info(String.format("MailStore %s is close", fromAddress));
     }
 
     /**

@@ -1,6 +1,6 @@
 package demo.test.forms;
 
-import demo.test.models.Mail;
+import demo.test.testModels.Mail;
 import org.openqa.selenium.By;
 import webdriver.BaseForm;
 import webdriver.elements.Label;

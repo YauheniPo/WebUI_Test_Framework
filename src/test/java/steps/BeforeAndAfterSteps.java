@@ -14,7 +14,7 @@ public class BeforeAndAfterSteps extends BaseEntity {
         before();
     }
 
-    @After
+    @After(order = 1)
     public void afterScenario(Scenario scenario) {
         if (scenario.isFailed()) {
             TestListener testListener = new TestListener();

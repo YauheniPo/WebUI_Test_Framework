@@ -3,8 +3,8 @@ package steps;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
-import demo.test.models.Mail;
-import demo.test.models.TestDataMails;
+import demo.test.testModels.Mail;
+import demo.test.testModels.TestDataMails;
 import webdriver.Browser;
 import webdriver.common.ProviderData;
 import webdriver.utils.mail.MailUtils;
@@ -17,7 +17,7 @@ import java.util.function.Predicate;
 
 public class ApiEmailSteps extends BaseSteps {
     private final String currentBrowser = Browser.getBrowserName();
-    private final ArrayList<MailUtils> mailBox = new ArrayList<>();
+    private static final ArrayList<MailUtils> mailBox = new ArrayList<>();
     private Predicate<Object> elIsNull = Objects::nonNull;
 
     private MailUtils getMailStore(String login, String password) {
@@ -28,8 +28,16 @@ public class ApiEmailSteps extends BaseSteps {
 
     @After(order = 2)
     public void clearEmailAndCloseMailStore() {
-        deleteMails();
-        mailBox.forEach(mail -> {if(elIsNull.test(mail)) {mail.closeStore();}});
+        try {
+            deleteMails();
+            mailBox.forEach(mail -> {
+                if (elIsNull.test(mail)) {
+                    mail.closeStore();
+                }
+            });
+        } finally {
+            mailBox.clear();
+        }
     }
 
     @Given("^test data from \"([^\"]*)\"$")
@@ -54,10 +62,10 @@ public class ApiEmailSteps extends BaseSteps {
     }
 
     @And("^creating letter with text '(.*)'$")
-    public void generationLetter(String emailText) {
+    public void generationLetter(String textLetter) {
         String dateTimeMail = new SimpleDateFormat("HH:mm").format(new Date());
         String subject = String.format("From %s", SCENARIO_CONTEXT.getContextObj("senderMailLogin"));
-        String text = String.format("%s_%s_%s", emailText, currentBrowser, dateTimeMail);
+        String text = String.format("%s_%s_%s", textLetter, currentBrowser, dateTimeMail);
         Mail apiMail = new Mail(subject, text, (String) SCENARIO_CONTEXT.getContextObj("senderMailLogin"),
                 (String) SCENARIO_CONTEXT.getContextObj("recipientMailLogin"));
         SCENARIO_CONTEXT.setContext("apiMail", apiMail);

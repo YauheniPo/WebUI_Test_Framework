@@ -5,6 +5,7 @@ import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -98,14 +99,10 @@ final public class BrowserFactory {
      *
      * @return the grid remote driver
      */
+    @SneakyThrows(MalformedURLException.class)
     private static RemoteWebDriver getGridRemoteDriver(DesiredCapabilities capabilities) {
         logger.info("Set selenium grid driver");
-        try {
-            return new RemoteWebDriver(new URL(Browser.getGridUrl()), capabilities);
-        } catch (MalformedURLException exception) {
-            logger.debug("Grid Remote Driver Initialization is fall", exception);
-        }
-        return null;
+        return new RemoteWebDriver(new URL(Browser.getGridUrl()), capabilities);
     }
 
     /**

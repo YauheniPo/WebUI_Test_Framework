@@ -2,6 +2,7 @@ package webdriver;
 
 import lombok.Cleanup;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,15 +58,11 @@ public final class PropertiesResourceManager {
         properties.setProperty(key, value);
     }
 
+    @SneakyThrows(IOException.class)
     private Properties appendFromResource(final Properties objProperties, final String resourceName) {
-        InputStream inStream = this.getClass().getClassLoader().getResourceAsStream(resourceName);
+        @Cleanup InputStream inStream = this.getClass().getClassLoader().getResourceAsStream(resourceName);
         if (inStream != null) {
-            try {
-                objProperties.load(inStream);
-                inStream.close();
-            } catch (IOException e) {
-                LOGGER.info(e.getMessage());
-            }
+            objProperties.load(inStream);
         } else {
             LOGGER.error(String.format("Resource \"%1$s\" could not be found", resourceName));
         }

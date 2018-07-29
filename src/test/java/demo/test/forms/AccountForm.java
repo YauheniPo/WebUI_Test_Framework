@@ -12,7 +12,7 @@ import webdriver.elements.Label;
  * The type User account dropdown.
  */
 public class AccountForm extends BaseForm {
-    private static final By MAIN_LOCATOR = By.xpath("//div[contains(@class, 'head-user') or contains(@class, 'card__title')]");
+    private static final By MAIN_LOCATOR = By.xpath("//div[contains(@class, 'head-user') or contains(@class, 'login-title')]");
     private final String locUserDropdown = "//div[contains(@class, 'dropdown-content')]//*[contains(@href, '%s')]";
 
     /**

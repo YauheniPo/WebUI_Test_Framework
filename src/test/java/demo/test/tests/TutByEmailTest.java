@@ -3,8 +3,8 @@ package demo.test.tests;
 import demo.test.forms.AccountForm;
 import demo.test.forms.AuthorizeEmailForm;
 import demo.test.forms.TutByHeader;
-import demo.test.models.Mail;
-import demo.test.models.TestDataMails;
+import demo.test.testModels.Mail;
+import demo.test.testModels.TestDataMails;
 import demo.test.pages.EmailAccountPage;
 import demo.test.pages.TutByHomePage;
 import io.qameta.allure.Step;
@@ -23,6 +23,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * The type Tut by email test.
@@ -36,6 +38,7 @@ public class TutByEmailTest extends BaseTest {
     private MailUtils mailSender;
     private final String currentBrowser = Browser.getBrowserName();
     private final ArrayList<MailUtils> mailBox = new ArrayList<>();
+    private Predicate<Object> elIsNull = Objects::nonNull;
 
     /**
      * Init test data.
@@ -54,11 +57,7 @@ public class TutByEmailTest extends BaseTest {
     @AfterClass
     public void clearEmailAndCloseMailStore() {
         deleteMails();
-        for (MailUtils mail : mailBox) {
-            if (mail != null) {
-                mail.closeStore();
-            }
-        }
+        mailBox.forEach(mail -> {if(elIsNull.test(mail)) {mail.closeStore();}});
     }
 
     /**
@@ -174,11 +173,7 @@ public class TutByEmailTest extends BaseTest {
      * Delete mails.
      */
     private void deleteMails() {
-        for (MailUtils mail : mailBox) {
-            if (mail != null) {
-                mail.deleteAllMessages();
-            }
-        }
+        mailBox.forEach(mail -> {if(elIsNull.test(mail)) {mail.deleteAllMessages();}});
     }
 
     /**
@@ -188,10 +183,10 @@ public class TutByEmailTest extends BaseTest {
      * @param mails   the mails
      */
     private void equalsMails(Mail apiMail, List<Mail> mails) {
-        for (Mail mail : mails) {
+        mails.forEach(mail -> {
             ASSERT_WRAPPER.assertEquals(apiMail, mail);
-            info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
-        }
+            LOGGER.info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
+        });
     }
 
     /**

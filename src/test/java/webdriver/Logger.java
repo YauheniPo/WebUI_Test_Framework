@@ -1,27 +1,25 @@
 package webdriver;
 
-import org.apache.logging.log4j.LogManager;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.Synchronized;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * The type Logger.
  */
+@Log4j2
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Logger {
-    private static final org.apache.logging.log4j.Logger LOG4J = LogManager.getLogger(Logger.class);
     private static Logger instance = null;
-
-    /**
-     * Instantiates a new Logger.
-     */
-    private Logger() {
-        // do not instantiate Logger class
-    }
 
     /**
      * Gets instance.
      *
      * @return the instance
      */
-    public static synchronized Logger getInstance() {
+    @Synchronized
+    public static Logger getInstance() {
         if (instance == null) {
             instance = new Logger();
         }
@@ -44,7 +42,7 @@ public final class Logger {
      * @param message the message
      */
     public void debug(Object message) {
-        LOG4J.debug(message);
+        log.debug(message);
     }
 
     /**
@@ -53,7 +51,7 @@ public final class Logger {
      * @param message the message
      */
     public void error(Object message) {
-        LOG4J.error(message);
+        log.error(message);
     }
 
     /**
@@ -62,7 +60,7 @@ public final class Logger {
      * @param message the message
      */
     public void info(Object message) {
-        LOG4J.info(message);
+        log.info(message);
     }
 
     /**
@@ -71,7 +69,7 @@ public final class Logger {
      * @param message the message
      */
     public void fatal(final String message) {
-        LOG4J.fatal(message);
+        log.fatal(message);
     }
 
     /**
@@ -81,7 +79,7 @@ public final class Logger {
      * @param throwable the throwable
      */
     public void debug(Object message, Throwable throwable) {
-        LOG4J.debug(message, throwable);
+        log.debug(message, throwable);
     }
 
     /**
@@ -103,11 +101,11 @@ public final class Logger {
     private void logTestEnd(final String data, final String result, final String reason) {
         info("");
         String leftAlignFormat = "| %-20s | %-22s | %-32s |%n";
-        info("+----------------------------------------------+------------------------+-------------------------------------+%n");
-        info("| Account                                      | Result (Passed\\Failed) | Failures reason                     |%n");
-        info("+----------------------------------------------+------------------------+-------------------------------------+%n");
+        info("+----------------------------------------------+------------------------+-------------------------------------+");
+        info("| Account                                      | Result (Passed\\Failed) | Failures reason                     |");
+        info("+----------------------------------------------+------------------------+-------------------------------------+");
         info(String.format(leftAlignFormat, data, result, reason));
-        info("+----------------------------------------------+------------------------+-------------------------------------+%n");
+        info("+----------------------------------------------+------------------------+-------------------------------------+");
     }
 
     /**
@@ -137,8 +135,7 @@ public final class Logger {
     void logTestName(final String testName) {
         String formattedName = String.format("===================== '%1$s' =====================", testName);
         StringBuilder delims = new StringBuilder();
-        int nChars = formattedName.length();
-        for (int i = 0; i < nChars; i++) {
+        for (int i = 0, nChars = formattedName.length(); i < nChars; i++) {
             delims.append("-");
         }
         info(delims.toString());

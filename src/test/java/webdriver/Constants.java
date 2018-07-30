@@ -1,9 +1,9 @@
 package webdriver;
 
 /**
- * The type Constants frm.
+ * The type Constants.
  */
-public class ConstantsFrm {
+public class Constants {
     public static final String PROPERTIES_MAIL = "mail.properties";
     public static final String CHARSET = "UTF-8";
     public static final String PROPERTIES_DB = "database.properties";

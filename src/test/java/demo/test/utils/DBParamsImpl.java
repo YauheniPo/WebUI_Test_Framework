@@ -1,5 +1,6 @@
 package demo.test.utils;
 
+import lombok.Cleanup;
 import webdriver.PropertiesResourceManager;
 import webdriver.utils.db.DatabaseConnMySQL;
 
@@ -9,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static webdriver.ConstantsFrm.PROPERTIES_DB_QUERIES;
+import static webdriver.Constants.PROPERTIES_DB_QUERIES;
 
 /**
  * The type Db parameters.
@@ -20,29 +21,27 @@ public class DBParamsImpl extends InitParams {
     /**
      * Fetch test data object [ ].
      *
-     * @param dataBaselocation the data baselocation
-     *
+     * @param dataBaseLocation the data baselocation
      * @return the object [ ]
      */
     @Override
-    public Object[] fetchTestData(String dataBaselocation) {
+    public Object[] fetchTestData(String dataBaseLocation) {
         DatabaseConnMySQL database = new DatabaseConnMySQL();
         Statement statement = database.getStatement();
         String getEmailAccounts = props.getProperty("sql_get_email_accounts");
         List<String> data = new ArrayList<>();
         try {
-            try (ResultSet rs = statement.executeQuery(getEmailAccounts)) {
-                while (rs.next()) {
-                    data.add(rs.getString("login"));
-                    data.add(rs.getString("password"));
-                }
+            @Cleanup ResultSet rs = statement.executeQuery(getEmailAccounts);
+            while (rs.next()) {
+                data.add(rs.getString("login"));
+                data.add(rs.getString("password"));
             }
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         } finally {
             database.close();
         }
-        LOGGER.info(String.format("Вata received from %s", dataBaselocation));
+        logger.info(String.format("Data received from %s", dataBaseLocation));
         return getTestDataMails(data);
     }
 }

@@ -1,8 +1,7 @@
 package webdriver;
 
-import demo.test.utils.FactoryInitParams;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import webdriver.common.ProviderData;
 
 /**
  * The type Base test.
@@ -24,38 +23,22 @@ public abstract class BaseTest extends BaseEntity {
     protected abstract String getReportData();
 
     /**
-     * Get params object [ ]
-     *
-     * @return the object [ ]
-     */
-    @DataProvider(name = "initParams")
-    public Object[] getParams() {
-        String dataBaseLocation = Browser.getPropsStage().getProperty("dataBaseLocation");
-        Object[] dataProvider = new FactoryInitParams().getTestData(dataBaseLocation);
-        if (dataProvider == null) {
-            logger.error(String.format("Data not received from %s", dataBaseLocation));
-        }
-        return dataProvider;
-    }
-
-    /**
      * Test method
      *
      * @param testData emails test data
      */
-    @Test(dataProvider = "initParams")
+    @Test(dataProvider = "initParams", dataProviderClass = ProviderData.class)
     public void xTest(Object testData) {
         Class<? extends BaseTest> currentClass = this.getClass();
         try {
-            logger.logTestName(currentClass.getName());
+            LOGGER.logTestName(currentClass.getName());
             runTest(testData);
-            logger.logTestEnd(getReportData());
+            LOGGER.logTestEnd(getReportData());
         } catch (Exception ex) {
-            logger.debug(ex.getMessage());
+            LOGGER.debug(ex.getMessage());
             throw ex;
         } catch (AssertionError as) {
-            logger.logTestEnd(getReportData(), as.getMessage());
-            makeScreen(currentClass);
+            LOGGER.logTestEnd(getReportData(), as.getMessage());
             throw as;
         }
     }

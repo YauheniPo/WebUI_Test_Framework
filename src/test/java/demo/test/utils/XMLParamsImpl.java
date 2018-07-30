@@ -17,13 +17,13 @@ public class XMLParamsImpl extends InitParams {
     /**
      * Fetch test data object [ ].
      *
-     * @param dataBaselocation the data baselocation
+     * @param dataBaseLocation the data baselocation
      *
      * @return the object [ ]
      */
     @Override
-    public Object[] fetchTestData(String dataBaselocation) {
-        Document doc = new XMLParse(dataBaselocation).fetchDocument();
+    public Object[] fetchTestData(String dataBaseLocation) {
+        Document doc = new XMLParse(dataBaseLocation).fetchDocument();
         NodeList nList = doc.getElementsByTagName("account");
         List<String> data = new ArrayList<>();
         for (int temp = 0; temp < nList.getLength(); temp++) {

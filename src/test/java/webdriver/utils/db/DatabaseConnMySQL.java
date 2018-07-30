@@ -1,5 +1,6 @@
 package webdriver.utils.db;
 
+import lombok.SneakyThrows;
 import webdriver.BaseEntity;
 import webdriver.PropertiesResourceManager;
 
@@ -8,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static webdriver.ConstantsFrm.PROPERTIES_DB;
+import static webdriver.Constants.PROPERTIES_DB;
 
 /**
  * The type Database conn my sql.
@@ -22,19 +23,16 @@ public class DatabaseConnMySQL extends BaseEntity {
      *
      * @return the connection
      */
+    @SneakyThrows(Exception.class)
     private Connection getConnection() {
         if (connection == null) {
-            try {
-                Class.forName(props.getProperty(Property.MYSQL_JDBC_DRIVER_NAME.toString())).newInstance();
-                info("Get connection from database");
-                connection = DriverManager.getConnection(
-                        props.getProperty(Property.MYSQL_URL.toString()),
-                        props.getProperty(Property.MYSQL_USERNAME.toString()),
-                        props.getProperty(Property.MYSQL_PASSWORD.toString())
-                );
-            } catch (Exception exception) {
-                info(String.format("Connection from database is denied. %s", exception));
-            }
+            Class.forName(props.getProperty(Property.MYSQL_JDBC_DRIVER_NAME.toString())).newInstance();
+            info("Get connection from database");
+            connection = DriverManager.getConnection(
+                props.getProperty(Property.MYSQL_URL.toString()),
+                props.getProperty(Property.MYSQL_USERNAME.toString()),
+                props.getProperty(Property.MYSQL_PASSWORD.toString())
+            );
         }
         return connection;
     }
@@ -48,7 +46,7 @@ public class DatabaseConnMySQL extends BaseEntity {
         try {
             return getConnection().createStatement();
         } catch (SQLException exception) {
-            info(String.format("Not statement from database. %s", exception));
+            debug(String.format("Not statement from database. %s", exception));
         }
         return null;
     }
@@ -56,14 +54,11 @@ public class DatabaseConnMySQL extends BaseEntity {
     /**
      * Close.
      */
+    @SneakyThrows(SQLException.class)
     public void close() {
         info("DB connection is closing");
         if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException exception) {
-                info(String.format("Connection is not close. %s", exception));
-            }
+            connection.close();
             connection = null;
         }
     }

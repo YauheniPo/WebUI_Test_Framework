@@ -1,22 +1,30 @@
 package demo.test.tests;
 
-import demo.test.models.Mail;
-import demo.test.models.TestDataMails;
+import demo.test.forms.AccountForm;
 import demo.test.forms.AuthorizeEmailForm;
 import demo.test.forms.TutByHeader;
-import demo.test.forms.UserAccountDropdown;
+import demo.test.testModels.Mail;
+import demo.test.testModels.TestDataMails;
 import demo.test.pages.EmailAccountPage;
 import demo.test.pages.TutByHomePage;
+import io.qameta.allure.Step;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import webdriver.BaseTest;
 import webdriver.Browser;
 import webdriver.utils.mail.MailUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * The type Tut by email test.
@@ -30,6 +38,7 @@ public class TutByEmailTest extends BaseTest {
     private MailUtils mailSender;
     private final String currentBrowser = Browser.getBrowserName();
     private final ArrayList<MailUtils> mailBox = new ArrayList<>();
+    private Predicate<Object> elIsNull = Objects::nonNull;
 
     /**
      * Init test data.
@@ -38,7 +47,7 @@ public class TutByEmailTest extends BaseTest {
      */
     @BeforeTest
     @Parameters(value = {"emailText"})
-    public void initTestData(String emailText) {
+    public void initTestData(@Optional("epam_e.popovich")String emailText) {
         this.emailText = emailText;
     }
 
@@ -48,11 +57,7 @@ public class TutByEmailTest extends BaseTest {
     @AfterClass
     public void clearEmailAndCloseMailStore() {
         deleteMails();
-        for (MailUtils mail : mailBox) {
-            if (mail != null) {
-                mail.closeStore();
-            }
-        }
+        mailBox.forEach(mail -> {if(elIsNull.test(mail)) {mail.closeStore();}});
     }
 
     /**
@@ -86,29 +91,31 @@ public class TutByEmailTest extends BaseTest {
         // cleaning mail data
         deleteMails();
 
-        logger.step(1, "Sending a message using api");
+        LOGGER.step(1, "Sending a message using api");
         Mail apiMail = new Mail(subject, text, this.senderMailLogin, this.recipientMailLogin);
-        mailSender.sendMail(text, subject, this.recipientMailLogin);
+        mailSender.messageGeneration(apiMail.getText(), apiMail.getSubject(), apiMail.getToAddress()).sendMail();
         mailSender.addMsgInSentFolder();
 
-        logger.step(2, "Opening the main page");
+        LOGGER.step(2, "Opening the main page");
         TutByHomePage tutByHomePage = new TutByHomePage();
 
-        logger.step(3, "Receiving data from the sender's mail");
+        LOGGER.step(3, "Receiving data from the sender's mail");
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
         Mail senderMail = fetchAccountMail(EmailAccountPage.NavBox.SENT, this.senderMailLogin, this.senderMailPassword);
         logoutAccount();
+        checkAuthorization(this.senderMailLogin, false);
 
-        logger.step(4, "Opening the main page");
+        LOGGER.step(4, "Opening the main page");
         Browser.openStartPage();
         tutByHomePage = new TutByHomePage();
 
-        logger.step(5, "Receiving data from the sender's mail");
+        LOGGER.step(5, "Receiving data from the sender's mail");
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
         Mail recipientMail = fetchAccountMail(EmailAccountPage.NavBox.INBOX, this.recipientMailLogin, this.recipientMailPassword);
         logoutAccount();
+        checkAuthorization(this.recipientMailLogin, false);
 
-        logger.step(6, "Verification of the correctness of the data of the sent mail");
+        LOGGER.step(6, "Verification of the correctness of the data of the sent mail");
         equalsMails(apiMail, new LinkedList<>(Arrays.asList(senderMail, recipientMail)));
     }
 
@@ -121,16 +128,30 @@ public class TutByEmailTest extends BaseTest {
      *
      * @return the mail
      */
+    @Step("{0} {1} {2}")
     private Mail fetchAccountMail(EmailAccountPage.NavBox folder, String emailLogin, String emailPassword) {
-        return new AuthorizeEmailForm().signIn(emailLogin, emailPassword).
-                fetchEmailFolder(folder).getMailsForm().choiceLastMail().getMail();
+        EmailAccountPage emailAccountPage = new AuthorizeEmailForm().signIn(emailLogin, emailPassword);
+        checkAuthorization(emailLogin, true);
+        return emailAccountPage.fetchEmailFolder(folder).getMailsForm().choiceLastMail().getMail();
+    }
+
+    /**
+     * Check Authorization
+     *
+     * @param login          login
+     * @param expectedResult expected result
+     */
+    @Step("{0} {1}")
+    private void checkAuthorization(String login, Boolean expectedResult) {
+        LOGGER.info("Verify authorization");
+        ASSERT_WRAPPER.assertEquals(new AccountForm().isAuthorized(login), expectedResult);
     }
 
     /**
      * Logout account.
      */
     private void logoutAccount() {
-        new EmailAccountPage().clickUserAccount().clickUserDropdownField(UserAccountDropdown.UserDropdown.LOGOUT);
+        new EmailAccountPage().getAccountForm().clickUserAccount().clickUserDropdownField(AccountForm.UserDropdown.LOGOUT);
     }
 
     /**
@@ -141,6 +162,7 @@ public class TutByEmailTest extends BaseTest {
      *
      * @return the mail store
      */
+    @Step("{0} {1}")
     private MailUtils getMailStore(String login, String password) {
         MailUtils mail = new MailUtils(login, password);
         mailBox.add(mail);
@@ -151,11 +173,7 @@ public class TutByEmailTest extends BaseTest {
      * Delete mails.
      */
     private void deleteMails() {
-        for (MailUtils mail : mailBox) {
-            if (mail != null) {
-                mail.deleteAllMessages();
-            }
-        }
+        mailBox.forEach(mail -> {if(elIsNull.test(mail)) {mail.deleteAllMessages();}});
     }
 
     /**
@@ -165,10 +183,10 @@ public class TutByEmailTest extends BaseTest {
      * @param mails   the mails
      */
     private void equalsMails(Mail apiMail, List<Mail> mails) {
-        for (Mail mail : mails) {
-            assertEquals(apiMail, mail);
-            info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
-        }
+        mails.forEach(mail -> {
+            ASSERT_WRAPPER.assertEquals(apiMail, mail);
+            LOGGER.info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
+        });
     }
 
     /**

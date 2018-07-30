@@ -1,21 +1,26 @@
 package webdriver.utils.mail;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import webdriver.BaseEntity;
 import webdriver.PropertiesResourceManager;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
 import java.util.Properties;
 
-import static webdriver.ConstantsFrm.CHARSET;
-import static webdriver.ConstantsFrm.PROPERTIES_MAIL;
+import static webdriver.Constants.CHARSET;
+import static webdriver.Constants.PROPERTIES_MAIL;
 
 /**
  * The type Mail utils.
  */
 public class MailUtils extends BaseEntity {
-    private static final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_MAIL);
+
+    private static final PropertiesResourceManager PROPS = new PropertiesResourceManager(PROPERTIES_MAIL);
     private String host;
     private final String fromAddress;
     private final String password;
@@ -39,7 +44,7 @@ public class MailUtils extends BaseEntity {
         this.fromAddress = username;
         this.password = password;
         readConfig(host);
-        fetchProperties();
+        setProperties();
         initSession();
         store = connect();
     }
@@ -77,25 +82,31 @@ public class MailUtils extends BaseEntity {
 
     /**
      * Send mail.
+     */
+    @SneakyThrows({MessagingException.class, IOException.class})
+    public void sendMail() {
+        Transport.send(message);
+        info(String.format("Sent a email Subject: %s Text: %s", message.getSubject(), message.getContent()));
+    }
+
+    /**
+     * Message generation mail utils.
      *
      * @param text                  the text
      * @param subject               the subject
-     * @param recipientEmailAddress the recipient emsil address
+     * @param recipientEmailAddress the recipient email address
+     * @return the mail utils
      */
-    public void sendMail(String text, String subject, String recipientEmailAddress) {
+    @SneakyThrows({MessagingException.class})
+    public MailUtils messageGeneration(String text, String subject, String recipientEmailAddress) {
         message = new MimeMessage(session);
-        try {
-            message.setHeader("Content-Type", String.format("text/plain; charset=%s", CHARSET));
-            message.setSubject(subject, CHARSET);
-            message.setText(text, CHARSET);
-            message.setFrom(new InternetAddress(fromAddress));
-            InternetAddress toAddress = new InternetAddress(recipientEmailAddress);
-            message.addRecipient(Message.RecipientType.TO, toAddress);
-            Transport.send(message);
-            info(String.format("Sent a email Subject: %s Text: %s", subject, text));
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+        message.setHeader("Content-Type", String.format("text/plain; charset=%s", CHARSET));
+        message.setSubject(subject, CHARSET);
+        message.setText(text, CHARSET);
+        message.setFrom(new InternetAddress(fromAddress));
+        InternetAddress toAddress = new InternetAddress(recipientEmailAddress);
+        message.addRecipient(Message.RecipientType.TO, toAddress);
+        return this;
     }
 
     /**
@@ -103,21 +114,21 @@ public class MailUtils extends BaseEntity {
      *
      * @param folderName the folder name
      */
+    @SneakyThrows({MessagingException.class})
     private void addMsgInFolder(String folderName) {
-        try {
-            Folder folder = getStoreConnected().getFolder(folderName);
-            folder.open(Folder.READ_WRITE);
-            folder.appendMessages(new Message[]{message});
-            folder.close(true);
-        } catch (MessagingException e) {
-            debug(e.getMessage());
-        }
+        Folder folder = getStoreConnected().getFolder(folderName);
+        folder.open(Folder.READ_WRITE);
+        folder.appendMessages(new Message[]{message});
+        folder.close(true);
     }
 
     /**
      * Add msg in sent folder.
      */
+    @SneakyThrows({MessagingException.class, IOException.class})
     public void addMsgInSentFolder() {
+        info(String.format("Sent a email Subject: %s Text: %s to %s folder", this.message.getSubject(),
+                           message.getContent(), sentFolder));
         addMsgInFolder(sentFolder);
     }
 
@@ -177,13 +188,10 @@ public class MailUtils extends BaseEntity {
     /**
      * Close store.
      */
+    @SneakyThrows(Exception.class)
     public void closeStore() {
-        try {
-            store.close();
-            info(String.format("MailStore %s is close", fromAddress));
-        } catch (Exception e) {
-            debug(e.getMessage());
-        }
+        store.close();
+        info(String.format("MailStore %s is close", fromAddress));
     }
 
     /**
@@ -192,22 +200,22 @@ public class MailUtils extends BaseEntity {
      * @param host the host
      */
     private void readConfig(String host) {
-        String prop = props.getProperty(host);
+        String prop = PROPS.getProperty(host);
         String hostProtoc = prop.split(";")[0];
         this.service = prop.split(";")[1];
         this.host = String.format("%s.%s", hostProtoc, service);
-        this.port = props.getProperty("port");
-        this.sentFolder = props.getProperty("seltFolder", "Sent");
+        this.port = PROPS.getProperty("port");
+        this.sentFolder = PROPS.getProperty("seltFolder", "Sent");
         this.protocol = MailProtocols.valueOf(prop.split(";")[2].toUpperCase());
     }
 
     /**
      * Fetch properties.
      */
-    private void fetchProperties() {
+    private void setProperties() {
         properties.setProperty("mail.store.protocol", protocol.toString());
         properties.put("mail.smtp.host", String.format("smtp.%s", service));
-        properties.put("mail.smtp.auth", props.getProperty("smtp.auth"));
+        properties.put("mail.smtp.auth", PROPS.getProperty("smtp.auth"));
         properties.put("mail.smtp.port", port);
         properties.put("mail.imap.ssl.enable", "true");
         properties.put("mail.smtp.socketFactory.port", port);
@@ -217,6 +225,7 @@ public class MailUtils extends BaseEntity {
     /**
      * The enum Mail protocols.
      */
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
     public enum MailProtocols {
         POP3("pop3"),
         SMTP("smtp"),
@@ -225,15 +234,6 @@ public class MailUtils extends BaseEntity {
         POP3S("pop3s");
 
         private final String protocol;
-
-        /**
-         * Instantiates a new Mail protocols.
-         *
-         * @param name the name
-         */
-        MailProtocols(String name) {
-            protocol = name;
-        }
 
         /**
          * To string string.

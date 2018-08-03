@@ -4,7 +4,12 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Synchronized;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.naming.NamingException;
 import java.util.concurrent.TimeUnit;
@@ -15,7 +20,11 @@ import static webdriver.Constants.PROPERTIES_STAGE;
 /**
  * The type Browser.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource(properties = "enigma = 42")
 public final class Browser {
+    @Value("${enigma}")
+    Integer enigma;
     private static final String BROWSER_BY_DEFAULT = Browsers.CHROME.value;
     private static final String URL_LOGIN_PAGE = "urlLoginPage";
     private static final String DRIVER_MANAGER = "driverManager";

@@ -1,6 +1,5 @@
 package webdriver.waitings;
 
-import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -32,7 +31,7 @@ final public class SmartWait {
             .withTimeout(Duration.ofSeconds(timeOutInSeconds)).pollingEvery(Duration.ofMillis(300));
         try {
             return wait.until(condition);
-        } catch (Exception | AssertionError e) {
+        } catch (Exception e) {
             LOGGER.debug("SmartWait.waitFor", e);
         } finally {
             Browser.getDriver().manage().timeouts().implicitlyWait(Long.parseLong(Browser.getTimeoutForCondition()), TimeUnit.SECONDS);
@@ -48,7 +47,6 @@ final public class SmartWait {
      *
      * @return the boolean
      */
-    @SneakyThrows({Exception.class})
     public static boolean waitForTrue(ExpectedCondition<Boolean> condition, long timeOutInSeconds) {
         try {
             return waitFor(condition, timeOutInSeconds) != null;

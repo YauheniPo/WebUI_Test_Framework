@@ -36,7 +36,7 @@ public class TextBox extends BaseElement {
      */
     private void type(final String value) {
         waitForIsElementPresent();
-        info(String.format("text sending" + " '%1$s'", value));
+        LOGGER.info(String.format("text sending" + " '%1$s'", value));
         if (Browser.getDriver() != null) {
             Browser.getDriver().executeScript("arguments[0].style.border='3px solid red'", getElement());
         }

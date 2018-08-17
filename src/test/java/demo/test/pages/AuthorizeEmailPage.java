@@ -1,6 +1,5 @@
-package demo.test.forms;
+package demo.test.pages;
 
-import demo.test.pages.EmailAccountPage;
 import org.openqa.selenium.By;
 import webdriver.BaseForm;
 import webdriver.elements.Button;
@@ -9,7 +8,7 @@ import webdriver.elements.TextBox;
 /**
  * The type Authorize email form.
  */
-public class AuthorizeEmailForm extends BaseForm {
+public class AuthorizeEmailPage extends BaseForm {
     private static final By MAIN_LOCATOR = By.xpath("//*[@class='bookBody']");
     private final TextBox textBoxInputLogin = new TextBox(By.xpath("//*[@id='form']//input[@name='login']"), "Input Login");
     private final TextBox textBoxInputPassword = new TextBox(By.xpath("//*[@id='form']//input[@name='password']"), "Input Password");
@@ -18,7 +17,7 @@ public class AuthorizeEmailForm extends BaseForm {
     /**
      * Instantiates a new Authorize email form.
      */
-    public AuthorizeEmailForm() {
+    public AuthorizeEmailPage() {
         super(MAIN_LOCATOR, "tut.by Authorize Email Form");
     }
 

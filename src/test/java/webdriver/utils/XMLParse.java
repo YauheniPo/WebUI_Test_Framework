@@ -30,7 +30,7 @@ public class XMLParse extends BaseEntity {
         try {
             dBuilder = dbFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         Document doc = null;
         try {
@@ -38,12 +38,12 @@ public class XMLParse extends BaseEntity {
                 doc = dBuilder.parse(fXmlFile);
             }
         } catch (SAXException | IOException e) {
-            error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         if (doc != null) {
             doc.getDocumentElement().normalize();
         }
-        info(String.format("Data received from %s", filepath));
+        LOGGER.info(String.format("Data received from %s", filepath));
         return doc;
     }
 }

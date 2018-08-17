@@ -3,22 +3,22 @@ package steps;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import demo.test.forms.AuthorizeEmailForm;
+import demo.test.pages.AuthorizeEmailPage;
 import demo.test.pages.EmailAccountPage;
 import demo.test.testModels.Mail;
 
 public class EmailSteps extends BaseSteps {
-    private AuthorizeEmailForm authorizeEmailForm;
+    private AuthorizeEmailPage authorizeEmailPage;
     private EmailAccountPage emailAccountPage;
 
     @Then("^Authorize Email Form is opened$")
     public void authorizeEmailForm() {
-        authorizeEmailForm = new AuthorizeEmailForm();
+        authorizeEmailPage = new AuthorizeEmailPage();
     }
 
     @When("^I was authorized as '(.*)'$")
     public void authorization(String account) {
-        authorizeEmailForm.signIn((String) SCENARIO_CONTEXT.getContextObj(account + "MailLogin"),
+        authorizeEmailPage.signIn((String) SCENARIO_CONTEXT.getContextObj(account + "MailLogin"),
                                   (String) SCENARIO_CONTEXT.getContextObj(account + "MailPassword"));
     }
 

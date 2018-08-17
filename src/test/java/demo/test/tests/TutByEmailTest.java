@@ -1,8 +1,9 @@
 package demo.test.tests;
 
 import demo.test.forms.AccountForm;
-import demo.test.forms.AuthorizeEmailForm;
+import demo.test.pages.AuthorizeEmailPage;
 import demo.test.forms.TutByHeader;
+import demo.test.pages.AuthorizeEmailPageFactory;
 import demo.test.testModels.Mail;
 import demo.test.testModels.TestDataMails;
 import demo.test.pages.EmailAccountPage;
@@ -130,7 +131,8 @@ public class TutByEmailTest extends BaseTest {
      */
     @Step("{0} {1} {2}")
     private Mail fetchAccountMail(EmailAccountPage.NavBox folder, String emailLogin, String emailPassword) {
-        EmailAccountPage emailAccountPage = new AuthorizeEmailForm().signIn(emailLogin, emailPassword);
+//        EmailAccountPage emailAccountPage = new AuthorizeEmailPage().signIn(emailLogin, emailPassword);
+        EmailAccountPage emailAccountPage = new AuthorizeEmailPageFactory().signIn(emailLogin, emailPassword);
         checkAuthorization(emailLogin, true);
         return emailAccountPage.fetchEmailFolder(folder).getMailsForm().choiceLastMail().getMail();
     }

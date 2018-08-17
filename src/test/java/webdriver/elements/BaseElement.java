@@ -26,7 +26,7 @@ public abstract class BaseElement extends BaseEntity {
      */
     BaseElement(final By locator, final String nameOf) {
         super(locator, nameOf);
-        info(String.format("Locator of '%1$s' Element", this.title));
+        LOGGER.info(String.format("Locator of '%1$s' Element", this.title));
     }
 
     /**
@@ -46,7 +46,7 @@ public abstract class BaseElement extends BaseEntity {
      */
     public String getText() {
         waitForIsElementPresent();
-        info(String.format("Getting text of element %s", this.title));
+        LOGGER.info(String.format("Getting text of element %s", this.title));
         return element.getText();
     }
 
@@ -55,7 +55,7 @@ public abstract class BaseElement extends BaseEntity {
      */
     public void click() {
         waitForIsElementPresent();
-        info(String.format("clicking %s", this.title));
+        LOGGER.info(String.format("clicking %s", this.title));
         Browser.getDriver().getMouse().mouseMove(element.getCoordinates());
         if (Browser.getDriver() instanceof JavascriptExecutor) {
             Browser.getDriver().executeScript("arguments[0].style.border='3px solid red'", element);
@@ -107,7 +107,7 @@ public abstract class BaseElement extends BaseEntity {
                 }
                 return false;
             } catch (Exception e) {
-                debug(e.getMessage());
+                LOGGER.debug(e.getMessage());
                 return false;
             }
         };

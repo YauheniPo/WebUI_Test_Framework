@@ -1,16 +1,16 @@
 package webdriver;
 
+import static webdriver.Constants.PROPERTIES_SELENIUM;
+import static webdriver.Constants.PROPERTIES_STAGE;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Synchronized;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import javax.naming.NamingException;
 import java.util.concurrent.TimeUnit;
-
-import static webdriver.Constants.PROPERTIES_SELENIUM;
-import static webdriver.Constants.PROPERTIES_STAGE;
+import javax.naming.NamingException;
 
 /**
  * The type Browser.

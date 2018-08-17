@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import webdriver.asserts.AssertWrapper;
-import webdriver.elements.Label;
 
 /**
  * The type Base entity.
@@ -55,45 +54,5 @@ public abstract class BaseEntity {
     @AfterTest
     public void after() {
         getBrowser().exit();
-    }
-
-    /**
-     * Debug.
-     *
-     * @param message the message
-     */
-    protected final void debug(final String message) {
-        LOGGER.debug(String.format("[%1$s] %2$s", this.getClass().getSimpleName(), (message)));
-    }
-
-    /**
-     * Info.
-     *
-     * @param message the message
-     */
-    protected void info(final String message) {
-        LOGGER.info(message);
-    }
-
-    /**
-     * Error.
-     *
-     * @param message the message
-     */
-    protected void error(final String message) {
-        LOGGER.error(message);
-    }
-
-    /**
-     * Check form is displayed.
-     */
-    void checkIsDisplayed() {
-        try {
-            new Label(this.titleLocator, title).waitForIsElementPresent();
-        } catch (Exception e) {
-            debug(e.getMessage());
-            ASSERT_WRAPPER.fatal(String.format("Locator form %1$s doesn't appear", this.title));
-        }
-        info(String.format("Locator of %1$s Form appears", this.title));
     }
 }

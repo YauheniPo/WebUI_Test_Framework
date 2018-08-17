@@ -86,7 +86,7 @@ public class MailUtils extends BaseEntity {
     @SneakyThrows({MessagingException.class, IOException.class})
     public void sendMail() {
         Transport.send(message);
-        info(String.format("Sent a email Subject: %s Text: %s", message.getSubject(), message.getContent()));
+        LOGGER.info(String.format("Sent a email Subject: %s Text: %s", message.getSubject(), message.getContent()));
     }
 
     /**
@@ -127,7 +127,7 @@ public class MailUtils extends BaseEntity {
      */
     @SneakyThrows({MessagingException.class, IOException.class})
     public void addMsgInSentFolder() {
-        info(String.format("Sent a email Subject: %s Text: %s to %s folder", this.message.getSubject(),
+        LOGGER.info(String.format("Sent a email Subject: %s Text: %s to %s folder", this.message.getSubject(),
                            message.getContent(), sentFolder));
         addMsgInFolder(sentFolder);
     }
@@ -146,19 +146,19 @@ public class MailUtils extends BaseEntity {
                 store.connect(host, fromAddress, password);
                 break;
             } catch (NoSuchProviderException e) {
-                debug(e.getMessage());
+                LOGGER.debug(e.getMessage());
                 try {
                     Thread.sleep(delay);
                 } catch (InterruptedException e1) {
-                    debug(e1.getMessage());
+                    LOGGER.debug(e1.getMessage());
                 }
                 e.printStackTrace();
             } catch (MessagingException e) {
-                debug(e.getMessage());
+                LOGGER.debug(e.getMessage());
                 try {
                     Thread.sleep(delay);
                 } catch (InterruptedException e1) {
-                    debug(e1.getMessage());
+                    LOGGER.debug(e1.getMessage());
                 }
             }
         }
@@ -178,10 +178,10 @@ public class MailUtils extends BaseEntity {
                     message.setFlag(Flags.Flag.DELETED, true);
                 }
                 folder.close(true);
-                info(String.format("Mails deleted from %s from %s folder", fromAddress, folder.getName()));
+                LOGGER.info(String.format("Mails deleted from %s from %s folder", fromAddress, folder.getName()));
             }
         } catch (MessagingException e) {
-            debug(e.getMessage());
+            LOGGER.debug(e.getMessage());
         }
     }
 
@@ -191,7 +191,7 @@ public class MailUtils extends BaseEntity {
     @SneakyThrows(Exception.class)
     public void closeStore() {
         store.close();
-        info(String.format("MailStore %s is close", fromAddress));
+        LOGGER.info(String.format("MailStore %s is close", fromAddress));
     }
 
     /**

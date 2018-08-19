@@ -2,7 +2,6 @@ package webdriver.common;
 
 import demo.test.utils.FactoryInitParams;
 import lombok.NoArgsConstructor;
-import org.testng.annotations.DataProvider;
 import webdriver.Browser;
 import webdriver.Logger;
 
@@ -28,7 +27,6 @@ public class ProviderData {
      *
      * @return the object [ ]
      */
-    @DataProvider(name = "initParams")
     public Object[] getParams() {
         String dataBaseLocation = this.dataBaseLocation == null ? Browser.getPropStage().getProperty("dataBaseLocation") : this.dataBaseLocation;
         Object[] dataProvider = new FactoryInitParams().getTestData(dataBaseLocation);

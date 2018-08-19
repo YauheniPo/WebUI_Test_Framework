@@ -4,6 +4,9 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.openqa.selenium.By;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import webdriver.asserts.AssertWrapper;
@@ -11,8 +14,10 @@ import webdriver.asserts.AssertWrapper;
 /**
  * The type Base entity.
  */
+@ContextConfiguration(classes = {ImportResourceValueProperties.class},
+        loader = AnnotationConfigContextLoader.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class BaseEntity {
+public class BaseEntity extends AbstractTestNGSpringContextTests {
     protected By titleLocator;
     protected String title;
     protected static final Logger LOGGER = Logger.getInstance();
@@ -24,7 +29,7 @@ public abstract class BaseEntity {
      * @param locator   the locator
      * @param formTitle the form title
      */
-    protected BaseEntity(@NonNull final By locator, @NonNull final String formTitle) {
+    public BaseEntity(@NonNull final By locator, @NonNull final String formTitle) {
         this.titleLocator = locator;
         this.title = formTitle;
     }

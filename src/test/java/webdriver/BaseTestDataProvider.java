@@ -1,13 +1,15 @@
 package webdriver;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import webdriver.common.ProviderData;
 
 /**
  * The type Base test.
  */
-public abstract class BaseTest extends BaseEntity {
-
+public abstract class BaseTestDataProvider extends BaseEntity {
+    @Value("${dataBaseLocation}")
+    private String dataBaseLocation = "accounts.xml";
     /**
      * Run Test
      *
@@ -27,9 +29,9 @@ public abstract class BaseTest extends BaseEntity {
      *
      * @param testData emails test data
      */
-    @Test(dataProvider = "initParams", dataProviderClass = ProviderData.class)
+    @Test(dataProvider = "initParams")
     public void xTest(Object testData) {
-        Class<? extends BaseTest> currentClass = this.getClass();
+        Class<? extends BaseTestDataProvider> currentClass = this.getClass();
         try {
             LOGGER.logTestName(currentClass.getName());
             runTest(testData);
@@ -42,4 +44,15 @@ public abstract class BaseTest extends BaseEntity {
             throw as;
         }
     }
+
+    @DataProvider(name = "initParams")
+    public Object[] getParams() {
+        Object[] dataProvider = getTestData(dataBaseLocation);
+        if (dataProvider == null) {
+            LOGGER.error(String.format("Data not received from %s", dataBaseLocation));
+        }
+        return dataProvider;
+    }
+
+    protected abstract Object[] getTestData(String dataBaseLocation);
 }

@@ -1,20 +1,18 @@
 package demo.test.tests;
 
 import demo.test.forms.AccountForm;
-import demo.test.pages.AuthorizeEmailPage;
 import demo.test.forms.TutByHeader;
 import demo.test.pages.AuthorizeEmailPageFactory;
 import demo.test.testModels.Mail;
 import demo.test.testModels.TestDataMails;
 import demo.test.pages.EmailAccountPage;
 import demo.test.pages.TutByHomePage;
+import demo.test.utils.FactoryInitParams;
 import io.qameta.allure.Step;
+import org.springframework.beans.factory.annotation.Value;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import webdriver.BaseTest;
+import webdriver.BaseTestDataProvider;
 import webdriver.Browser;
 import webdriver.utils.mail.MailUtils;
 
@@ -30,27 +28,17 @@ import java.util.function.Predicate;
 /**
  * The type Tut by email test.
  */
-public class TutByEmailTest extends BaseTest {
+public class TutByEmailTest extends BaseTestDataProvider {
     private String senderMailLogin;
     private String recipientMailLogin;
     private String senderMailPassword;
     private String recipientMailPassword;
-    private String emailText;
     private MailUtils mailSender;
     private final String currentBrowser = Browser.getBrowserName();
     private final ArrayList<MailUtils> mailBox = new ArrayList<>();
     private Predicate<Object> elIsNull = Objects::nonNull;
-
-    /**
-     * Init test data.
-     *
-     * @param emailText the email text
-     */
-    @BeforeTest
-    @Parameters(value = {"emailText"})
-    public void initTestData(@Optional("epam_e.popovich")String emailText) {
-        this.emailText = emailText;
-    }
+    @Value("${emailText}")
+    private String emailText = "epam_e.popovich";
 
     /**
      * Clear email and close mail store.
@@ -198,5 +186,10 @@ public class TutByEmailTest extends BaseTest {
      */
     public String getReportData() {
         return String.format("%s, %s", this.senderMailLogin, this.recipientMailLogin);
+    }
+
+    @Override
+    protected Object[] getTestData(String dataBaseLocation) {
+        return new FactoryInitParams().getTestData(dataBaseLocation);
     }
 }

@@ -184,12 +184,13 @@ public class TutByEmailTest extends BaseTestDataProvider {
      *
      * @return the report data
      */
+    @Override
     public String getReportData() {
         return String.format("%s, %s", this.senderMailLogin, this.recipientMailLogin);
     }
 
     @Override
     protected Object[] getTestData(String dataBaseLocation) {
-        return new FactoryInitParams().getTestData(dataBaseLocation);
+        return new FactoryInitParams(dataBaseLocation).getTestData();
     }
 }

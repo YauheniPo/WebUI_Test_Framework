@@ -25,6 +25,14 @@ public abstract class BaseTestDataProvider extends BaseEntity {
     protected abstract String getReportData();
 
     /**
+     * Get test data object [ ].
+     *
+     * @param dataBaseLocation the data base location
+     * @return the object [ ]
+     */
+    protected abstract Object[] getTestData(String dataBaseLocation);
+
+    /**
      * Test method
      *
      * @param testData emails test data
@@ -53,6 +61,4 @@ public abstract class BaseTestDataProvider extends BaseEntity {
         }
         return dataProvider;
     }
-
-    protected abstract Object[] getTestData(String dataBaseLocation);
 }

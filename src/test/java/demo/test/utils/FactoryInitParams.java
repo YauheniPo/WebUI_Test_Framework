@@ -1,18 +1,30 @@
 package demo.test.utils;
 
+import lombok.NonNull;
+import webdriver.common.ProviderData;
+
 /**
  * The type Factory init parameters.
  */
-public class FactoryInitParams {
+public class FactoryInitParams implements ProviderData {
+    private String dataBaseLocation;
+
+    /**
+     * Instantiates a new Factory init params.
+     *
+     * @param dataBaseLocation the data base location
+     */
+    public FactoryInitParams(String dataBaseLocation) {
+        this.dataBaseLocation = dataBaseLocation;
+    }
 
     /**
      * Gets test data.
      *
-     * @param dataBaseLocation the data base location
-     *
      * @return the test data
      */
-    public Object[] getTestData(String dataBaseLocation) {
+    @Override
+    public @NonNull Object[] getTestData() {
         if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.XML.name())) {
             return new XMLParamsImpl().fetchTestData(dataBaseLocation);
         } else if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.CSV.name())) {

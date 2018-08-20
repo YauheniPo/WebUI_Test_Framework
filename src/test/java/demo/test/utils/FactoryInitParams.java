@@ -19,8 +19,10 @@ public class FactoryInitParams implements ProviderData {
             return new XMLParamsImpl().fetchTestData(dataBaseLocation);
         } else if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.CSV.name())) {
             return new CSVParamsImpl().fetchTestData(dataBaseLocation);
-        } else if (dataBaseLocation.toUpperCase().equals(DataBaseType.DB.name())) {
+        } else if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.DB.name())) {
             return new DBParamsImpl().fetchTestData(dataBaseLocation);
+        } else if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.XLS.name())) {
+            return new XLSParamsImpl().fetchTestData(dataBaseLocation);
         }
         return null;
     }
@@ -31,6 +33,7 @@ public class FactoryInitParams implements ProviderData {
     public enum DataBaseType {
         XML,
         CSV,
-        DB
+        DB,
+        XLS
     }
 }

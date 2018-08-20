@@ -8,6 +8,8 @@ import org.testng.SkipException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type XLS parse.
@@ -24,24 +26,20 @@ public class XLSParse extends BaseParser {
     }
 
     /**
-     * Get table array string [ ] [ ].
+     * Gets table array.
      *
-     * @return the string [ ] [ ]
+     * @return the table array
      */
-    protected Object[][] getTableArray() {
-        String[][] tabArray = null;
+    public List<String> getTableArray() {
+        List<String> tabArray = new ArrayList<>();
         try {
             Workbook workbook = Workbook.getWorkbook(new File(this.filepath));
             Sheet sheet = workbook.getSheet(0);
-            int rowCount = sheet.getRows();
 
-            int columnCount = sheet.getColumns();
-
-            tabArray = new String[rowCount - 1][columnCount];
-            for (int i = 1; i < rowCount; i++) {
+            for (int i = 0, rowCount = sheet.getRows(); i < rowCount; ++i) {
                 Cell[] rowData = sheet.getRow(i);
-                for (int j = 0; j < columnCount; j++) {
-                    tabArray[i - 1][j] = rowData[j].getContents();
+                for (int j = 0, columnCount = sheet.getColumns(); j < columnCount; ++j) {
+                    tabArray.add(rowData[j].getContents());
                 }
             }
             workbook.close();

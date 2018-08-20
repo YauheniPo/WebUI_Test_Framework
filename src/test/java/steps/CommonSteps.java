@@ -17,12 +17,13 @@ public class CommonSteps extends BaseSteps {
     public void sendingEmailLetterOfTestDataFromThe(String dataFileName, String textLetter) {
         ApiEmailSteps apiEmailSteps = new ApiEmailSteps();
         apiEmailSteps.testDataFrom(dataFileName);
-        apiEmailSteps.connectingEmailStore("sender");
-        apiEmailSteps.connectingEmailStore("recipient");
-        apiEmailSteps.deleteMails();
-        apiEmailSteps.generationLetter(textLetter);
-        apiEmailSteps.sendingLetterToRecipient();
-        apiEmailSteps.sendingLetterInSendFolder();
+        sendingEmailLetter(apiEmailSteps, textLetter);
+    }
+
+    @Given("^sending email letter by test data from file and with text '(.*)'$")
+    public void sendingEmailLetterOfTestDataFromThe(String textLetter) {
+        ApiEmailSteps apiEmailSteps = new ApiEmailSteps();
+        sendingEmailLetter(apiEmailSteps, textLetter);
     }
 
     @When("^the '(.*)' logged in$")
@@ -52,5 +53,14 @@ public class CommonSteps extends BaseSteps {
         checkingSteps.userNotAuthorized(account);
         openStartingHomePage();
         new TutByHomePageSteps().homePageIsOpened();
+    }
+
+    private void sendingEmailLetter(ApiEmailSteps apiEmailSteps, String textLetter) {
+        apiEmailSteps.connectingEmailStore("sender");
+        apiEmailSteps.connectingEmailStore("recipient");
+        apiEmailSteps.deleteMails();
+        apiEmailSteps.generationLetter(textLetter);
+        apiEmailSteps.sendingLetterToRecipient();
+        apiEmailSteps.sendingLetterInSendFolder();
     }
 }

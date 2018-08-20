@@ -42,7 +42,7 @@ public class ApiEmailSteps extends BaseSteps {
 
     @Given("^test data from \"([^\"]*)\"$")
     public void testDataFrom(String datafile) {
-        TestDataMails testDataMails = (TestDataMails) (new FactoryInitParams(datafile).getTestData()[0]);
+        TestDataMails testDataMails = (TestDataMails) (new FactoryInitParams().getTestData(datafile)[0]);
         SCENARIO_CONTEXT.setContext("senderMailLogin", testDataMails.getSenderMailLogin());
         SCENARIO_CONTEXT.setContext("senderMailPassword", testDataMails.getSenderMailPassword());
         SCENARIO_CONTEXT.setContext("recipientMailLogin", testDataMails.getRecipientMailLogin());

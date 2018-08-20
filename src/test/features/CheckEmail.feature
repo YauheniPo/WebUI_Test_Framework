@@ -1,8 +1,10 @@
-@check_email
+@check_email_data_provider
 Feature: Check recipient and sender email letter
 
-  Scenario Outline: Checking email data of letter
-    Given sending email letter of test data from the "<datafile>" with text 'epam_e_popovich'
+#  Scenario Outline: Checking email data of letter
+  Scenario: Checking email data of letter
+#    Given sending email letter of test data from the "<datafile>" with text 'epam_e_popovich'
+    Given sending email letter by test data from file and with text 'epam_e_popovich'
     When tut.by Home Page is opened
     Then the 'sender' logged in
     When getting a data of the last letter from the 'sent' folder of 'sender'
@@ -43,7 +45,7 @@ Feature: Check recipient and sender email letter
 #    Then 'recipient' not authorized
 #    And checking data letters
 
-    Examples:
-      | datafile     |
-      | accounts.csv |
-      | accounts.xml |
+#    Examples:
+#      | datafile     |
+#      | accounts.csv |
+#      | accounts.xml |

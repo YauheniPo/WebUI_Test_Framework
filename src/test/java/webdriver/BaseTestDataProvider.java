@@ -1,5 +1,6 @@
 package webdriver;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,6 +11,7 @@ import org.testng.annotations.Test;
 public abstract class BaseTestDataProvider extends BaseEntity {
     @Value("${dataBaseLocation}")
     private String dataBaseLocation = "accounts.xml";
+
     /**
      * Run Test
      *
@@ -38,7 +40,7 @@ public abstract class BaseTestDataProvider extends BaseEntity {
      * @param testData emails test data
      */
     @Test(dataProvider = "initParams")
-    public void xTest(Object testData) {
+    public void xTest(@NonNull Object testData) {
         Class<? extends BaseTestDataProvider> currentClass = this.getClass();
         try {
             LOGGER.logTestName(currentClass.getName());
@@ -53,6 +55,11 @@ public abstract class BaseTestDataProvider extends BaseEntity {
         }
     }
 
+    /**
+     * Get params object [ ].
+     *
+     * @return the object [ ]
+     */
     @DataProvider(name = "initParams")
     public Object[] getParams() {
         Object[] dataProvider = getTestData(dataBaseLocation);

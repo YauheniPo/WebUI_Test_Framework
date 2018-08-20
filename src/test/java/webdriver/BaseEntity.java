@@ -29,7 +29,7 @@ public class BaseEntity extends AbstractTestNGSpringContextTests {
      * @param locator   the locator
      * @param formTitle the form title
      */
-    public BaseEntity(@NonNull final By locator, @NonNull final String formTitle) {
+    protected BaseEntity(@NonNull final By locator, @NonNull final String formTitle) {
         this.titleLocator = locator;
         this.title = formTitle;
     }

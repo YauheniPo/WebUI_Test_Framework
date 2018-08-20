@@ -13,5 +13,5 @@ public interface ProviderData {
      *
      * @return the object [ ]
      */
-    Object[] getTestData();
+    Object[] getTestData(String dataBaseLocation);
 }

@@ -7,16 +7,6 @@ import webdriver.common.ProviderData;
  * The type Factory init parameters.
  */
 public class FactoryInitParams implements ProviderData {
-    private String dataBaseLocation;
-
-    /**
-     * Instantiates a new Factory init params.
-     *
-     * @param dataBaseLocation the data base location
-     */
-    public FactoryInitParams(String dataBaseLocation) {
-        this.dataBaseLocation = dataBaseLocation;
-    }
 
     /**
      * Gets test data.
@@ -24,7 +14,7 @@ public class FactoryInitParams implements ProviderData {
      * @return the test data
      */
     @Override
-    public @NonNull Object[] getTestData() {
+    public @NonNull Object[] getTestData(String dataBaseLocation) {
         if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.XML.name())) {
             return new XMLParamsImpl().fetchTestData(dataBaseLocation);
         } else if (dataBaseLocation.toUpperCase().endsWith(DataBaseType.CSV.name())) {

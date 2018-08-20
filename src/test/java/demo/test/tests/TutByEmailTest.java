@@ -191,6 +191,6 @@ public class TutByEmailTest extends BaseTestDataProvider {
 
     @Override
     protected Object[] getTestData(String dataBaseLocation) {
-        return new FactoryInitParams(dataBaseLocation).getTestData();
+        return new FactoryInitParams().getTestData(dataBaseLocation);
     }
 }

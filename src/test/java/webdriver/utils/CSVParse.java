@@ -1,8 +1,6 @@
 package webdriver.utils;
 
 import au.com.bytecode.opencsv.CSVReader;
-import lombok.AllArgsConstructor;
-import webdriver.BaseEntity;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,9 +11,16 @@ import java.util.List;
 /**
  * The type Csv parameters.
  */
-@AllArgsConstructor
-public class CSVParse extends BaseEntity {
-    private final String filepath;
+public class CSVParse extends BaseParser {
+
+    /**
+     * Instantiates a new Csv parse.
+     *
+     * @param filepath the filepath
+     */
+    public CSVParse(String filepath) {
+        super(filepath);
+    }
 
     /**
      * Fetch csv data list.

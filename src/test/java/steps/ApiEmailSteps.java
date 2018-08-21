@@ -5,8 +5,8 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import demo.test.testModels.Mail;
 import demo.test.testModels.TestDataMails;
+import demo.test.utils.FactoryInitParams;
 import webdriver.Browser;
-import webdriver.common.ProviderData;
 import webdriver.utils.mail.MailUtils;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +42,7 @@ public class ApiEmailSteps extends BaseSteps {
 
     @Given("^test data from \"([^\"]*)\"$")
     public void testDataFrom(String datafile) {
-        TestDataMails testDataMails = (TestDataMails) (new ProviderData(datafile).getParams()[0]);
+        TestDataMails testDataMails = (TestDataMails) (new FactoryInitParams().getTestData(datafile)[0]);
         SCENARIO_CONTEXT.setContext("senderMailLogin", testDataMails.getSenderMailLogin());
         SCENARIO_CONTEXT.setContext("senderMailPassword", testDataMails.getSenderMailPassword());
         SCENARIO_CONTEXT.setContext("recipientMailLogin", testDataMails.getRecipientMailLogin());

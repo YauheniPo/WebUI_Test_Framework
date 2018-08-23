@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Synchronized;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -16,6 +17,7 @@ import javax.naming.NamingException;
  * The type Browser.
  */
 public final class Browser {
+    @Getter private static Environment testEnvironment = ConfigFactory.create(Environment.class);
     private static final String BROWSER_BY_DEFAULT = Browsers.CHROME.value;
     private static final String URL_LOGIN_PAGE = "urlLoginPage";
     private static final String DRIVER_MANAGER = "driverManager";

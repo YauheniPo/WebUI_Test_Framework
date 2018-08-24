@@ -1,7 +1,7 @@
 package webdriver.elements;
 
 import org.openqa.selenium.By;
-import webdriver.Browser;
+import webdriver.driver.Browser;
 
 /**
  * The type Text box.

@@ -1,4 +1,4 @@
-package demo.test.testModels;
+package demo.test.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

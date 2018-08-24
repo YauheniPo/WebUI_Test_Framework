@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import webdriver.Browser;
+import webdriver.driver.Browser;
 import webdriver.Logger;
 
 import java.time.Duration;

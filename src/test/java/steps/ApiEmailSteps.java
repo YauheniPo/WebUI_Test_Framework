@@ -3,10 +3,10 @@ package steps;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
-import demo.test.testModels.Mail;
-import demo.test.testModels.TestDataMails;
+import demo.test.models.Mail;
+import demo.test.models.TestDataMails;
 import demo.test.utils.FactoryInitParams;
-import webdriver.Browser;
+import webdriver.driver.Browser;
 import webdriver.utils.mail.MailUtils;
 
 import java.text.SimpleDateFormat;

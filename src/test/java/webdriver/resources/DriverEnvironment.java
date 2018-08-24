@@ -1,9 +1,9 @@
-package webdriver;
+package webdriver.resources;
 
 import org.aeonbits.owner.Config;
 
 @Config.Sources({"classpath:selenium.properties", "classpath:stage.properties"})
-public interface Environment extends Config {
+public interface DriverEnvironment extends Config {
 
     String browser();
 
@@ -13,7 +13,6 @@ public interface Environment extends Config {
 
     Integer defaultConditionTimeout();
 
-//    @Key("implicity.wait")
     Integer implicityWait();
 
     Boolean grid();

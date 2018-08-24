@@ -5,7 +5,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import demo.test.pages.AuthorizeEmailPage;
 import demo.test.pages.EmailAccountPage;
-import demo.test.testModels.Mail;
+import demo.test.models.Mail;
 
 public class EmailSteps extends BaseSteps {
     private AuthorizeEmailPage authorizeEmailPage;

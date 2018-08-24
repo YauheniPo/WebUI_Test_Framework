@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import webdriver.BaseEntity;
-import webdriver.Browser;
+import webdriver.driver.Browser;
 import webdriver.waitings.SmartWait;
 
 import java.util.List;

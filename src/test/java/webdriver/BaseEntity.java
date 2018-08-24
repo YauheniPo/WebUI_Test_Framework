@@ -9,12 +9,13 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
-import webdriver.asserts.AssertWrapper;
+import webdriver.driver.Browser;
+import webdriver.resources.ImportResourceProperties;
 
 /**
  * The type Base entity.
  */
-@ContextConfiguration(classes = {ImportResourceValueProperties.class},
+@ContextConfiguration(classes = {ImportResourceProperties.class},
         loader = AnnotationConfigContextLoader.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaseEntity extends AbstractTestNGSpringContextTests {

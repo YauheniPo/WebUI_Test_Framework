@@ -1,7 +1,7 @@
-package webdriver;
+package webdriver.driver;
 
-import static webdriver.Constants.PROPERTIES_SELENIUM;
-import static webdriver.Constants.PROPERTIES_STAGE;
+import static webdriver.resources.Constants.PROPERTIES_SELENIUM;
+import static webdriver.resources.Constants.PROPERTIES_STAGE;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.Synchronized;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import webdriver.Logger;
+import webdriver.resources.DriverEnvironment;
+import webdriver.resources.PropertiesResourceManager;
 
 import java.util.concurrent.TimeUnit;
 import javax.naming.NamingException;
@@ -17,7 +20,7 @@ import javax.naming.NamingException;
  * The type Browser.
  */
 public final class Browser {
-    @Getter private static Environment testEnvironment = ConfigFactory.create(Environment.class);
+    @Getter private static DriverEnvironment driverEnv = ConfigFactory.create(DriverEnvironment.class);
     private static final String BROWSER_BY_DEFAULT = Browsers.CHROME.value;
     private static final String URL_LOGIN_PAGE = "urlLoginPage";
     private static final String DRIVER_MANAGER = "driverManager";
@@ -57,7 +60,7 @@ public final class Browser {
      * @return the instance
      */
     @Synchronized
-    static Browser getInstance() {
+    public static Browser getInstance() {
         if (instance == null) {
             initProperties();
             instance = new Browser();
@@ -139,7 +142,7 @@ public final class Browser {
     /**
      * Window maximise.
      */
-    void windowMaximise() {
+    public void windowMaximise() {
         try {
             getDriver().executeScript("if (window.screen) {window.moveTo(0, 0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};");
             getDriver().manage().window().maximize();
@@ -153,14 +156,14 @@ public final class Browser {
      *
      * @param url the url
      */
-    void navigate(final String url) {
+    public void navigate(final String url) {
         getDriver().navigate().to(url);
     }
 
     /**
      * Exit.
      */
-    void exit() {
+    public void exit() {
         try {
             getDriver().quit();
             instance = null;

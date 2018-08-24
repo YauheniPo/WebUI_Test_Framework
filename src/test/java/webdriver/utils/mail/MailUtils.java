@@ -3,8 +3,10 @@ package webdriver.utils.mail;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import org.aeonbits.owner.ConfigFactory;
 import webdriver.BaseEntity;
-import webdriver.PropertiesResourceManager;
+import webdriver.resources.MailEnvironment;
+import webdriver.resources.PropertiesResourceManager;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -12,14 +14,15 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Properties;
 
-import static webdriver.Constants.CHARSET;
-import static webdriver.Constants.PROPERTIES_MAIL;
+import static webdriver.resources.Constants.CHARSET;
+import static webdriver.resources.Constants.PROPERTIES_MAIL;
 
 /**
  * The type Mail utils.
  */
 public class MailUtils extends BaseEntity {
 
+    private MailEnvironment mailEnv = ConfigFactory.create(MailEnvironment.class);
     private static final PropertiesResourceManager PROPS = new PropertiesResourceManager(PROPERTIES_MAIL);
     private String host;
     private final String fromAddress;

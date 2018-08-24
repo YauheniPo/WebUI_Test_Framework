@@ -1,4 +1,4 @@
-package webdriver.asserts;
+package webdriver;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -9,7 +9,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Synchronized;
-import webdriver.Logger;
 
 /**
  * The type Soft assert wrapper.

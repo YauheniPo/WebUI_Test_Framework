@@ -1,8 +1,9 @@
-package webdriver;
+package webdriver.resources;
 
 import lombok.Cleanup;
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import webdriver.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;

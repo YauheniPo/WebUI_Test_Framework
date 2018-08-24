@@ -1,7 +1,7 @@
 package steps;
 
 import webdriver.Logger;
-import webdriver.asserts.AssertWrapper;
+import webdriver.AssertWrapper;
 import webdriver.common.ScenarioContext;
 
 class BaseSteps {

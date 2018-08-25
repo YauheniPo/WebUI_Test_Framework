@@ -3,8 +3,9 @@ package webdriver.utils.mail;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import org.aeonbits.owner.ConfigFactory;
 import webdriver.BaseEntity;
-import webdriver.PropertiesResourceManager;
+import webdriver.resources.MailEnvironment;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -12,51 +13,39 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Properties;
 
-import static webdriver.Constants.CHARSET;
-import static webdriver.Constants.PROPERTIES_MAIL;
+import static webdriver.resources.Constants.CHARSET;
 
 /**
  * The type Mail utils.
  */
 public class MailUtils extends BaseEntity {
 
-    private static final PropertiesResourceManager PROPS = new PropertiesResourceManager(PROPERTIES_MAIL);
+    private final MailEnvironment mailEnv = ConfigFactory.create(MailEnvironment.class);
+    private final Properties properties = new Properties();
     private String host;
     private final String fromAddress;
     private final String password;
-    private final Properties properties = new Properties();
     private MailProtocols protocol;
     private Store store;
     private Session session;
-    private String port;
+    private int port = mailEnv.port();
     private String service;
-    private String sentFolder;
+    private String sentFolder = mailEnv.seltFolder();
     private MimeMessage message;
 
     /**
      * Instantiates a new Mail utils.
      *
-     * @param host     the host
      * @param username the username
      * @param password the password
      */
-    private MailUtils(String host, String username, String password) {
+    public MailUtils(String username, String password) {
         this.fromAddress = username;
         this.password = password;
-        readConfig(host);
+        readConfig();
         setProperties();
         initSession();
         store = connect();
-    }
-
-    /**
-     * Instantiates a new Mail utils.
-     *
-     * @param account  the account
-     * @param password the password
-     */
-    public MailUtils(String account, String password) {
-        this(account.split("@")[1], account, password);
     }
 
     /**
@@ -196,17 +185,13 @@ public class MailUtils extends BaseEntity {
 
     /**
      * Read config.
-     *
-     * @param host the host
      */
-    private void readConfig(String host) {
-        String prop = PROPS.getProperty(host);
+    private void readConfig() {
+        String prop = mailEnv.serv();
         String hostProtoc = prop.split(";")[0];
-        this.service = prop.split(";")[1];
-        this.host = String.format("%s.%s", hostProtoc, service);
-        this.port = PROPS.getProperty("port");
-        this.sentFolder = PROPS.getProperty("seltFolder", "Sent");
-        this.protocol = MailProtocols.valueOf(prop.split(";")[2].toUpperCase());
+        service = prop.split(";")[1];
+        host = String.format("%s.%s", hostProtoc, service);
+        protocol = MailProtocols.valueOf(prop.split(";")[2].toUpperCase());
     }
 
     /**
@@ -215,7 +200,7 @@ public class MailUtils extends BaseEntity {
     private void setProperties() {
         properties.setProperty("mail.store.protocol", protocol.toString());
         properties.put("mail.smtp.host", String.format("smtp.%s", service));
-        properties.put("mail.smtp.auth", PROPS.getProperty("smtp.auth"));
+        properties.put("mail.smtp.auth", mailEnv.smtpAuth());
         properties.put("mail.smtp.port", port);
         properties.put("mail.imap.ssl.enable", "true");
         properties.put("mail.smtp.socketFactory.port", port);

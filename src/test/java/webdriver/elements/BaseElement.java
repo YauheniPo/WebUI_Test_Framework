@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import webdriver.BaseEntity;
-import webdriver.Browser;
+import webdriver.driver.Browser;
 import webdriver.waitings.SmartWait;
 
 import java.util.List;
@@ -68,7 +68,7 @@ public abstract class BaseElement extends BaseEntity {
      */
     void waitForIsElementPresent() {
         boolean isVisible = false;
-        if (isPresent(Integer.parseInt(Browser.getTimeoutForCondition()))) {
+        if (isPresent(Browser.getTimeoutForCondition())) {
             try {
                 isVisible = element.isDisplayed();
             } catch (Exception ex) {
@@ -86,7 +86,7 @@ public abstract class BaseElement extends BaseEntity {
      * @return Is element present
      */
     public boolean isPresent() {
-        return isPresent(Long.parseLong(Browser.getTimeoutForCondition()));
+        return isPresent(Browser.getTimeoutForCondition());
     }
 
     /**

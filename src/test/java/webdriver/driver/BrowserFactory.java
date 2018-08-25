@@ -1,4 +1,4 @@
-package webdriver;
+package webdriver.driver;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
@@ -13,7 +13,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import webdriver.Browser.Browsers;
+import webdriver.Logger;
+import webdriver.driver.Browser.Browsers;
 
 import javax.naming.NamingException;
 import java.io.File;
@@ -21,7 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import static webdriver.Constants.*;
+import static webdriver.resources.Constants.*;
 
 /**
  * The type Browser factory.
@@ -69,7 +70,7 @@ final public class BrowserFactory {
      * @return the web driver
      */
     private static RemoteWebDriver getWebDriver(@NonNull final Browsers type) {
-        boolean isGrid = Browser.getGridUrl() != null;
+        boolean isGrid = Browser.isGrid();
         switch (type) {
             case CHROME:
                 if (isGrid)

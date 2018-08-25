@@ -1,7 +1,7 @@
 package demo.test.utils;
 
 import lombok.Cleanup;
-import webdriver.PropertiesResourceManager;
+import webdriver.resources.PropertiesResourceManager;
 import webdriver.utils.db.DatabaseConnMySQL;
 
 import java.sql.ResultSet;
@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static webdriver.Constants.PROPERTIES_DB_QUERIES;
+import static webdriver.resources.Constants.PROPERTIES_DB_QUERIES;
 
 /**
  * The type Db parameters.

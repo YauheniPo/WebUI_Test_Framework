@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-import webdriver.Browser;
+import webdriver.driver.Browser;
 import webdriver.Logger;
 import webdriver.reports.ExtentManager;
 import webdriver.reports.ExtentTestManager;

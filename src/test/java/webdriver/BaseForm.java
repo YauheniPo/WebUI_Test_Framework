@@ -6,6 +6,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import webdriver.driver.Browser;
 
 /**
  * The type Base form.
@@ -25,7 +26,7 @@ public abstract class BaseForm extends BaseEntity {
     }
 
     private void waitForPageLoad() {
-        WebDriverWait wait = new WebDriverWait(Browser.getDriver(), Integer.parseInt(Browser.getTimeoutForCondition()));
+        WebDriverWait wait = new WebDriverWait(Browser.getDriver(), Browser.getTimeoutForCondition());
         wait.until((ExpectedCondition<Boolean>) driver -> ((JavascriptExecutor) driver)
             .executeScript("return document.readyState").equals("complete"));
     }

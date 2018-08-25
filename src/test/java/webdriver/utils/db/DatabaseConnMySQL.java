@@ -2,14 +2,14 @@ package webdriver.utils.db;
 
 import lombok.SneakyThrows;
 import webdriver.BaseEntity;
-import webdriver.PropertiesResourceManager;
+import webdriver.resources.PropertiesResourceManager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static webdriver.Constants.PROPERTIES_DB;
+import static webdriver.resources.Constants.PROPERTIES_DB;
 
 /**
  * The type Database conn my sql.

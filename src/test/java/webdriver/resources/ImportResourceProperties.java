@@ -2,7 +2,9 @@ package webdriver.resources;
 
 import org.springframework.context.annotation.ImportResource;
 
-@ImportResource("application.xml")
+import static webdriver.resources.Constants.APPLICATION;
+
+@ImportResource(APPLICATION)
 public class ImportResourceProperties {
 
 }

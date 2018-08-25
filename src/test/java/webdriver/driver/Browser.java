@@ -20,7 +20,7 @@ import javax.naming.NamingException;
  * The type Browser.
  */
 public final class Browser {
-    @Getter private static DriverEnvironment driverEnv = ConfigFactory.create(DriverEnvironment.class);
+    @Getter static DriverEnvironment driverEnv = ConfigFactory.create(DriverEnvironment.class);
     private static final String BROWSER_BY_DEFAULT = Browsers.CHROME.value;
     private static final String URL_LOGIN_PAGE = "urlLoginPage";
     private static final String DRIVER_MANAGER = "driverManager";

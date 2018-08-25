@@ -2,7 +2,9 @@ package webdriver.resources;
 
 import org.aeonbits.owner.Config;
 
-@Config.Sources({"classpath:mail.properties"})
+import static webdriver.resources.Constants.PROPERTIES_MAIL;
+
+@Config.Sources({"classpath:" + PROPERTIES_MAIL})
 public interface MailEnvironment extends Config {
 
     String serv();
@@ -12,5 +14,6 @@ public interface MailEnvironment extends Config {
     @Key("smtp.auth")
     boolean smtpAuth();
 
+    @DefaultValue("Sent")
     String seltFolder();
 }

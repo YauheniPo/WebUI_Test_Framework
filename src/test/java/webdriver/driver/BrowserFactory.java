@@ -70,7 +70,7 @@ final public class BrowserFactory {
      * @return the web driver
      */
     private static RemoteWebDriver getWebDriver(@NonNull final Browsers type) {
-        boolean isGrid = Browser.getGridUrl() != null;
+        boolean isGrid = Browser.isGrid();
         switch (type) {
             case CHROME:
                 if (isGrid)

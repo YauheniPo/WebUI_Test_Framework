@@ -68,7 +68,7 @@ public abstract class BaseElement extends BaseEntity {
      */
     void waitForIsElementPresent() {
         boolean isVisible = false;
-        if (isPresent(Integer.parseInt(Browser.getTimeoutForCondition()))) {
+        if (isPresent(Browser.getTimeoutForCondition())) {
             try {
                 isVisible = element.isDisplayed();
             } catch (Exception ex) {
@@ -86,7 +86,7 @@ public abstract class BaseElement extends BaseEntity {
      * @return Is element present
      */
     public boolean isPresent() {
-        return isPresent(Long.parseLong(Browser.getTimeoutForCondition()));
+        return isPresent(Browser.getTimeoutForCondition());
     }
 
     /**

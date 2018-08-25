@@ -34,7 +34,7 @@ final public class SmartWait {
         } catch (Exception e) {
             LOGGER.debug("SmartWait.waitFor", e);
         } finally {
-            Browser.getDriver().manage().timeouts().implicitlyWait(Long.parseLong(Browser.getTimeoutForCondition()), TimeUnit.SECONDS);
+            Browser.getDriver().manage().timeouts().implicitlyWait(Browser.getTimeoutForCondition(), TimeUnit.SECONDS);
         }
         return null;
     }

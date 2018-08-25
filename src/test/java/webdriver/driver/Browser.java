@@ -1,8 +1,5 @@
 package webdriver.driver;
 
-import static webdriver.resources.Constants.PROPERTIES_SELENIUM;
-import static webdriver.resources.Constants.PROPERTIES_STAGE;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +8,7 @@ import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import webdriver.Logger;
 import webdriver.resources.DriverEnvironment;
-import webdriver.resources.PropertiesResourceManager;
+import webdriver.resources.StageEnvironment;
 
 import java.util.concurrent.TimeUnit;
 import javax.naming.NamingException;
@@ -20,32 +17,18 @@ import javax.naming.NamingException;
  * The type Browser.
  */
 public final class Browser {
-    @Getter static DriverEnvironment driverEnv = ConfigFactory.create(DriverEnvironment.class);
-    private static final String BROWSER_BY_DEFAULT = Browsers.CHROME.value;
-    private static final String URL_LOGIN_PAGE = "urlLoginPage";
-    private static final String DRIVER_MANAGER = "driverManager";
-    private static final String BROWSER_HEADLESS = "browserHeadless";
-    private static final String BROWSER_PROP = "browser";
-    private static final String STAGE = "stage";
-    private static final String GRID = "grid";
-    private static final String GRID_URL = "gridUrl";
-    private static final String GRID_IP = "gridIp";
-    private static final String GRID_PORT = "gridPort";
-    private static final PropertiesResourceManager PROPS = new PropertiesResourceManager(PROPERTIES_SELENIUM);
-    private static final Browsers CURRENT_BROWSER = Browsers.valueOf((System.getenv("browser") == null
-                                                                     ? System.getProperty(BROWSER_PROP, PROPS.getProperty(BROWSER_PROP, BROWSER_BY_DEFAULT))
-                                                                     : System.getenv("browser")).toUpperCase());
-    private static final long IMPLICITY_WAIT = Long.parseLong(PROPS.getProperty("implicityWait", String.valueOf(10)));
-    private static final String DEFAULT_CONDITION_TIMEOUT = "defaultConditionTimeout";
+    private static DriverEnvironment driverEnv = ConfigFactory.create(DriverEnvironment.class);
+    private static StageEnvironment stageEnv = ConfigFactory.create(StageEnvironment.class);
+    private static final Browsers CURRENT_BROWSER = Browsers.valueOf(driverEnv.browser().toUpperCase());
+    private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
     private static final Logger LOGGER = Logger.getInstance();
     private static Browser instance;
     private volatile static RemoteWebDriver driver;
-    @Getter private static PropertiesResourceManager propStage;
-    @Getter private static String browserURL;
-    @Getter private static boolean isDriverManager;
-    @Getter private static String gridUrl = null;
-    @Getter private static boolean isHeadless;
-    @Getter private static String timeoutForCondition;
+    @Getter private static String browserURL = stageEnv.urlLoginPage();
+    @Getter private static boolean isDriverManager = driverEnv.driverManager();
+    @Getter private static String gridUrl =driverEnv.gridUrl();
+    @Getter private static boolean isHeadless = driverEnv.browserHeadless();
+    @Getter private static int timeoutForCondition = driverEnv.defaultConditionTimeout();
 
     /**
      * Instantiates a new Browser.
@@ -62,10 +45,19 @@ public final class Browser {
     @Synchronized
     public static Browser getInstance() {
         if (instance == null) {
-            initProperties();
+            driver = getNewDriver();
             instance = new Browser();
         }
         return instance;
+    }
+
+    /**
+     * Is grid boolean.
+     *
+     * @return the boolean
+     */
+    static boolean isGrid() {
+        return driverEnv.grid();
     }
 
     /**
@@ -94,24 +86,6 @@ public final class Browser {
      */
     public static void openStartPage() {
         getDriver().navigate().to(browserURL);
-    }
-
-    /**
-     * Init properties.
-     */
-    private static void initProperties() {
-        isDriverManager = Boolean.valueOf((System.getenv("driver_manager") == null
-                                           ? PROPS.getProperty(DRIVER_MANAGER, "false")
-                                           : System.getenv("driver_manager")));
-        isHeadless = Boolean.valueOf(PROPS.getProperty(BROWSER_HEADLESS, "false"));
-        if (Boolean.valueOf(PROPS.getProperty(GRID, "false"))) {
-            gridUrl = String.format(PROPS.getProperty(GRID_URL), PROPS.getProperty(GRID_IP, "localhost"), PROPS.getProperty(GRID_PORT));
-        }
-        timeoutForCondition = PROPS.getProperty(DEFAULT_CONDITION_TIMEOUT);
-        propStage = new PropertiesResourceManager(PROPERTIES_STAGE);
-        String choosenStage = propStage.getProperty(STAGE);
-        browserURL = String.format(propStage.getProperty(URL_LOGIN_PAGE), choosenStage);
-        driver = getNewDriver();
     }
 
     /**

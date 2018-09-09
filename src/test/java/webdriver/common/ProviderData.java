@@ -14,4 +14,14 @@ public interface ProviderData {
      * @return the object [ ]
      */
     Object[] getTestData(String dataBaseLocation);
+
+    /**
+     * The enum Data base type.
+     */
+    enum DataBaseType {
+        XML,
+        CSV,
+        DB,
+        XLS
+    }
 }

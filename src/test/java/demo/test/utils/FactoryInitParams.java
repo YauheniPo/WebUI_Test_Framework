@@ -26,14 +26,4 @@ public class FactoryInitParams implements ProviderData {
         }
         return null;
     }
-
-    /**
-     * The enum Data base type.
-     */
-    public enum DataBaseType {
-        XML,
-        CSV,
-        DB,
-        XLS
-    }
 }

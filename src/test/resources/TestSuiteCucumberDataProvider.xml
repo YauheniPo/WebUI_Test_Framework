@@ -2,7 +2,13 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="EPAM_e.popovich" verbose="1"> <!--parallel="tests"-->
     <test name="Test @tut.by EMAIL#1">
-        <parameter name="textLetter" value="epam_e_popovich"/>
+        <parameter name="testData" value="accounts.csv"/>
+        <classes>
+            <class name="CucumberRunner"/>
+        </classes>
+    </test>
+    <test name="Test @tut.by EMAIL#2">
+        <parameter name="testData" value="accounts.xls"/>
         <classes>
             <class name="CucumberRunner"/>
         </classes>

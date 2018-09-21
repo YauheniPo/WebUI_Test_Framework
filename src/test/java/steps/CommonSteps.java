@@ -55,6 +55,14 @@ public class CommonSteps extends BaseSteps {
         new TutByHomePageSteps().homePageIsOpened();
     }
 
+    @Given("^data the sender: \"([^\"]*)\", \"([^\"]*)\", and the recipient: \"([^\"]*)\", \"([^\"]*)\"$")
+    public void dataTheSenderAndTheRecipient(String senderLogin, String senderPassword, String recipientLogin, String recipientPassword) {
+        SCENARIO_CONTEXT.setContext("senderMailLogin", senderLogin);
+        SCENARIO_CONTEXT.setContext("senderMailPassword", senderPassword);
+        SCENARIO_CONTEXT.setContext("recipientMailLogin", recipientLogin);
+        SCENARIO_CONTEXT.setContext("recipientMailPassword", recipientPassword);
+    }
+
     private void sendingEmailLetter(ApiEmailSteps apiEmailSteps, String textLetter) {
         apiEmailSteps.connectingEmailStore("sender");
         apiEmailSteps.connectingEmailStore("recipient");

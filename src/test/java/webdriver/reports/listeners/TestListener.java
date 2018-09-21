@@ -86,9 +86,7 @@ public class TestListener extends TestListenerAdapter {
     }
 
     public void makeExtentReportScreenshot() {
-        String base64Screenshot = "data:image/png;base64," + Objects.requireNonNull(Browser.getDriver()).
-                getScreenshotAs(OutputType.BASE64);
-        ExtentTestManager.getTest().log(LogStatus.FAIL, "Test Failed",
-                ExtentTestManager.getTest().addBase64ScreenShot(base64Screenshot));
+        String base64Screenshot = "data:image/png;base64," + Objects.requireNonNull(Browser.getDriver()).getScreenshotAs(OutputType.BASE64);
+        ExtentTestManager.getTest().log(LogStatus.FAIL, "Test Failed", ExtentTestManager.getTest().addBase64ScreenShot(base64Screenshot));
     }
 }

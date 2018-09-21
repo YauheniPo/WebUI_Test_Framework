@@ -3,12 +3,7 @@ import cucumber.api.testng.CucumberFeatureWrapperImpl;
 import cucumber.api.testng.TestNGCucumberRunner;
 import demo.test.models.TestDataMails;
 import demo.test.utils.FactoryInitParams;
-import lombok.NonNull;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import webdriver.BaseEntity;
 import webdriver.common.ScenarioContext;
 
@@ -17,27 +12,29 @@ import webdriver.common.ScenarioContext;
         glue = "steps",
         strict = true,
         format = {"pretty", "html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"},
-        tags = {"~@_data_provider"}
+        tags = {"@check_email"}
 )
-public class CucumberRunnerDataProvider extends BaseEntity {
+public class CucumberRunner extends BaseEntity {
     private static final ScenarioContext SCENARIO_CONTEXT = ScenarioContext.getInstance();
     private TestNGCucumberRunner testRunner;
     private String testData;
 
     @Parameters(value = {"testData"})
     @BeforeClass
-    public void setUP(String testData) {
+    public void setUP(@Optional String testData) {
         this.testData = testData;
         testRunner = new TestNGCucumberRunner(this.getClass());
     }
 
     @Test(dataProvider="initParams")
-    public void login(@NonNull Object testData) {
-        TestDataMails testDataMails = (TestDataMails) testData;
-        SCENARIO_CONTEXT.setContext("senderMailLogin", testDataMails.getSenderMailLogin());
-        SCENARIO_CONTEXT.setContext("senderMailPassword", testDataMails.getSenderMailPassword());
-        SCENARIO_CONTEXT.setContext("recipientMailLogin", testDataMails.getRecipientMailLogin());
-        SCENARIO_CONTEXT.setContext("recipientMailPassword", testDataMails.getRecipientMailPassword());
+    public void initParams(Object testData) {
+        if (testData != null) {
+            TestDataMails testDataMails = (TestDataMails) testData;
+            SCENARIO_CONTEXT.setContext("senderMailLogin", testDataMails.getSenderMailLogin());
+            SCENARIO_CONTEXT.setContext("senderMailPassword", testDataMails.getSenderMailPassword());
+            SCENARIO_CONTEXT.setContext("recipientMailLogin", testDataMails.getRecipientMailLogin());
+            SCENARIO_CONTEXT.setContext("recipientMailPassword", testDataMails.getRecipientMailPassword());
+        }
         for (Object[] rn : testRunner.provideFeatures()) {
             for (Object r : rn) {
                 testRunner.runCucumber(((CucumberFeatureWrapperImpl) r).getCucumberFeature());
@@ -47,7 +44,7 @@ public class CucumberRunnerDataProvider extends BaseEntity {
 
     @DataProvider(name = "initParams")
     public Object[] getParams() {
-        return new FactoryInitParams().getTestData(testData);
+        return testData == null ? new String[]{null} : new FactoryInitParams().getTestData(testData);
     }
 
     @AfterClass

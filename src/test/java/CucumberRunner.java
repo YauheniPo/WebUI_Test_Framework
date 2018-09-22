@@ -11,8 +11,8 @@ import webdriver.common.ScenarioContext;
         features = {"src/test/features/"},
         glue = "steps",
         strict = true,
-        format = {"pretty", "html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"},
-        tags = {"@check_email"}
+        format = {"pretty", "html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"}
+//        ,tags = {"@check_email"}
 )
 public class CucumberRunner extends BaseEntity {
     private static final ScenarioContext SCENARIO_CONTEXT = ScenarioContext.getInstance();

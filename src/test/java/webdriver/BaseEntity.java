@@ -4,21 +4,15 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.openqa.selenium.By;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import webdriver.driver.Browser;
-import webdriver.resources.ImportResourceProperties;
 
 /**
  * The type Base entity.
  */
-@ContextConfiguration(classes = {ImportResourceProperties.class},
-        loader = AnnotationConfigContextLoader.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BaseEntity extends AbstractTestNGSpringContextTests {
+public class BaseEntity {
     protected By titleLocator;
     protected String title;
     protected static final Logger LOGGER = Logger.getInstance();

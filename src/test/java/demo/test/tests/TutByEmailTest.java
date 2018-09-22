@@ -7,11 +7,9 @@ import demo.test.models.Mail;
 import demo.test.models.TestDataMails;
 import demo.test.pages.EmailAccountPage;
 import demo.test.pages.TutByHomePage;
-import demo.test.utils.FactoryInitParams;
 import io.qameta.allure.Step;
-import org.springframework.beans.factory.annotation.Value;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
+import lombok.NonNull;
+import org.testng.annotations.*;
 import webdriver.BaseTestDataProvider;
 import webdriver.driver.Browser;
 import webdriver.utils.mail.MailUtils;
@@ -36,43 +34,37 @@ public class TutByEmailTest extends BaseTestDataProvider {
     private MailUtils mailSender;
     private final String currentBrowser = Browser.getBrowserName();
     private final ArrayList<MailUtils> mailBox = new ArrayList<>();
-    private Predicate<Object> elIsNull = Objects::nonNull;
-    @Value("${emailText}")
-    private String emailText = "epam_e.popovich";
+    private Predicate<Object> nonNull = Objects::nonNull;
+    private String emailText;
 
-    /**
-     * Clear email and close mail store.
-     */
+    @Parameters({"emailText", "dataBaseLocation"})
+    @BeforeClass
+    public void fetchTestData(String emailText, String dataBaseLocation) {
+        this.emailText = emailText;
+        this.dataBaseLocation = dataBaseLocation;
+    }
+
     @AfterClass
     public void clearEmailAndCloseMailStore() {
         deleteMails();
-        mailBox.forEach(mail -> {if(elIsNull.test(mail)) {mail.closeStore();}});
+        mailBox.forEach(mail -> {if(this.nonNull.test(mail)) {mail.closeStore();}});
     }
 
-    /**
-     * Return base page.
-     */
     @AfterMethod
     public void returnBasePage() {
         Browser.openStartPage();
     }
 
-    /**
-     * Run test.
-     *
-     * @param testData the test data
-     */
-    @Override
-    public void runTest(Object testData) {
-        TestDataMails testDataMails = (TestDataMails) testData;
-        this.senderMailLogin = testDataMails.getSenderMailLogin();
-        this.senderMailPassword = testDataMails.getSenderMailPassword();
-        this.recipientMailLogin = testDataMails.getRecipientMailLogin();
-        this.recipientMailPassword = testDataMails.getRecipientMailPassword();
+    @Test(dataProvider = "initParams")
+    public void emailTest(@NonNull TestDataMails testDataEmails) {
+        this.senderMailLogin = testDataEmails.getSenderMailLogin();
+        this.senderMailPassword = testDataEmails.getSenderMailPassword();
+        this.recipientMailLogin = testDataEmails.getRecipientMailLogin();
+        this.recipientMailPassword = testDataEmails.getRecipientMailPassword();
 
         String dateTimeMail = new SimpleDateFormat("HH:mm").format(new Date());
         String subject = String.format("From %s", this.senderMailLogin);
-        String text = String.format("%s_%s_%s", emailText, currentBrowser, dateTimeMail);
+        String text = String.format("%s_%s_%s", this.emailText, this.currentBrowser, dateTimeMail);
 
         // init Email sessions
         this.mailSender = getMailStore(this.senderMailLogin, this.senderMailPassword);
@@ -82,8 +74,8 @@ public class TutByEmailTest extends BaseTestDataProvider {
 
         LOGGER.step(1, "Sending a message using api");
         Mail apiMail = new Mail(subject, text, this.senderMailLogin, this.recipientMailLogin);
-        mailSender.messageGeneration(apiMail.getText(), apiMail.getSubject(), apiMail.getToAddress()).sendMail();
-        mailSender.addMsgInSentFolder();
+        this.mailSender.messageGeneration(apiMail.getText(), apiMail.getSubject(), apiMail.getToAddress()).sendMail();
+        this.mailSender.addMsgInSentFolder();
 
         LOGGER.step(2, "Opening the main page");
         TutByHomePage tutByHomePage = new TutByHomePage();
@@ -155,7 +147,7 @@ public class TutByEmailTest extends BaseTestDataProvider {
     @Step("{0} {1}")
     private MailUtils getMailStore(String login, String password) {
         MailUtils mail = new MailUtils(login, password);
-        mailBox.add(mail);
+        this.mailBox.add(mail);
         return mail;
     }
 
@@ -163,7 +155,7 @@ public class TutByEmailTest extends BaseTestDataProvider {
      * Delete mails.
      */
     private void deleteMails() {
-        mailBox.forEach(mail -> {if(elIsNull.test(mail)) {mail.deleteAllMessages();}});
+        this.mailBox.forEach(mail -> {if(this.nonNull.test(mail)) {mail.deleteAllMessages();}});
     }
 
     /**
@@ -177,20 +169,5 @@ public class TutByEmailTest extends BaseTestDataProvider {
             ASSERT_WRAPPER.assertEquals(apiMail, mail);
             LOGGER.info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
         });
-    }
-
-    /**
-     * Gets report data.
-     *
-     * @return the report data
-     */
-    @Override
-    public String getReportData() {
-        return String.format("%s, %s", this.senderMailLogin, this.recipientMailLogin);
-    }
-
-    @Override
-    protected Object[] getTestData(String dataBaseLocation) {
-        return new FactoryInitParams().getTestData(dataBaseLocation);
     }
 }

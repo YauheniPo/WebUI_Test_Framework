@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="EPAM_e.popovich" verbose="1"> <!--parallel="tests"-->
-    <test name="Test @tut.by EMAIL#1">
-        <parameter name="textLetter" value="epam_e_popovich"/>
+    <test name="Test @tut.by EMAIL">
         <classes>
             <class name="CucumberRunner"/>
         </classes>

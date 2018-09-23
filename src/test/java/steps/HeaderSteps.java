@@ -2,10 +2,10 @@ package steps;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import demo.test.forms.TutByHeader;
-import demo.test.forms.AccountForm;
-import demo.test.pages.EmailAccountPage;
-import demo.test.pages.TutByHomePage;
+import demo.test.webentities.forms.TutByHeader;
+import demo.test.webentities.forms.AccountForm;
+import demo.test.webentities.pages.EmailAccountPage;
+import demo.test.webentities.pages.TutByHomePage;
 
 public class HeaderSteps extends BaseSteps {
 

@@ -1,7 +1,7 @@
 package steps;
 
 import cucumber.api.java.en.Given;
-import demo.test.pages.TutByHomePage;
+import demo.test.webentities.pages.TutByHomePage;
 
 public class TutByHomePageSteps extends BaseSteps {
 

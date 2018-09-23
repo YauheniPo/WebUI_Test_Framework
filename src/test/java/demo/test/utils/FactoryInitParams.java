@@ -1,12 +1,12 @@
 package demo.test.utils;
 
 import lombok.NonNull;
-import webdriver.common.ProviderData;
+import webdriver.common.IProviderData;
 
 /**
  * The type Factory init parameters.
  */
-public class FactoryInitParams implements ProviderData {
+public class FactoryInitParams implements IProviderData {
 
     /**
      * Gets test data.

@@ -1,12 +1,12 @@
 package demo.test.tests;
 
-import demo.test.forms.AccountForm;
-import demo.test.forms.TutByHeader;
-import demo.test.pages.AuthorizeEmailPageFactory;
-import demo.test.models.Mail;
-import demo.test.models.TestDataMails;
-import demo.test.pages.EmailAccountPage;
-import demo.test.pages.TutByHomePage;
+import demo.test.webentities.forms.AccountForm;
+import demo.test.webentities.forms.TutByHeader;
+import demo.test.webentities.pages.AuthorizeEmailPage;
+import demo.test.webentities.models.Mail;
+import demo.test.webentities.models.TestDataMails;
+import demo.test.webentities.pages.EmailAccountPage;
+import demo.test.webentities.pages.TutByHomePage;
 import io.qameta.allure.Step;
 import lombok.NonNull;
 import org.testng.annotations.*;
@@ -111,8 +111,8 @@ public class TutByEmailTest extends BaseTestDataProvider {
      */
     @Step("{0} {1} {2}")
     private Mail fetchAccountMail(EmailAccountPage.NavBox folder, String emailLogin, String emailPassword) {
-//        EmailAccountPage emailAccountPage = new AuthorizeEmailPage().signIn(emailLogin, emailPassword);
-        EmailAccountPage emailAccountPage = new AuthorizeEmailPageFactory().signIn(emailLogin, emailPassword);
+        EmailAccountPage emailAccountPage = new AuthorizeEmailPage().signIn(emailLogin, emailPassword);
+//        EmailAccountPage emailAccountPage = new AuthorizeEmailPageFactory().signIn(emailLogin, emailPassword);
         checkAuthorization(emailLogin, true);
         return emailAccountPage.fetchEmailFolder(folder).getMailsForm().choiceLastMail().getMail();
     }

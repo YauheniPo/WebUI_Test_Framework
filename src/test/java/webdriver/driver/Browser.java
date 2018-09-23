@@ -7,8 +7,8 @@ import lombok.Synchronized;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import webdriver.Logger;
-import webdriver.resources.DriverEnvironment;
-import webdriver.resources.StageEnvironment;
+import webdriver.resources.IDriverEnvironment;
+import webdriver.resources.IStageEnvironment;
 
 import java.util.concurrent.TimeUnit;
 import javax.naming.NamingException;
@@ -17,8 +17,8 @@ import javax.naming.NamingException;
  * The type Browser.
  */
 public final class Browser {
-    private static DriverEnvironment driverEnv = ConfigFactory.create(DriverEnvironment.class);
-    private static StageEnvironment stageEnv = ConfigFactory.create(StageEnvironment.class);
+    private static IDriverEnvironment driverEnv = ConfigFactory.create(IDriverEnvironment.class);
+    private static IStageEnvironment stageEnv = ConfigFactory.create(IStageEnvironment.class);
     private static final Browsers CURRENT_BROWSER = Browsers.valueOf(driverEnv.browser().toUpperCase());
     private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
     private static final Logger LOGGER = Logger.getInstance();

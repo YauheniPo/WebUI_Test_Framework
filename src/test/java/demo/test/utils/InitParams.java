@@ -1,6 +1,6 @@
 package demo.test.utils;
 
-import demo.test.models.TestDataMails;
+import demo.test.webentities.models.TestDataMails;
 import webdriver.Logger;
 
 import java.util.List;

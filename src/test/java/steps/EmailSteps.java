@@ -3,9 +3,9 @@ package steps;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import demo.test.pages.AuthorizeEmailPage;
-import demo.test.pages.EmailAccountPage;
-import demo.test.models.Mail;
+import demo.test.webentities.pages.AuthorizeEmailPage;
+import demo.test.webentities.pages.EmailAccountPage;
+import demo.test.webentities.models.Mail;
 
 public class EmailSteps extends BaseSteps {
     private AuthorizeEmailPage authorizeEmailPage;

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.aeonbits.owner.ConfigFactory;
 import webdriver.BaseEntity;
-import webdriver.resources.MailEnvironment;
+import webdriver.resources.IMailEnvironment;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -20,7 +20,7 @@ import static webdriver.resources.Constants.CHARSET;
  */
 public class MailUtils extends BaseEntity {
 
-    private final MailEnvironment mailEnv = ConfigFactory.create(MailEnvironment.class);
+    private final IMailEnvironment mailEnv = ConfigFactory.create(IMailEnvironment.class);
     private final Properties properties = new Properties();
     private String host;
     private final String fromAddress;

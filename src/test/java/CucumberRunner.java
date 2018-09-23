@@ -1,7 +1,7 @@
 import cucumber.api.CucumberOptions;
 import cucumber.api.testng.CucumberFeatureWrapperImpl;
 import cucumber.api.testng.TestNGCucumberRunner;
-import demo.test.models.TestDataMails;
+import demo.test.webentities.models.TestDataMails;
 import demo.test.utils.FactoryInitParams;
 import org.testng.annotations.*;
 import webdriver.BaseEntity;

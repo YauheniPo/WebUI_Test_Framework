@@ -2,8 +2,8 @@ package steps;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
-import demo.test.forms.AccountForm;
-import demo.test.models.Mail;
+import demo.test.webentities.forms.AccountForm;
+import demo.test.webentities.models.Mail;
 
 import java.util.Arrays;
 import java.util.LinkedList;

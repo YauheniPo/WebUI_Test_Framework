@@ -18,7 +18,7 @@ import java.text.MessageFormat;
  */
 public class EmailAccountPage extends BaseForm {
 
-    private static IEmailAccountPage emailAccountPageLocators = ConfigFactory.create(IEmailAccountPage.class);
+    private static final IEmailAccountPage emailAccountPageLocators = ConfigFactory.create(IEmailAccountPage.class);
     private static final String MAIN_LOCATOR = emailAccountPageLocators.mainLocator();
     private final String navBarLocator = emailAccountPageLocators.navBar();
 

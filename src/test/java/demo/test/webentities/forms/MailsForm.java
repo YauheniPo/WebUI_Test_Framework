@@ -12,7 +12,7 @@ import webdriver.elements.Label;
  */
 public class MailsForm extends BaseForm {
 
-    private static IMailsForm mailsFormLocators = ConfigFactory.create(IMailsForm.class);
+    private static final IMailsForm mailsFormLocators = ConfigFactory.create(IMailsForm.class);
     private static final String MAIN_LOCATOR = mailsFormLocators.mainLocator();
     private final String locLastMail = mailsFormLocators.lastMail();
     private final String locSender = mailsFormLocators.sender();

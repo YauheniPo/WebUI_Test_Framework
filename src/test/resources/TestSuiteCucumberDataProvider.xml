@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="EPAM_e.popovich" verbose="1"> <!--parallel="tests"-->
+<suite name="EPAM_e.popovich">
     <test name="Test @tut.by EMAIL#1">
         <parameter name="testData" value="accounts.csv"/>
         <classes>
-            <class name="CucumberRunner"/>
+            <class name="CucumberRunnerDataProvider"/>
         </classes>
     </test>
     <test name="Test @tut.by EMAIL#2">
         <parameter name="testData" value="accounts.xls"/>
         <classes>
-            <class name="CucumberRunner"/>
+            <class name="CucumberRunnerDataProvider"/>
         </classes>
     </test>
 </suite>

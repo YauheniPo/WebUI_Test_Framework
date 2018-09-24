@@ -34,7 +34,7 @@ public class TutByEmailTest extends BaseTestDataProvider {
     private MailUtils mailSender;
     private final String currentBrowser = Browser.getBrowserName();
     private final ArrayList<MailUtils> mailBox = new ArrayList<>();
-    private Predicate<Object> nonNull = Objects::nonNull;
+    private final Predicate<Object> nonNull = Objects::nonNull;
     private String emailText;
 
     @Parameters({"emailText", "dataBaseLocation"})

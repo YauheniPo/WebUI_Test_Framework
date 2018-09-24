@@ -24,7 +24,7 @@ Feature: Check recipient and sender email letter
     When I did click to 'email'
     Then Authorize Email Form is opened
     When I was authorized as 'recipient'
-    Then 'sender' authorized
+    Then 'recipient' authorized
     And Email Page is opened
     When I did click to 'inbox' folder
     And I chose 'recipient' last letter

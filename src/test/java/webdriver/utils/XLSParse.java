@@ -46,6 +46,7 @@ public class XLSParse extends BaseParser {
         } catch (FileNotFoundException e) {
             throw new SkipException("File not found: " + this.filepath);
         } catch (BiffException | IOException e) {
+            LOGGER.debug(e.getMessage());
         }
         return tabArray;
     }

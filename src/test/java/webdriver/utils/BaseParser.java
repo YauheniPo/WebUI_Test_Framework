@@ -4,7 +4,7 @@ import webdriver.Logger;
 
 class BaseParser {
     static final Logger LOGGER = Logger.getInstance();
-    String filepath;
+    final String filepath;
 
     /**
      * Instantiates a new Base parser.

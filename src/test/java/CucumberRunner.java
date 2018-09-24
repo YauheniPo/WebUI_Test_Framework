@@ -1,54 +1,13 @@
 import cucumber.api.CucumberOptions;
-import cucumber.api.testng.CucumberFeatureWrapperImpl;
-import cucumber.api.testng.TestNGCucumberRunner;
-import demo.test.webentities.models.TestDataMails;
-import demo.test.utils.FactoryInitParams;
-import org.testng.annotations.*;
-import webdriver.BaseEntity;
-import webdriver.common.ScenarioContext;
+import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 @CucumberOptions(
         features = {"src/test/features/"},
         glue = "steps",
         strict = true,
         format = {"pretty", "html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"}
-//        ,tags = {"@check_email"}
+        ,tags = {"~@check_email_data_provider"}//{"@check_email"} {"@check_email_data_files"} {"~@check_email_data_provider"}
 )
-public class CucumberRunner extends BaseEntity {
-    private static final ScenarioContext SCENARIO_CONTEXT = ScenarioContext.getInstance();
-    private TestNGCucumberRunner testRunner;
-    private String testData;
+public class CucumberRunner extends AbstractTestNGCucumberTests {
 
-    @Parameters(value = {"testData"})
-    @BeforeClass
-    public void setUP(@Optional String testData) {
-        this.testData = testData;
-        testRunner = new TestNGCucumberRunner(this.getClass());
-    }
-
-    @Test(dataProvider="initParams")
-    public void initParams(Object testData) {
-        if (testData != null) {
-            TestDataMails testDataMails = (TestDataMails) testData;
-            SCENARIO_CONTEXT.setContext("senderMailLogin", testDataMails.getSenderMailLogin());
-            SCENARIO_CONTEXT.setContext("senderMailPassword", testDataMails.getSenderMailPassword());
-            SCENARIO_CONTEXT.setContext("recipientMailLogin", testDataMails.getRecipientMailLogin());
-            SCENARIO_CONTEXT.setContext("recipientMailPassword", testDataMails.getRecipientMailPassword());
-        }
-        for (Object[] rn : testRunner.provideFeatures()) {
-            for (Object r : rn) {
-                testRunner.runCucumber(((CucumberFeatureWrapperImpl) r).getCucumberFeature());
-            }
-        }
-    }
-
-    @DataProvider(name = "initParams")
-    public Object[] getParams() {
-        return testData == null ? new String[]{null} : new FactoryInitParams().getTestData(testData);
-    }
-
-    @AfterClass
-    public void tearDown() {
-        testRunner.finish();
-    }
 }

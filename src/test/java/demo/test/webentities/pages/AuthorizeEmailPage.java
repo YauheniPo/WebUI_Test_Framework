@@ -12,7 +12,7 @@ import webdriver.elements.TextBox;
  */
 public class AuthorizeEmailPage extends BaseForm {
 
-    private static IAuthorizeEmailPage authorizeEmailPageLocators = ConfigFactory.create(IAuthorizeEmailPage.class);
+    private static final IAuthorizeEmailPage authorizeEmailPageLocators = ConfigFactory.create(IAuthorizeEmailPage.class);
     private static final String MAIN_LOCATOR = authorizeEmailPageLocators.mainLocator();
     private final String textBoxInputLoginLocator = authorizeEmailPageLocators.textBoxInputLogin();
     private final String textBoxInputPasswordLocator = authorizeEmailPageLocators.textBoxInputPassword();

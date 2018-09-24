@@ -17,7 +17,7 @@ import java.text.MessageFormat;
  */
 public class AccountForm extends BaseForm {
 
-    private static IAccountForm accountFormLocators = ConfigFactory.create(IAccountForm.class);
+    private static final IAccountForm accountFormLocators = ConfigFactory.create(IAccountForm.class);
     private static final String MAIN_LOCATOR = accountFormLocators.mainLocator();
     private final String locUserDropdown = accountFormLocators.userDropdown();
 

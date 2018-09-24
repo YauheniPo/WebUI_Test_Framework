@@ -56,4 +56,13 @@ public class ScenarioContext {
     public void clearScenario() {
         context.clear();
     }
+
+    /**
+     * Is empty boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isEmpty() {
+        return context.isEmpty();
+    }
 }

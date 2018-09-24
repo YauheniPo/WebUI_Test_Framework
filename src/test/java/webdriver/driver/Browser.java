@@ -17,8 +17,8 @@ import javax.naming.NamingException;
  * The type Browser.
  */
 public final class Browser {
-    private static IDriverEnvironment driverEnv = ConfigFactory.create(IDriverEnvironment.class);
-    private static IStageEnvironment stageEnv = ConfigFactory.create(IStageEnvironment.class);
+    private static final IDriverEnvironment driverEnv = ConfigFactory.create(IDriverEnvironment.class);
+    private static final IStageEnvironment stageEnv = ConfigFactory.create(IStageEnvironment.class);
     private static final Browsers CURRENT_BROWSER = Browsers.valueOf(driverEnv.browser().toUpperCase());
     private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
     private static final Logger LOGGER = Logger.getInstance();

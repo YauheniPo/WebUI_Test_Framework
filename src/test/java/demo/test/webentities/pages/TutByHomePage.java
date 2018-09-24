@@ -12,7 +12,7 @@ import webdriver.BaseForm;
  */
 public class TutByHomePage extends BaseForm {
 
-    private static ITutByHomePage homePageLocators = ConfigFactory.create(ITutByHomePage.class);
+    private static final ITutByHomePage homePageLocators = ConfigFactory.create(ITutByHomePage.class);
     private static final String MAIN_LOCATOR = homePageLocators.mainLocator();
 
     @Getter private final TutByHeader header = new TutByHeader();

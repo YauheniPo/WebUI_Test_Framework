@@ -16,7 +16,7 @@ import java.text.MessageFormat;
  */
 public class TutByHeader extends BaseForm {
 
-    private static ITutByHeader tutByHeaderLocators = ConfigFactory.create(ITutByHeader.class);
+    private static final ITutByHeader tutByHeaderLocators = ConfigFactory.create(ITutByHeader.class);
     private static final String MAIN_LOCATOR = tutByHeaderLocators.mainLocator();
     private final String locTopBarElement = tutByHeaderLocators.topBar();
 

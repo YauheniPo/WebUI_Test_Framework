@@ -45,7 +45,6 @@ public class MailUtils extends BaseEntity {
         readConfig();
         setProperties();
         initSession();
-        store = connect();
     }
 
     /**
@@ -53,12 +52,12 @@ public class MailUtils extends BaseEntity {
      *
      * @return the store connected
      */
+    @SneakyThrows(InterruptedException.class)
     private Store getStoreConnected() {
-        if (store.isConnected()) {
-            return store;
+        if (this.store == null || !this.store.isConnected()) {
+            this.store = connect();
         }
-        store = connect();
-        return store;
+        return this.store;
     }
 
     /**
@@ -126,32 +125,19 @@ public class MailUtils extends BaseEntity {
      *
      * @return the store
      */
-    private Store connect() {
+    private Store connect() throws InterruptedException {
         int delay = 1000;
-        for (int i = 0; i <= 10; i++) {
-            initSession();
+        for (int i = 0; i <= 10; ++i) {
             try {
-                store = session.getStore();
-                store.connect(host, fromAddress, password);
+                this.store = this.session.getStore();
+                this.store.connect(host, fromAddress, password);
                 break;
-            } catch (NoSuchProviderException e) {
-                LOGGER.debug(e.getMessage());
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e1) {
-                    LOGGER.debug(e1.getMessage());
-                }
-                e.printStackTrace();
             } catch (MessagingException e) {
                 LOGGER.debug(e.getMessage());
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e1) {
-                    LOGGER.debug(e1.getMessage());
-                }
+                Thread.sleep(delay);
             }
         }
-        return store;
+        return this.store;
     }
 
     /**
@@ -159,7 +145,7 @@ public class MailUtils extends BaseEntity {
      */
     public void deleteAllMessages() {
         try {
-            Folder[] folders = store.getDefaultFolder().list("*");
+            Folder[] folders = getStoreConnected().getDefaultFolder().list("*");
             for (Folder folder : folders) {
                 folder.open(Folder.READ_WRITE);
                 Message[] messages = folder.getMessages();

@@ -32,7 +32,7 @@ public class CSVParse extends BaseParser {
         try {
             List<String[]> allRows = new CSVReader(new FileReader(filepath), ';').readAll();
             if (!allRows.isEmpty()) {
-                allRows.forEach(row -> {data.addAll(Arrays.asList(row));});
+                allRows.forEach(row -> data.addAll(Arrays.asList(row)));
             }
         } catch (IOException e) {
             LOGGER.error(e.getMessage());

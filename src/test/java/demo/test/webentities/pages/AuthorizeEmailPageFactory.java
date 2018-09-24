@@ -34,7 +34,7 @@ public class AuthorizeEmailPageFactory extends BaseForm {
      * @param login the login
      */
     public void inputLogin(String login) {
-        textBoxInputLogin.sendKeys(login);
+        this.textBoxInputLogin.sendKeys(login);
     }
 
     /**
@@ -43,14 +43,14 @@ public class AuthorizeEmailPageFactory extends BaseForm {
      * @param password the password
      */
     public void inputPsw(String password) {
-        textBoxInputPassword.sendKeys(password);
+        this.textBoxInputPassword.sendKeys(password);
     }
 
     /**
      * Click sign in.
      */
     public void clickSignIn() {
-        btnSighIn.click();
+        this.btnSighIn.click();
     }
 
     /**

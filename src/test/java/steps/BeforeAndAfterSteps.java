@@ -3,14 +3,15 @@ package steps;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import webdriver.BaseEntity;
 import webdriver.common.ScenarioContext;
 import webdriver.reports.listeners.TestListener;
 
-public class BeforeAndAfterSteps {
+public class BeforeAndAfterSteps extends BaseEntity {
 
     @Before(order = 1)
     public void beforeScenario() {
-//        before();
+        before();
     }
 
     @After(order = 1)
@@ -20,7 +21,7 @@ public class BeforeAndAfterSteps {
             scenario.embed(testListener.makeScreenshot(), "image/png");
             testListener.makeExtentReportScreenshot();
         }
-//        after();
+        after();
         ScenarioContext.getInstance().clearScenario();
     }
 }

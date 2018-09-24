@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 public class ApiEmailSteps extends BaseSteps {
     private final String currentBrowser = Browser.getBrowserName();
     private static final ArrayList<MailUtils> mailBox = new ArrayList<>();
-    private Predicate<Object> elIsNull = Objects::nonNull;
+    private final Predicate<Object> elIsNull = Objects::nonNull;
 
     private MailUtils getMailStore(String login, String password) {
         MailUtils mail = new MailUtils(login, password);
@@ -30,11 +30,7 @@ public class ApiEmailSteps extends BaseSteps {
     public void clearEmailAndCloseMailStore() {
         try {
             deleteMails();
-            mailBox.forEach(mail -> {
-                if (elIsNull.test(mail)) {
-                    mail.closeStore();
-                }
-            });
+            mailBox.forEach(mail -> {if (elIsNull.test(mail)) {mail.closeStore();}});
         } finally {
             mailBox.clear();
         }

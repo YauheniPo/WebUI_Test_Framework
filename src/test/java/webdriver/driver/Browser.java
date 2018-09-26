@@ -21,6 +21,7 @@ public final class Browser {
     private static final IStageEnvironment stageEnv = ConfigFactory.create(IStageEnvironment.class);
     private static final Browsers CURRENT_BROWSER = Browsers.valueOf(driverEnv.browser().toUpperCase());
     private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
+    private static final int PAGE_IMPLICITY_WAIT = driverEnv.pageImplicityWait();
     private static final Logger LOGGER = Logger.getInstance();
     private static Browser instance;
     private volatile static RemoteWebDriver driver;
@@ -85,7 +86,7 @@ public final class Browser {
      * Open start page.
      */
     public static void openStartPage() {
-        getDriver().navigate().to(browserURL);
+        navigate(browserURL);
     }
 
     /**
@@ -97,6 +98,7 @@ public final class Browser {
         try {
             RemoteWebDriver driver = BrowserFactory.setUp(CURRENT_BROWSER.toString());
             driver.manage().timeouts().implicitlyWait(IMPLICITY_WAIT, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(PAGE_IMPLICITY_WAIT, TimeUnit.SECONDS);
             LOGGER.info("browser constructed");
             return driver;
         } catch (NamingException e) {
@@ -108,7 +110,7 @@ public final class Browser {
     /**
      * Refresh.
      */
-    public void refresh() {
+    public static void refresh() {
         getDriver().navigate().refresh();
         LOGGER.info("Page was refreshed.");
     }
@@ -130,7 +132,7 @@ public final class Browser {
      *
      * @param url the url
      */
-    public void navigate(final String url) {
+    public static void navigate(final String url) {
         getDriver().navigate().to(url);
     }
 

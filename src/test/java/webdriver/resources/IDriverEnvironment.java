@@ -13,6 +13,9 @@ public interface IDriverEnvironment extends Config {
     @DefaultValue("10")
     Integer implicityWait();
 
+    @DefaultValue("60")
+    Integer pageImplicityWait();
+
     @DefaultValue("chrome")
     String browser();
 

@@ -3,10 +3,10 @@ import cucumber.api.testng.CucumberFeatureWrapperImpl;
 import cucumber.api.testng.TestNGCucumberRunner;
 import demo.test.utils.FactoryInitParams;
 import demo.test.webentities.models.TestDataMails;
+import lombok.NonNull;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import webdriver.BaseEntity;
@@ -26,13 +26,13 @@ public class CucumberRunnerDataProvider extends BaseEntity {
 
     @Parameters(value = {"testData"})
     @BeforeClass
-    public void setUP(@Optional String testData) {
+    public void setUP(@NonNull String testData) {
         this.testData = testData;
         testRunner = new TestNGCucumberRunner(this.getClass());
     }
 
     @Test(dataProvider="initParams")
-    public void initParams(Object testData) {
+    public void initParams(@NonNull Object testData) {
         TestDataMails testDataMails = (TestDataMails) testData;
         SCENARIO_CONTEXT.setContext("senderMailLogin", testDataMails.getSenderMailLogin());
         SCENARIO_CONTEXT.setContext("senderMailPassword", testDataMails.getSenderMailPassword());

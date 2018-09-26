@@ -26,7 +26,7 @@ final public class SmartWait {
      * @return the t
      */
     private static <T> T waitFor(ExpectedCondition<T> condition, long timeOutInSeconds) {
-        Browser.getDriver().manage().timeouts().implicitlyWait(0L, TimeUnit.MILLISECONDS);
+        Browser.getDriver().manage().timeouts().implicitlyWait(0L, TimeUnit.SECONDS);
         Wait<WebDriver> wait = new FluentWait<>((WebDriver) Browser.getDriver())
             .withTimeout(Duration.ofSeconds(timeOutInSeconds)).pollingEvery(Duration.ofMillis(300));
         try {

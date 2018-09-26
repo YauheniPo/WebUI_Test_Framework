@@ -39,7 +39,7 @@ public class TutByEmailTest extends BaseTestDataProvider {
 
     @Parameters({"emailText", "dataBaseLocation"})
     @BeforeClass
-    public void fetchTestData(String emailText, String dataBaseLocation) {
+    public void fetchTestData(@Optional(value = "test_text") String emailText, String dataBaseLocation) {
         this.emailText = emailText;
         this.dataBaseLocation = dataBaseLocation;
     }

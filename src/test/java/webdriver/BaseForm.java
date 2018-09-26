@@ -28,7 +28,7 @@ public abstract class BaseForm extends BaseEntity {
      * Wait for page load.
      */
     private void waitForPageLoad() {
-        WebDriverWait wait = new WebDriverWait(Browser.getDriver(), Browser.getTimeoutForCondition());
+        WebDriverWait wait = (WebDriverWait) new WebDriverWait(Browser.getDriver(), Browser.getTimeoutForCondition()).withMessage("Element was not found");
         wait.until((ExpectedCondition<Boolean>) driver -> ((JavascriptExecutor) driver)
             .executeScript("return document.readyState").equals("complete"));
     }

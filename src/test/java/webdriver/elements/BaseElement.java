@@ -95,7 +95,7 @@ public abstract class BaseElement extends BaseEntity {
      * @param timeout the timeout
      * @return the boolean
      */
-    private boolean isPresent(long timeout) {
+    public boolean isPresent(long timeout) {
         ExpectedCondition<Boolean> condition = driver -> {
             try {
                 List<WebElement> elems = Objects.requireNonNull(driver).findElements(this.titleLocator);

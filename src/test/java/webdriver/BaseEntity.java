@@ -45,7 +45,7 @@ public class BaseEntity {
     public void before() {
         Browser browser = getBrowser();
         browser.windowMaximise();
-        Browser.navigate(Browser.getBrowserURL());
+        Browser.navigate(Browser.BROWSER_URL);
     }
 
     /**

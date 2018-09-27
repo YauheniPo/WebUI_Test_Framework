@@ -20,14 +20,11 @@ public interface IDriverEnvironment extends Config {
     String browser();
 
     @DefaultValue("true")
-    Boolean driverManager();
-
-    @DefaultValue("true")
     Boolean browserHeadless();
 
     @DefaultValue("false")
     Boolean grid();
 
-    @DefaultValue("http://${gridIp}:${gridPort}/wd/hub")
+    @DefaultValue("http://localhost:4444/wd/hub")
     String gridUrl();
 }

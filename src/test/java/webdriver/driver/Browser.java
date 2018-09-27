@@ -2,7 +2,6 @@ package webdriver.driver;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.Synchronized;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -25,11 +24,10 @@ public final class Browser {
     private static final Logger LOGGER = Logger.getInstance();
     private static Browser instance;
     private volatile static RemoteWebDriver driver;
-    @Getter private static String browserURL = stageEnv.urlLoginPage();
-    @Getter private static boolean isDriverManager = driverEnv.driverManager();
-    @Getter private static String gridUrl =driverEnv.gridUrl();
-    @Getter private static boolean isHeadless = driverEnv.browserHeadless();
-    @Getter private static int timeoutForCondition = driverEnv.defaultConditionTimeout();
+    static final boolean IS_HEADLESS = driverEnv.browserHeadless();
+    static final String GRID_URL =driverEnv.gridUrl();
+    public static final int TIMEOUT_FOR_CONDITION = driverEnv.defaultConditionTimeout();
+    public static final String BROWSER_URL = stageEnv.urlLoginPage();
 
     /**
      * Instantiates a new Browser.
@@ -86,7 +84,7 @@ public final class Browser {
      * Open start page.
      */
     public static void openStartPage() {
-        navigate(browserURL);
+        navigate(BROWSER_URL);
     }
 
     /**
@@ -142,7 +140,7 @@ public final class Browser {
     public void exit() {
         try {
             getDriver().quit();
-            instance = null;
+//            instance = null;
             LOGGER.info("browser driver quit");
         } catch (Exception e) {
             LOGGER.debug(e.getMessage());

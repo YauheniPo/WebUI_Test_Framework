@@ -30,14 +30,14 @@ public class CSVParse extends BaseParser {
     public List<String> fetchCSVData() {
         List<String> data = new ArrayList<>();
         try {
-            List<String[]> allRows = new CSVReader(new FileReader(filepath), ';').readAll();
+            List<String[]> allRows = new CSVReader(new FileReader(this.filepath), ';').readAll();
             if (!allRows.isEmpty()) {
                 allRows.forEach(row -> data.addAll(Arrays.asList(row)));
             }
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
         }
-        LOGGER.info(String.format("Data received from %s", filepath));
+        LOGGER.info(String.format("Data received from %s", this.filepath));
         return data;
     }
 }

@@ -30,7 +30,7 @@ public class ApiEmailSteps extends BaseSteps {
     public void clearEmailAndCloseMailStore() {
         try {
             deleteMails();
-            mailBox.forEach(mail -> {if (elIsNull.test(mail)) {mail.closeStore();}});
+            mailBox.forEach(mail -> {if (this.elIsNull.test(mail)) {mail.closeStore();}});
         } finally {
             mailBox.clear();
         }
@@ -47,7 +47,7 @@ public class ApiEmailSteps extends BaseSteps {
 
     @And("^deleting email data$")
     public void deleteMails() {
-        mailBox.forEach(mail -> {if(elIsNull.test(mail)) {mail.deleteAllMessages();}});
+        mailBox.forEach(mail -> {if(this.elIsNull.test(mail)) {mail.deleteAllMessages();}});
     }
 
     @And("^connecting '(.*)' email store$")

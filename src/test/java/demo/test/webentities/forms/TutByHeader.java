@@ -33,7 +33,7 @@ public class TutByHeader extends BaseForm {
      * @param element the element
      */
     public void clickTopBarElement(TopBar element) {
-        new Button(By.xpath(MessageFormat.format(locTopBarElement, element.getTopBarLocator())),
+        new Button(By.xpath(MessageFormat.format(this.locTopBarElement, element.getTopBarLocator())),
                    String.format("Button %s", element.getTopBarLocator().toUpperCase())).click();
     }
 

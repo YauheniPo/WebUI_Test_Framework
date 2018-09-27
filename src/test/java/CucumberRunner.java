@@ -9,5 +9,4 @@ import cucumber.api.testng.AbstractTestNGCucumberTests;
         ,tags = {"~@check_email_data_provider"}//{"@check_email"} {"@check_email_data_files"} {"~@check_email_data_provider"}
 )
 public class CucumberRunner extends AbstractTestNGCucumberTests {
-
 }

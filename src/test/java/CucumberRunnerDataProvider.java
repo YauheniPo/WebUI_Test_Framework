@@ -28,7 +28,7 @@ public class CucumberRunnerDataProvider extends BaseEntity {
     @BeforeClass
     public void setUP(@NonNull String testData) {
         this.testData = testData;
-        testRunner = new TestNGCucumberRunner(this.getClass());
+        this.testRunner = new TestNGCucumberRunner(this.getClass());
     }
 
     @Test(dataProvider="initParams")
@@ -38,20 +38,20 @@ public class CucumberRunnerDataProvider extends BaseEntity {
         SCENARIO_CONTEXT.setContext("senderMailPassword", testDataMails.getSenderMailPassword());
         SCENARIO_CONTEXT.setContext("recipientMailLogin", testDataMails.getRecipientMailLogin());
         SCENARIO_CONTEXT.setContext("recipientMailPassword", testDataMails.getRecipientMailPassword());
-        for (Object[] rn : testRunner.provideFeatures()) {
+        for (Object[] rn : this.testRunner.provideFeatures()) {
             for (Object r : rn) {
-                testRunner.runCucumber(((CucumberFeatureWrapperImpl) r).getCucumberFeature());
+                this.testRunner.runCucumber(((CucumberFeatureWrapperImpl) r).getCucumberFeature());
             }
         }
     }
 
     @DataProvider(name = "initParams")
     public Object[] getParams() {
-        return testData == null ? new String[]{null} : new FactoryInitParams().getTestData(testData);
+        return this.testData == null ? new String[]{null} : new FactoryInitParams().getTestData(this.testData);
     }
 
     @AfterClass
     public void tearDown() {
-        testRunner.finish();
+        this.testRunner.finish();
     }
 }

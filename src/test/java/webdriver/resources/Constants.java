@@ -10,8 +10,4 @@ public class Constants {
     public static final String PROPERTIES_DB_QUERIES = "db_queries.properties";
     public static final String PROPERTIES_SELENIUM = "selenium.properties";
     public static final String PROPERTIES_STAGE = "stage.properties";
-    public static final String WEBDRIVER_CHROME = "webdriver.chrome.driver";
-    public static final String WEBDRIVER_GECKODRIVER = "webdriver.gecko.driver";
-    public static final String CHROMEDRIVER = "chromedriver";
-    public static final String GECKODRIVER = "geckodriver";
 }

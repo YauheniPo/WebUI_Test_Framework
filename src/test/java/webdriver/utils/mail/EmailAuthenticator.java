@@ -19,6 +19,6 @@ class EmailAuthenticator extends javax.mail.Authenticator {
      * @return the password authentication
      */
     public PasswordAuthentication getPasswordAuthentication() {
-        return new PasswordAuthentication(login, password);
+        return new PasswordAuthentication(this.login, this.password);
     }
 }

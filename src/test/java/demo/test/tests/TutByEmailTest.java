@@ -47,7 +47,7 @@ public class TutByEmailTest extends BaseTestDataProvider {
     @AfterClass
     public void clearEmailAndCloseMailStore() {
         deleteMails();
-        mailBox.forEach(mail -> {if(this.nonNull.test(mail)) {mail.closeStore();}});
+        this.mailBox.forEach(mail -> {if(this.nonNull.test(mail)) {mail.closeStore();}});
     }
 
     @AfterMethod

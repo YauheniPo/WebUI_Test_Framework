@@ -35,7 +35,7 @@ public class AuthorizeEmailPage extends BaseForm {
      * @param login the login
      */
     public void inputLogin(String login) {
-        textBoxInputLogin.setText(login);
+        this.textBoxInputLogin.setText(login);
     }
 
     /**
@@ -44,14 +44,14 @@ public class AuthorizeEmailPage extends BaseForm {
      * @param password the password
      */
     public void inputPsw(String password) {
-        textBoxInputPassword.setText(password);
+        this.textBoxInputPassword.setText(password);
     }
 
     /**
      * Click sign in.
      */
     public void clickSignIn() {
-        btnSighIn.click();
+        this.btnSighIn.click();
     }
 
     /**

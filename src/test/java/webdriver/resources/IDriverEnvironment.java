@@ -25,6 +25,6 @@ public interface IDriverEnvironment extends Config {
     @DefaultValue("false")
     Boolean grid();
 
-    @DefaultValue("http://${gridIp}:${gridPort}/wd/hub")
+    @DefaultValue("http://localhost:4444/wd/hub")
     String gridUrl();
 }

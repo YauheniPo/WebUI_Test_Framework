@@ -64,8 +64,8 @@ public class MailUtils extends BaseEntity {
      * Init session.
      */
     private void initSession() {
-        Authenticator auth = new EmailAuthenticator(fromAddress, password);
-        session = Session.getInstance(properties, auth);
+        Authenticator auth = new EmailAuthenticator(this.fromAddress, this.password);
+        this.session = Session.getInstance(this.properties, auth);
     }
 
     /**
@@ -73,8 +73,8 @@ public class MailUtils extends BaseEntity {
      */
     @SneakyThrows({MessagingException.class, IOException.class})
     public void sendMail() {
-        Transport.send(message);
-        LOGGER.info(String.format("Sent a email Subject: %s Text: %s", message.getSubject(), message.getContent()));
+        Transport.send(this.message);
+        LOGGER.info(String.format("Sent a email Subject: %s Text: %s", this.message.getSubject(), this.message.getContent()));
     }
 
     /**
@@ -87,13 +87,13 @@ public class MailUtils extends BaseEntity {
      */
     @SneakyThrows({MessagingException.class})
     public MailUtils messageGeneration(String text, String subject, String recipientEmailAddress) {
-        message = new MimeMessage(session);
-        message.setHeader("Content-Type", String.format("text/plain; charset=%s", CHARSET));
-        message.setSubject(subject, CHARSET);
-        message.setText(text, CHARSET);
-        message.setFrom(new InternetAddress(fromAddress));
+        this.message = new MimeMessage(this.session);
+        this.message.setHeader("Content-Type", String.format("text/plain; charset=%s", CHARSET));
+        this.message.setSubject(subject, CHARSET);
+        this.message.setText(text, CHARSET);
+        this.message.setFrom(new InternetAddress(this.fromAddress));
         InternetAddress toAddress = new InternetAddress(recipientEmailAddress);
-        message.addRecipient(Message.RecipientType.TO, toAddress);
+        this.message.addRecipient(Message.RecipientType.TO, toAddress);
         return this;
     }
 
@@ -106,7 +106,7 @@ public class MailUtils extends BaseEntity {
     private void addMsgInFolder(String folderName) {
         Folder folder = getStoreConnected().getFolder(folderName);
         folder.open(Folder.READ_WRITE);
-        folder.appendMessages(new Message[]{message});
+        folder.appendMessages(new Message[]{this.message});
         folder.close(true);
     }
 
@@ -116,8 +116,8 @@ public class MailUtils extends BaseEntity {
     @SneakyThrows({MessagingException.class, IOException.class})
     public void addMsgInSentFolder() {
         LOGGER.info(String.format("Sent a email Subject: %s Text: %s to %s folder", this.message.getSubject(),
-                           message.getContent(), sentFolder));
-        addMsgInFolder(sentFolder);
+                this.message.getContent(), this.sentFolder));
+        addMsgInFolder(this.sentFolder);
     }
 
     /**
@@ -130,7 +130,7 @@ public class MailUtils extends BaseEntity {
         for (int i = 0; i <= 10; ++i) {
             try {
                 this.store = this.session.getStore();
-                this.store.connect(host, fromAddress, password);
+                this.store.connect(this.host, this.fromAddress, this.password);
                 break;
             } catch (MessagingException e) {
                 LOGGER.debug(e.getMessage());
@@ -153,7 +153,7 @@ public class MailUtils extends BaseEntity {
                     message.setFlag(Flags.Flag.DELETED, true);
                 }
                 folder.close(true);
-                LOGGER.info(String.format("Mails deleted from %s from %s folder", fromAddress, folder.getName()));
+                LOGGER.info(String.format("Mails deleted from %s from %s folder", this.fromAddress, folder.getName()));
             }
         } catch (MessagingException e) {
             LOGGER.debug(e.getMessage());
@@ -165,32 +165,32 @@ public class MailUtils extends BaseEntity {
      */
     @SneakyThrows(Exception.class)
     public void closeStore() {
-        store.close();
-        LOGGER.info(String.format("MailStore %s is close", fromAddress));
+        this.store.close();
+        LOGGER.info(String.format("MailStore %s is close", this.fromAddress));
     }
 
     /**
      * Read config.
      */
     private void readConfig() {
-        String prop = mailEnv.serv();
+        String prop = this.mailEnv.serv();
         String hostProtoc = prop.split(";")[0];
-        service = prop.split(";")[1];
-        host = String.format("%s.%s", hostProtoc, service);
-        protocol = MailProtocols.valueOf(prop.split(";")[2].toUpperCase());
+        this.service = prop.split(";")[1];
+        this.host = String.format("%s.%s", hostProtoc, this.service);
+        this.protocol = MailProtocols.valueOf(prop.split(";")[2].toUpperCase());
     }
 
     /**
      * Fetch properties.
      */
     private void setProperties() {
-        properties.setProperty("mail.store.protocol", protocol.toString());
-        properties.put("mail.smtp.host", String.format("smtp.%s", service));
-        properties.put("mail.smtp.auth", mailEnv.smtpAuth());
-        properties.put("mail.smtp.port", port);
-        properties.put("mail.imap.ssl.enable", "true");
-        properties.put("mail.smtp.socketFactory.port", port);
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        this.properties.setProperty("mail.store.protocol", this.protocol.toString());
+        this.properties.put("mail.smtp.host", String.format("smtp.%s", this.service));
+        this.properties.put("mail.smtp.auth", this.mailEnv.smtpAuth());
+        this.properties.put("mail.smtp.port", this.port);
+        this.properties.put("mail.imap.ssl.enable", "true");
+        this.properties.put("mail.smtp.socketFactory.port", this.port);
+        this.properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
     }
 
     /**

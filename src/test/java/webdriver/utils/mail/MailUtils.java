@@ -22,15 +22,15 @@ public class MailUtils extends BaseEntity {
 
     private final IMailEnvironment mailEnv = ConfigFactory.create(IMailEnvironment.class);
     private final Properties properties = new Properties();
-    private String host;
     private final String fromAddress;
     private final String password;
+    private final int port = mailEnv.port();
+    private final String sentFolder = mailEnv.seltFolder();
+    private String host;
     private MailProtocols protocol;
     private Store store;
     private Session session;
-    private int port = mailEnv.port();
     private String service;
-    private String sentFolder = mailEnv.seltFolder();
     private MimeMessage message;
 
     /**

@@ -14,7 +14,7 @@ import java.util.Properties;
  */
 public final class PropertiesResourceManager {
     private static final Logger LOGGER = Logger.getInstance();
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
     /**
      * Instantiates a new Properties resource manager.

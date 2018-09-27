@@ -1,10 +1,10 @@
 package webdriver.driver;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.Synchronized;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -12,7 +12,6 @@ import webdriver.Logger;
 import webdriver.resources.IDriverEnvironment;
 import webdriver.resources.IStageEnvironment;
 
-import java.util.concurrent.TimeUnit;
 import javax.naming.NamingException;
 
 /**
@@ -23,13 +22,13 @@ public final class Browser {
     private static final IStageEnvironment stageEnv = ConfigFactory.create(IStageEnvironment.class);
     private static final Browsers CURRENT_BROWSER = Browsers.valueOf(driverEnv.browser().toUpperCase());
     private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
-    private static final int PAGE_IMPLICITY_WAIT = driverEnv.pageImplicityWait();
     private static final Logger LOGGER = Logger.getInstance();
     private static Browser instance;
-    @Getter private static String browserURL = stageEnv.urlLoginPage();
-    @Getter private static String gridUrl =driverEnv.gridUrl();
-    @Getter private static boolean isHeadless = driverEnv.browserHeadless();
-    @Getter private static int timeoutForCondition = driverEnv.defaultConditionTimeout();
+    static final String GRID_URL =driverEnv.gridUrl();
+    static final boolean IS_HEADLESS = driverEnv.browserHeadless();
+    public static final int TIMEOUT_FOR_CONDITION = driverEnv.defaultConditionTimeout();
+    public static final String BROWSER_URL = stageEnv.urlLoginPage();
+    public static final int PAGE_WAIT = driverEnv.pageImplicityWait();
 
     /**
      * Instantiates a new Browser.
@@ -83,17 +82,16 @@ public final class Browser {
      * Open start page.
      */
     public static void openStartPage() {
-        navigate(browserURL);
+        navigate(BROWSER_URL);
     }
 
     /**
      * Gets new driver.
      */
     private static void initNewDriver() {
+        Configuration.timeout = IMPLICITY_WAIT;
         try {
             BrowserFactory.setUp(CURRENT_BROWSER.toString());
-            getDriver().manage().timeouts().implicitlyWait(IMPLICITY_WAIT, TimeUnit.SECONDS);
-            getDriver().manage().timeouts().pageLoadTimeout(PAGE_IMPLICITY_WAIT, TimeUnit.SECONDS);
             LOGGER.info("browser constructed");
         } catch (NamingException e) {
             LOGGER.debug("Browser: getting New Driver", e);
@@ -113,7 +111,7 @@ public final class Browser {
      */
     public void windowMaximise() {
         try {
-            getDriver().executeScript("if (window.screen) {window.moveTo(0, 0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};");
+            Selenide.executeJavaScript("if (window.screen) {window.moveTo(0, 0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};");
             getDriver().manage().window().maximize();
         } catch (Exception e) {
             LOGGER.debug(e);

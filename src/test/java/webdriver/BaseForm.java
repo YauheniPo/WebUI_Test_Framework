@@ -1,10 +1,10 @@
 package webdriver;
 
+import static com.codeborne.selenide.Selenide.$;
+
+import com.codeborne.selenide.Condition;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import webdriver.driver.Browser;
 
 /**
@@ -19,18 +19,8 @@ public abstract class BaseForm extends BaseEntity {
      * @param formTitle the form title
      */
     protected BaseForm(final By locator, final String formTitle) {
-        waitForPageLoad();
-//        PageFactory.initElements(Browser.getDriver(), this);
+        super(locator, formTitle);
         checkPageMainElement(locator, formTitle);
-    }
-
-    /**
-     * Wait for page load.
-     */
-    private void waitForPageLoad() {
-        WebDriverWait wait = (WebDriverWait) new WebDriverWait(Browser.getDriver(), Browser.getTimeoutForCondition()).withMessage("Element was not found");
-        wait.until((ExpectedCondition<Boolean>) driver -> ((JavascriptExecutor) driver)
-            .executeScript("return document.readyState").equals("complete"));
     }
 
     /**
@@ -41,7 +31,7 @@ public abstract class BaseForm extends BaseEntity {
      */
     private void checkPageMainElement(final By locator, final String formTitle) {
         LOGGER.info(String.format("Initialization %s element locator", formTitle));
-        if (!Browser.getDriver().findElement(locator).isDisplayed()) {
+        if (!$(locator).should(Condition.appear).waitUntil(Condition.visible, Browser.PAGE_WAIT).isDisplayed()) {
             LOGGER.error(String.format("Page %s didn't initialization", formTitle));
             throw new NoSuchElementException(formTitle);
         }

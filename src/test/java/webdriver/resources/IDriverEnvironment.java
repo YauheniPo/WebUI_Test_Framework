@@ -7,13 +7,13 @@ import static webdriver.resources.Constants.PROPERTIES_SELENIUM;
 @Config.Sources(value = {"classpath:" + PROPERTIES_SELENIUM})
 public interface IDriverEnvironment extends Config {
 
-    @DefaultValue("30")
+    @DefaultValue("3000")
     Integer defaultConditionTimeout();
 
-    @DefaultValue("10")
+    @DefaultValue("1000")
     Integer implicityWait();
 
-    @DefaultValue("60")
+    @DefaultValue("6000")
     Integer pageImplicityWait();
 
     @DefaultValue("chrome")

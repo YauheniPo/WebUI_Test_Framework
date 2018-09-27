@@ -58,7 +58,7 @@ final public class BrowserFactory {
      * @throws NamingException the naming exception
      */
     private static void setWebDriver(@NonNull final Browsers type) throws NamingException {
-        Configuration.headless = Browser.isHeadless();
+        Configuration.headless = Browser.IS_HEADLESS;
         boolean isGrid = Browser.isGrid();
         switch (type) {
             case CHROME:
@@ -91,6 +91,6 @@ final public class BrowserFactory {
     @SneakyThrows(MalformedURLException.class)
     private static RemoteWebDriver getGridRemoteDriver(DesiredCapabilities capabilities) {
         LOGGER.info("Set selenium grid driver");
-        return new RemoteWebDriver(new URL(Browser.getGridUrl()), capabilities);
+        return new RemoteWebDriver(new URL(Browser.GRID_URL), capabilities);
     }
 }

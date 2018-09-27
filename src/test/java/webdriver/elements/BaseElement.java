@@ -1,7 +1,6 @@
 package webdriver.elements;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -36,7 +35,7 @@ public abstract class BaseElement extends BaseEntity {
      */
     RemoteWebElement getElement() {
         waitForIsElementPresent();
-        return element;
+        return this.element;
     }
 
     /**
@@ -47,7 +46,7 @@ public abstract class BaseElement extends BaseEntity {
     public String getText() {
         waitForIsElementPresent();
         LOGGER.info(String.format("Getting text of element %s", this.title));
-        return element.getText();
+        return this.element.getText();
     }
 
     /**
@@ -56,11 +55,9 @@ public abstract class BaseElement extends BaseEntity {
     public void click() {
         waitForIsElementPresent();
         LOGGER.info(String.format("clicking %s", this.title));
-        Browser.getDriver().getMouse().mouseMove(element.getCoordinates());
-        if (Browser.getDriver() instanceof JavascriptExecutor) {
-            Browser.getDriver().executeScript("arguments[0].style.border='3px solid red'", element);
-        }
-        element.click();
+        Browser.getDriver().getMouse().mouseMove(this.element.getCoordinates());
+        Browser.getDriver().executeScript("arguments[0].style.border='3px solid red'", this.element);
+        this.element.click();
     }
 
     /**
@@ -68,15 +65,15 @@ public abstract class BaseElement extends BaseEntity {
      */
     void waitForIsElementPresent() {
         boolean isVisible = false;
-        if (isPresent(Browser.getTimeoutForCondition())) {
+        if (isPresent(Browser.TIMEOUT_FOR_CONDITION)) {
             try {
-                isVisible = element.isDisplayed();
+                isVisible = this.element.isDisplayed();
             } catch (Exception ex) {
                 LOGGER.debug(this, ex);
             }
         }
         if (!isVisible) {
-            ASSERT_WRAPPER.fatal(String.format("Element %s didn't find", title));
+            ASSERT_WRAPPER.fatal(String.format("Element %s didn't find", this.title));
         }
     }
 
@@ -86,7 +83,7 @@ public abstract class BaseElement extends BaseEntity {
      * @return Is element present
      */
     public boolean isPresent() {
-        return isPresent(Browser.getTimeoutForCondition());
+        return isPresent(Browser.TIMEOUT_FOR_CONDITION);
     }
 
     /**
@@ -101,7 +98,7 @@ public abstract class BaseElement extends BaseEntity {
                 List<WebElement> elems = Objects.requireNonNull(driver).findElements(this.titleLocator);
                 for (WebElement elem : elems) {
                     if (elem.isDisplayed()) {
-                        element = (RemoteWebElement) elem;
+                        this.element = (RemoteWebElement) elem;
                         return true;
                     }
                 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="EPAM_e.popovich">
+<suite name="EPAM_e.popovich" parallel="tests" thread-count="1">
     <parameter name="emailText" value="epam_e.popovich"/>
-    <parameter name="dataBaseLocation" value="accounts.xls"/>
     <test name="Test @tut.by EMAIL">
+        <parameter name="dataBaseLocation" value="accounts.csv"/>
         <classes>
             <class name="demo.test.tests.TutByEmailTest"/>
         </classes>

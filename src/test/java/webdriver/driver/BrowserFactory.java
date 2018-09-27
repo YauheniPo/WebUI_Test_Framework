@@ -1,95 +1,83 @@
 package webdriver.driver;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import webdriver.Logger;
 import webdriver.driver.Browser.Browsers;
 
 import javax.naming.NamingException;
-import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
-
-import static webdriver.resources.Constants.*;
 
 /**
  * The type Browser factory.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final public class BrowserFactory {
-    private static final String PLATFORM = System.getProperty("os.name").toLowerCase();
-    private static final Logger logger = Logger.getInstance();
-    private static final String CLS_NAME = BrowserFactory.class.getName();
+    private static final Logger LOGGER = Logger.getInstance();
 
     /**
      * Sets up.
      *
      * @param type the type
-     *
-     * @return the up
-     */
-    public static RemoteWebDriver setUp(@NonNull final Browsers type) {
-        return getWebDriver(type);
-    }
-
-    /**
-     * Sets up.
-     *
-     * @param type the type
-     *
-     * @return the up
      *
      * @throws NamingException the naming exception
      */
-    public static RemoteWebDriver setUp(@NonNull final String type) throws NamingException {
-        for (Browsers t : Browsers.values()) {
-            if (t.toString().equalsIgnoreCase(type)) {
-                return setUp(t);
-            }
-        }
-        throw new NamingException("browser name wrong" + ":\nchrome\nfirefox\niexplore\nopera\nsafari");
+    public static void setUp(@NonNull final Browsers type) throws NamingException {
+        setWebDriver(type);
     }
 
     /**
-     * Gets web driver.
+     * Sets up.
      *
      * @param type the type
      *
-     * @return the web driver
+     * @throws NamingException the naming exception
      */
-    private static RemoteWebDriver getWebDriver(@NonNull final Browsers type) {
+    public static void setUp(@NonNull final String type) throws NamingException {
+        for (Browsers t : Browsers.values()) {
+            if (t.toString().equalsIgnoreCase(type)) {
+                setUp(t);
+                return;
+            }
+        }
+        throw new NamingException("browser name wrong" + ":\nchrome\nfirefox");
+    }
+
+    /**
+     * Set web driver.
+     *
+     * @param type the type
+     *
+     * @throws NamingException the naming exception
+     */
+    private static void setWebDriver(@NonNull final Browsers type) throws NamingException {
+        Configuration.headless = Browser.isHeadless();
         boolean isGrid = Browser.isGrid();
         switch (type) {
             case CHROME:
-                if (isGrid)
-                    return getGridRemoteDriver(DesiredCapabilities.chrome());
-                if (Browser.isDriverManager()) {
-                    ChromeDriverManager.getInstance().setup();
-                    return new ChromeDriver(getChromeOptionsHeadless());
+                Configuration.browser = WebDriverRunner.CHROME;
+                if (isGrid) {
+                    RemoteWebDriver gridDriver = getGridRemoteDriver(DesiredCapabilities.chrome());
+                    WebDriverRunner.setWebDriver(gridDriver);
                 }
-                return getChromeDriver();
+                break;
             case FIREFOX:
-                if (isGrid)
-                    return getGridRemoteDriver(DesiredCapabilities.firefox());
-                if (Browser.isDriverManager()) {
-                    FirefoxDriverManager.getInstance().setup();
-                    return new FirefoxDriver(getFirefoxOptionsHeadless());
+                Configuration.browser = WebDriverRunner.FIREFOX;
+                if (isGrid) {
+                    RemoteWebDriver gridDriver = getGridRemoteDriver(DesiredCapabilities.firefox());
+                    WebDriverRunner.setWebDriver(gridDriver);
                 }
-                return getFirefoxDriver();
+                break;
             default:
-                return null;
+                LOGGER.error(String.format("WebDriver %s not created", type.name()));
+                throw new NamingException("browser name wrong" + ":\nchrome\nfirefox");
         }
     }
 
@@ -102,83 +90,7 @@ final public class BrowserFactory {
      */
     @SneakyThrows(MalformedURLException.class)
     private static RemoteWebDriver getGridRemoteDriver(DesiredCapabilities capabilities) {
-        logger.info("Set selenium grid driver");
+        LOGGER.info("Set selenium grid driver");
         return new RemoteWebDriver(new URL(Browser.getGridUrl()), capabilities);
-    }
-
-    /**
-     * Gets firefox driver.
-     *
-     * @return the firefox driver
-     */
-    private static RemoteWebDriver getFirefoxDriver() {
-        setDriverProperty(GECKODRIVER, WEBDRIVER_GECKODRIVER);
-        return new FirefoxDriver(getFirefoxOptionsHeadless());
-    }
-
-    /**
-     * Gets chrome driver.
-     *
-     * @return the chrome driver
-     */
-    private static RemoteWebDriver getChromeDriver() {
-        setDriverProperty(CHROMEDRIVER, WEBDRIVER_CHROME);
-        return new ChromeDriver(getChromeOptionsHeadless());
-    }
-
-    /**
-     * Set Driver Property
-     *
-     * @param browsDriver the browser driver name
-     * @param webBrowsDriver the browser webdriver name
-     */
-    private static void setDriverProperty(@NonNull final String browsDriver, @NonNull final String webBrowsDriver) {
-        URL myTestURL = null;
-        File myFile = null;
-        if (PLATFORM.contains("win")) {
-            myTestURL = ClassLoader.getSystemResource(String.format("%s.exe", browsDriver));
-        } else if (PLATFORM.contains("linux") || PLATFORM.contains("mac")) {
-            myTestURL = ClassLoader.getSystemResource(browsDriver);
-        } else {
-            logger.fatal(String.format("Unsupported platform: %s for browser for %s", browsDriver, PLATFORM));
-        }
-        try {
-            if (myTestURL != null) {
-                myFile = new File(myTestURL.toURI());
-            }
-        } catch (URISyntaxException e1) {
-            logger.debug(CLS_NAME + BrowserFactory.class.getEnclosingMethod().getName(), e1);
-        }
-        if (myFile != null) {
-            System.setProperty(webBrowsDriver, myFile.getAbsolutePath());
-        }
-    }
-
-    /**
-     * Gets chrome options headless.
-     *
-     * @return the chrome options headless
-     */
-    private static ChromeOptions getChromeOptionsHeadless() {
-        ChromeOptions options = new ChromeOptions();
-        if (Browser.isHeadless()) {
-            options.setHeadless(true);
-        }
-        return options;
-    }
-
-    /**
-     * Gets firefox options headless.
-     *
-     * @return the firefox options headless
-     */
-    private static FirefoxOptions getFirefoxOptionsHeadless() {
-        FirefoxBinary firefoxBinary = new FirefoxBinary();
-        if (Browser.isHeadless()) {
-            firefoxBinary.addCommandLineOptions("--headless");
-        }
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setBinary(firefoxBinary);
-        return firefoxOptions;
     }
 }

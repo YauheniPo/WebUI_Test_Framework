@@ -1,5 +1,7 @@
 package webdriver.driver;
 
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +26,7 @@ public final class Browser {
     private static final int PAGE_IMPLICITY_WAIT = driverEnv.pageImplicityWait();
     private static final Logger LOGGER = Logger.getInstance();
     private static Browser instance;
-    private volatile static RemoteWebDriver driver;
     @Getter private static String browserURL = stageEnv.urlLoginPage();
-    @Getter private static boolean isDriverManager = driverEnv.driverManager();
     @Getter private static String gridUrl =driverEnv.gridUrl();
     @Getter private static boolean isHeadless = driverEnv.browserHeadless();
     @Getter private static int timeoutForCondition = driverEnv.defaultConditionTimeout();
@@ -46,7 +46,7 @@ public final class Browser {
     @Synchronized
     public static Browser getInstance() {
         if (instance == null) {
-            driver = getNewDriver();
+            initNewDriver();
             instance = new Browser();
         }
         return instance;
@@ -76,10 +76,7 @@ public final class Browser {
      * @return the driver
      */
     public static RemoteWebDriver getDriver() {
-        if (driver == null) {
-            driver = getNewDriver();
-        }
-        return driver;
+        return (RemoteWebDriver) WebDriverRunner.getWebDriver();
     }
 
     /**
@@ -91,27 +88,23 @@ public final class Browser {
 
     /**
      * Gets new driver.
-     *
-     * @return the new driver
      */
-    private static RemoteWebDriver getNewDriver() {
+    private static void initNewDriver() {
         try {
-            RemoteWebDriver driver = BrowserFactory.setUp(CURRENT_BROWSER.toString());
-            driver.manage().timeouts().implicitlyWait(IMPLICITY_WAIT, TimeUnit.SECONDS);
-            driver.manage().timeouts().pageLoadTimeout(PAGE_IMPLICITY_WAIT, TimeUnit.SECONDS);
+            BrowserFactory.setUp(CURRENT_BROWSER.toString());
+            getDriver().manage().timeouts().implicitlyWait(IMPLICITY_WAIT, TimeUnit.SECONDS);
+            getDriver().manage().timeouts().pageLoadTimeout(PAGE_IMPLICITY_WAIT, TimeUnit.SECONDS);
             LOGGER.info("browser constructed");
-            return driver;
         } catch (NamingException e) {
             LOGGER.debug("Browser: getting New Driver", e);
         }
-        return null;
     }
 
     /**
      * Refresh.
      */
     public static void refresh() {
-        getDriver().navigate().refresh();
+        Selenide.refresh();
         LOGGER.info("Page was refreshed.");
     }
 
@@ -133,7 +126,7 @@ public final class Browser {
      * @param url the url
      */
     public static void navigate(final String url) {
-        getDriver().navigate().to(url);
+        Selenide.open(url);
     }
 
     /**
@@ -141,8 +134,7 @@ public final class Browser {
      */
     public void exit() {
         try {
-            getDriver().quit();
-            instance = null;
+            Selenide.close();
             LOGGER.info("browser driver quit");
         } catch (Exception e) {
             LOGGER.debug(e.getMessage());

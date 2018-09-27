@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="EPAM_e.popovich">
     <parameter name="emailText" value="epam_e.popovich"/>
-    <parameter name="dataBaseLocation" value="accounts.xls"/>
+    <parameter name="dataBaseLocation" value="accounts.csv"/>
     <test name="Test @tut.by EMAIL">
         <classes>
             <class name="demo.test.tests.TutByEmailTest"/>

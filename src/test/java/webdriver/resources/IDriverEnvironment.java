@@ -20,9 +20,6 @@ public interface IDriverEnvironment extends Config {
     String browser();
 
     @DefaultValue("true")
-    Boolean driverManager();
-
-    @DefaultValue("true")
     Boolean browserHeadless();
 
     @DefaultValue("false")

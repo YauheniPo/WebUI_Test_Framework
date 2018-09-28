@@ -1,16 +1,19 @@
 package webdriver;
 
+import com.epam.reportportal.testng.ReportPortalTestNGListener;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import webdriver.driver.Browser;
 
 /**
  * The type Base entity.
  */
+@Listeners({ReportPortalTestNGListener.class})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaseEntity {
     protected By titleLocator;

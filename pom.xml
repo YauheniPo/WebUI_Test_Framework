@@ -14,6 +14,17 @@
         <system>Jenkins</system>
     </ciManagement>
 
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-epam-reportportal</id>
+            <name>bintray</name>
+            <url>http://dl.bintray.com/epam/reportportal</url>
+        </repository>
+    </repositories>
+
     <properties>
         <project.reporting.outputEncoding>Cp1251</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,6 +35,26 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>agent-java-cucumber</artifactId>
+            <version>4.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>agent-java-testng</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>logger-java-logback</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>logger-java-log4j</artifactId>
+            <version>4.0.1</version>
+        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>

@@ -13,11 +13,12 @@ import webdriver.BaseEntity;
 import webdriver.common.ScenarioContext;
 
 @CucumberOptions(
+        plugin = {"pretty", "com.epam.reportportal.cucumber.StepReporter"},
         features = {"src/test/features/"},
         glue = "steps",
         strict = true,
-        format = {"pretty", "html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"}
-        ,tags = {"@check_email_data_provider"}
+        format = {"html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"},
+        tags = {"@check_email_data_provider"}
 )
 public class CucumberRunnerDataProvider extends BaseEntity {
     private static final ScenarioContext SCENARIO_CONTEXT = ScenarioContext.getInstance();

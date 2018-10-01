@@ -1,6 +1,6 @@
 import cucumber.api.CucumberOptions;
-import cucumber.api.testng.CucumberFeatureWrapperImpl;
 import cucumber.api.testng.TestNGCucumberRunner;
+import cucumber.runtime.model.CucumberFeature;
 import demo.test.utils.FactoryInitParams;
 import demo.test.webentities.models.TestDataMails;
 import lombok.NonNull;
@@ -39,10 +39,8 @@ public class CucumberRunnerDataProvider extends BaseEntity {
         SCENARIO_CONTEXT.setContext("senderMailPassword", testDataMails.getSenderMailPassword());
         SCENARIO_CONTEXT.setContext("recipientMailLogin", testDataMails.getRecipientMailLogin());
         SCENARIO_CONTEXT.setContext("recipientMailPassword", testDataMails.getRecipientMailPassword());
-        for (Object[] rn : this.testRunner.provideFeatures()) {
-            for (Object r : rn) {
-                this.testRunner.runCucumber(((CucumberFeatureWrapperImpl) r).getCucumberFeature());
-            }
+        for (CucumberFeature rn : this.testRunner.getFeatures()) {
+            this.testRunner.runCucumber(rn);
         }
     }
 

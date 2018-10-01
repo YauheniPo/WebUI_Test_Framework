@@ -91,7 +91,7 @@ public abstract class BaseElement extends BaseEntity {
      * @return the boolean
      */
     public boolean isPresent(long timeout) {
-        this.element = $(this.titleLocator).should(Condition.exist).waitUntil(Condition.visible, timeout);
+        this.element = $(this.titleLocator).waitUntil(Condition.visible, timeout);
         return this.element.isDisplayed();
     }
 }

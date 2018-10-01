@@ -25,7 +25,6 @@ public class TextBox extends BaseElement {
      */
     public void setText(final String value) {
         waitForIsElementPresent();
-        getElement().clear();
         type(value);
     }
 

@@ -128,18 +128,6 @@ public final class Browser {
     }
 
     /**
-     * Exit.
-     */
-    public void exit() {
-        try {
-            Selenide.close();
-            LOGGER.info("browser driver quit");
-        } catch (Exception e) {
-            LOGGER.debug(e.getMessage());
-        }
-    }
-
-    /**
      * The enum Browsers.
      */
     @AllArgsConstructor(access = AccessLevel.PROTECTED)

@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.openqa.selenium.By;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import webdriver.driver.Browser;
@@ -49,13 +48,5 @@ public class BaseEntity {
         Browser browser = getBrowser();
         browser.windowMaximise();
         Browser.navigate(Browser.BROWSER_URL);
-    }
-
-    /**
-     * After.
-     */
-    @AfterTest
-    public void after() {
-        getBrowser().exit();
     }
 }

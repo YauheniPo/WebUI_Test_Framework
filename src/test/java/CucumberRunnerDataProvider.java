@@ -1,6 +1,6 @@
 import cucumber.api.CucumberOptions;
+import cucumber.api.testng.PickleEventWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
-import cucumber.runtime.model.CucumberFeature;
 import demo.test.utils.FactoryInitParams;
 import demo.test.webentities.models.TestDataMails;
 import lombok.NonNull;
@@ -13,11 +13,10 @@ import webdriver.BaseEntity;
 import webdriver.common.ScenarioContext;
 
 @CucumberOptions(
-        plugin = {"pretty", "com.epam.reportportal.cucumber.StepReporter"},
+        plugin = {"html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"},
         features = {"src/test/features/"},
         glue = "steps",
         strict = true,
-        format = {"html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"},
         tags = {"@check_email_data_provider"}
 )
 public class CucumberRunnerDataProvider extends BaseEntity {
@@ -39,8 +38,13 @@ public class CucumberRunnerDataProvider extends BaseEntity {
         SCENARIO_CONTEXT.setContext("senderMailPassword", testDataMails.getSenderMailPassword());
         SCENARIO_CONTEXT.setContext("recipientMailLogin", testDataMails.getRecipientMailLogin());
         SCENARIO_CONTEXT.setContext("recipientMailPassword", testDataMails.getRecipientMailPassword());
-        for (CucumberFeature rn : this.testRunner.getFeatures()) {
-            this.testRunner.runCucumber(rn);
+        for (Object[] rn : this.testRunner.provideScenarios()) {
+            try {
+                this.testRunner.runScenario(((PickleEventWrapper) rn[0]).getPickleEvent());
+            } catch (Throwable throwable) {
+                LOGGER.error(throwable.getMessage());
+                throwable.printStackTrace();
+            }
         }
     }
 

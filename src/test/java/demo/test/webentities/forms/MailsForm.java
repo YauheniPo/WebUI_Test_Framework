@@ -33,7 +33,7 @@ public class MailsForm extends BaseForm {
      * @return the mails form
      */
     public MailsForm choiceLastMail() {
-        new Label(By.xpath(locLastMail), "Last Mail").click();
+        new Label(By.xpath(this.locLastMail), "Last Mail").click();
         return this;
     }
 
@@ -43,10 +43,10 @@ public class MailsForm extends BaseForm {
      * @return the mail
      */
     public Mail getMail() {
-        String subject = new Label(By.xpath(locSubject), "Subject field").getText();
-        String text = new Label(By.xpath(locText), "Mail text").getText();
-        String fromAddress = new Label(By.xpath(locSender), "Sender name").getText();
-        String toAddress = new Label(By.xpath(locRecipient), "Recipient name").getText();
+        String subject = new Label(By.xpath(this.locSubject), "Subject field").getText();
+        String text = new Label(By.xpath(this.locText), "Mail text").getText();
+        String fromAddress = new Label(By.xpath(this.locSender), "Sender name").getText();
+        String toAddress = new Label(By.xpath(this.locRecipient), "Recipient name").getText();
         return new Mail(subject, text, fromAddress, toAddress);
     }
 }

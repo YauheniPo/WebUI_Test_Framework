@@ -28,7 +28,7 @@ public class DBParamsImpl extends InitParams {
     public Object[] fetchTestData(String dataBaseLocation) {
         DatabaseConnMySQL database = new DatabaseConnMySQL();
         Statement statement = database.getStatement();
-        String getEmailAccounts = props.getProperty("sql_get_email_accounts");
+        String getEmailAccounts = this.props.getProperty("sql_get_email_accounts");
         List<String> data = new ArrayList<>();
         try {
             @Cleanup ResultSet rs = statement.executeQuery(getEmailAccounts);

@@ -1,5 +1,8 @@
 package webdriver.driver;
 
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Synchronized;
@@ -9,7 +12,6 @@ import webdriver.Logger;
 import webdriver.resources.IDriverEnvironment;
 import webdriver.resources.IStageEnvironment;
 
-import java.util.concurrent.TimeUnit;
 import javax.naming.NamingException;
 
 /**
@@ -20,14 +22,13 @@ public final class Browser {
     private static final IStageEnvironment stageEnv = ConfigFactory.create(IStageEnvironment.class);
     private static final Browsers CURRENT_BROWSER = Browsers.valueOf(driverEnv.browser().toUpperCase());
     private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
-    private static final int PAGE_IMPLICITY_WAIT = driverEnv.pageImplicityWait();
     private static final Logger LOGGER = Logger.getInstance();
     private static Browser instance;
-    private volatile static RemoteWebDriver driver;
-    static final boolean IS_HEADLESS = driverEnv.browserHeadless();
     static final String GRID_URL =driverEnv.gridUrl();
+    static final boolean IS_HEADLESS = driverEnv.browserHeadless();
     public static final int TIMEOUT_FOR_CONDITION = driverEnv.defaultConditionTimeout();
     public static final String BROWSER_URL = stageEnv.urlLoginPage();
+    public static final int PAGE_WAIT = driverEnv.pageImplicityWait();
 
     /**
      * Instantiates a new Browser.
@@ -44,7 +45,7 @@ public final class Browser {
     @Synchronized
     public static Browser getInstance() {
         if (instance == null) {
-            driver = getNewDriver();
+            initNewDriver();
             instance = new Browser();
         }
         return instance;
@@ -74,10 +75,7 @@ public final class Browser {
      * @return the driver
      */
     public static RemoteWebDriver getDriver() {
-        if (driver == null) {
-            driver = getNewDriver();
-        }
-        return driver;
+        return (RemoteWebDriver) WebDriverRunner.getWebDriver();
     }
 
     /**
@@ -89,27 +87,22 @@ public final class Browser {
 
     /**
      * Gets new driver.
-     *
-     * @return the new driver
      */
-    private static RemoteWebDriver getNewDriver() {
+    private static void initNewDriver() {
+        Configuration.timeout = IMPLICITY_WAIT;
         try {
-            RemoteWebDriver driver = BrowserFactory.setUp(CURRENT_BROWSER.toString());
-            driver.manage().timeouts().implicitlyWait(IMPLICITY_WAIT, TimeUnit.SECONDS);
-            driver.manage().timeouts().pageLoadTimeout(PAGE_IMPLICITY_WAIT, TimeUnit.SECONDS);
+            BrowserFactory.setUp(CURRENT_BROWSER.toString());
             LOGGER.info("browser constructed");
-            return driver;
         } catch (NamingException e) {
             LOGGER.debug("Browser: getting New Driver", e);
         }
-        return null;
     }
 
     /**
      * Refresh.
      */
     public static void refresh() {
-        getDriver().navigate().refresh();
+        Selenide.refresh();
         LOGGER.info("Page was refreshed.");
     }
 
@@ -118,7 +111,7 @@ public final class Browser {
      */
     public void windowMaximise() {
         try {
-            getDriver().executeScript("if (window.screen) {window.moveTo(0, 0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};");
+            Selenide.executeJavaScript("if (window.screen) {window.moveTo(0, 0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};");
             getDriver().manage().window().maximize();
         } catch (Exception e) {
             LOGGER.debug(e);
@@ -131,20 +124,7 @@ public final class Browser {
      * @param url the url
      */
     public static void navigate(final String url) {
-        getDriver().navigate().to(url);
-    }
-
-    /**
-     * Exit.
-     */
-    public void exit() {
-        try {
-            getDriver().quit();
-//            instance = null;
-            LOGGER.info("browser driver quit");
-        } catch (Exception e) {
-            LOGGER.debug(e.getMessage());
-        }
+        Selenide.open(url);
     }
 
     /**

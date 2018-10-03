@@ -1,21 +1,19 @@
 package webdriver.elements;
 
+import static com.codeborne.selenide.Selenide.$;
+
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import webdriver.BaseEntity;
 import webdriver.driver.Browser;
-import webdriver.waitings.SmartWait;
-
-import java.util.List;
-import java.util.Objects;
 
 /**
  * The type Base element.
  */
 public abstract class BaseElement extends BaseEntity {
-    private RemoteWebElement element;
+    private SelenideElement element;
 
     /**
      * Instantiates a new Base element.
@@ -33,7 +31,7 @@ public abstract class BaseElement extends BaseEntity {
      *
      * @return the element
      */
-    RemoteWebElement getElement() {
+    SelenideElement getElement() {
         waitForIsElementPresent();
         return this.element;
     }
@@ -55,8 +53,8 @@ public abstract class BaseElement extends BaseEntity {
     public void click() {
         waitForIsElementPresent();
         LOGGER.info(String.format("clicking %s", this.title));
-        Browser.getDriver().getMouse().mouseMove(this.element.getCoordinates());
-        Browser.getDriver().executeScript("arguments[0].style.border='3px solid red'", this.element);
+        this.element.hover();
+        Selenide.executeJavaScript("arguments[0].style.border='3px solid red'", this.element);
         this.element.click();
     }
 
@@ -67,7 +65,7 @@ public abstract class BaseElement extends BaseEntity {
         boolean isVisible = false;
         if (isPresent(Browser.TIMEOUT_FOR_CONDITION)) {
             try {
-                isVisible = this.element.isDisplayed();
+                isVisible = $(this.titleLocator).exists();
             } catch (Exception ex) {
                 LOGGER.debug(this, ex);
             }
@@ -93,21 +91,7 @@ public abstract class BaseElement extends BaseEntity {
      * @return the boolean
      */
     public boolean isPresent(long timeout) {
-        ExpectedCondition<Boolean> condition = driver -> {
-            try {
-                List<WebElement> elems = Objects.requireNonNull(driver).findElements(this.titleLocator);
-                for (WebElement elem : elems) {
-                    if (elem.isDisplayed()) {
-                        this.element = (RemoteWebElement) elem;
-                        return true;
-                    }
-                }
-                return false;
-            } catch (Exception e) {
-                LOGGER.debug(e.getMessage());
-                return false;
-            }
-        };
-        return SmartWait.waitForTrue(condition, timeout);
+        this.element = $(this.titleLocator).waitUntil(Condition.visible, timeout);
+        return this.element.isDisplayed();
     }
 }

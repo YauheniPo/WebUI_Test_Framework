@@ -40,7 +40,7 @@ public class EmailAccountPage extends BaseForm {
      * @return the email account page
      */
     public EmailAccountPage fetchEmailFolder(NavBox folder) {
-        new Button(By.xpath(MessageFormat.format(navBarLocator, folder.getNavBoxLocator())),
+        new Button(By.xpath(MessageFormat.format(this.navBarLocator, folder.getNavBoxLocator())),
                 String.format("Folder %s", folder.getNavBoxLocator().toUpperCase())).click();
         return this;
     }

@@ -25,16 +25,16 @@ public class DatabaseConnMySQL extends BaseEntity {
      */
     @SneakyThrows(Exception.class)
     private Connection getConnection() {
-        if (connection == null) {
+        if (this.connection == null) {
             Class.forName(props.getProperty(Property.MYSQL_JDBC_DRIVER_NAME.toString())).newInstance();
             LOGGER.info("Get connection from database");
-            connection = DriverManager.getConnection(
-                props.getProperty(Property.MYSQL_URL.toString()),
-                props.getProperty(Property.MYSQL_USERNAME.toString()),
-                props.getProperty(Property.MYSQL_PASSWORD.toString())
+            this.connection = DriverManager.getConnection(
+                    this.props.getProperty(Property.MYSQL_URL.toString()),
+                    this.props.getProperty(Property.MYSQL_USERNAME.toString()),
+                    this.props.getProperty(Property.MYSQL_PASSWORD.toString())
             );
         }
-        return connection;
+        return this.connection;
     }
 
     /**
@@ -57,9 +57,9 @@ public class DatabaseConnMySQL extends BaseEntity {
     @SneakyThrows(SQLException.class)
     public void close() {
         LOGGER.info("DB connection is closing");
-        if (connection != null) {
-            connection.close();
-            connection = null;
+        if (this.connection != null) {
+            this.connection.close();
+            this.connection = null;
         }
     }
 }

@@ -14,7 +14,7 @@ import java.util.Properties;
  */
 public final class PropertiesResourceManager {
     private static final Logger LOGGER = Logger.getInstance();
-    private Properties properties;
+    private final Properties properties = new Properties();
 
     /**
      * Instantiates a new Properties resource manager.
@@ -22,8 +22,7 @@ public final class PropertiesResourceManager {
      * @param resourceName the resource name
      */
     public PropertiesResourceManager(@NonNull final String resourceName) {
-        properties= new Properties();
-        properties = appendFromResource(properties, resourceName);
+        appendFromResource(resourceName);
     }
 
     /**
@@ -34,7 +33,7 @@ public final class PropertiesResourceManager {
      * @return the property
      */
     public String getProperty(@NonNull final String key) {
-        return properties.getProperty(key);
+        return this.properties.getProperty(key);
     }
 
     /**
@@ -46,7 +45,7 @@ public final class PropertiesResourceManager {
      * @return the property
      */
     public String getProperty(final String key, final String defaultValue) {
-        return properties.getProperty(key, defaultValue);
+        return this.properties.getProperty(key, defaultValue);
     }
 
     /**
@@ -56,17 +55,16 @@ public final class PropertiesResourceManager {
      * @param value the value
      */
     public void setProperty(final String key, final String value) {
-        properties.setProperty(key, value);
+        this.properties.setProperty(key, value);
     }
 
     @SneakyThrows(IOException.class)
-    private Properties appendFromResource(final Properties objProperties, final String resourceName) {
+    private void appendFromResource(final String resourceName) {
         @Cleanup InputStream inStream = this.getClass().getClassLoader().getResourceAsStream(resourceName);
         if (inStream != null) {
-            objProperties.load(inStream);
+            this.properties.load(inStream);
         } else {
             LOGGER.error(String.format("Resource \"%1$s\" could not be found", resourceName));
         }
-        return objProperties;
     }
 }

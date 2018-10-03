@@ -29,7 +29,7 @@ public class XMLParse extends BaseParser {
      * @return the document
      */
     public Document fetchDocument() {
-        File fXmlFile = new File(filepath);
+        File fXmlFile = new File(this.filepath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
         try {
@@ -48,7 +48,7 @@ public class XMLParse extends BaseParser {
         if (doc != null) {
             doc.getDocumentElement().normalize();
         }
-        LOGGER.info(String.format("Data received from %s", filepath));
+        LOGGER.info(String.format("Data received from %s", this.filepath));
         return doc;
     }
 }

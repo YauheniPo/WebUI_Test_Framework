@@ -10,7 +10,8 @@ import demo.test.webentities.pages.TutByHomePage;
 import io.qameta.allure.Step;
 import lombok.NonNull;
 import org.testng.annotations.*;
-import webdriver.BaseTestDataProvider;
+import webdriver.BaseTest;
+import webdriver.IDataProvider;
 import webdriver.driver.Browser;
 import webdriver.utils.mail.MailUtils;
 
@@ -26,7 +27,7 @@ import java.util.function.Predicate;
 /**
  * The type Tut by email test.
  */
-public class TutByEmailTest extends BaseTestDataProvider {
+public class TutByEmailTest extends BaseTest implements IDataProvider {
     private String senderMailLogin;
     private String recipientMailLogin;
     private String senderMailPassword;
@@ -36,6 +37,7 @@ public class TutByEmailTest extends BaseTestDataProvider {
     private final ArrayList<MailUtils> mailBox = new ArrayList<>();
     private final Predicate<Object> nonNull = Objects::nonNull;
     private String emailText;
+    private String dataBaseLocation;
 
     @Parameters({"emailText", "dataBaseLocation"})
     @BeforeClass
@@ -169,5 +171,10 @@ public class TutByEmailTest extends BaseTestDataProvider {
             ASSERT_WRAPPER.assertEquals(apiMail, mail);
             LOGGER.info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
         });
+    }
+
+    @Override
+    public String getDataBaseLocation() {
+        return this.dataBaseLocation;
     }
 }

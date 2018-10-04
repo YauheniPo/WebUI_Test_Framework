@@ -230,32 +230,32 @@
                     <stopPort>1234</stopPort>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.github.temyers</groupId>
-                <artifactId>cucumber-jvm-parallel-plugin</artifactId>
-                <version>4.2.0</version>
-                <executions>
-                    <execution>
-                        <id>generateRunners</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>generateRunners</goal>
-                        </goals>
-                        <configuration>
-                            <glue>steps</glue>
-                            <outputDirectory>${project.build.directory}/generated-test-sources/cucumber
-                            </outputDirectory>
-                            <featuresDirectory>src/test/resources/features</featuresDirectory>
-                            <cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>
-                            <format>pretty</format>
-                            <namingScheme>feature-title</namingScheme>
-                            <useTestNG>false</useTestNG>
-                            <tags>${tags}</tags>
-                            <strict>false</strict>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>com.github.temyers</groupId>-->
+                <!--<artifactId>cucumber-jvm-parallel-plugin</artifactId>-->
+                <!--<version>4.2.0</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>generateRunners</id>-->
+                        <!--<phase>validate</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>generateRunners</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<glue>steps</glue>-->
+                            <!--<outputDirectory>${project.build.directory}/generated-test-sources/cucumber-->
+                            <!--</outputDirectory>-->
+                            <!--<featuresDirectory>src/test/resources/features</featuresDirectory>-->
+                            <!--<cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>-->
+                            <!--<format>pretty</format>-->
+                            <!--<namingScheme>feature-title</namingScheme>-->
+                            <!--<useTestNG>false</useTestNG>-->
+                            <!--<tags>${tags}</tags>-->
+                            <!--<strict>false</strict>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 

@@ -2,7 +2,6 @@ package webdriver.driver;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Synchronized;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import webdriver.Logger;
@@ -22,8 +21,8 @@ public final class Browser {
     private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
     private static final int PAGE_IMPLICITY_WAIT = driverEnv.pageImplicityWait();
     private static final Logger LOGGER = Logger.getInstance();
-    private static Browser instance;
-    private volatile static RemoteWebDriver driver;
+    private static Browser instance = new Browser();
+    private static ThreadLocal<RemoteWebDriver> driverHolder = ThreadLocal.withInitial(Browser::getNewDriver);
     static final boolean IS_HEADLESS = driverEnv.browserHeadless();
     static final String GRID_URL =driverEnv.gridUrl();
     public static final int TIMEOUT_FOR_CONDITION = driverEnv.defaultConditionTimeout();
@@ -41,11 +40,13 @@ public final class Browser {
      *
      * @return the instance
      */
-    @Synchronized
     public static Browser getInstance() {
         if (instance == null) {
-            driver = getNewDriver();
-            instance = new Browser();
+            synchronized (Browser.class) {
+                if (instance == null) {
+                    instance = new Browser();
+                }
+            }
         }
         return instance;
     }
@@ -74,10 +75,10 @@ public final class Browser {
      * @return the driver
      */
     public static RemoteWebDriver getDriver() {
-        if (driver == null) {
-            driver = getNewDriver();
+        if (driverHolder.get() == null) {
+            driverHolder.set(getNewDriver());
         }
-        return driver;
+        return driverHolder.get();
     }
 
     /**
@@ -140,10 +141,11 @@ public final class Browser {
     public void exit() {
         try {
             getDriver().quit();
-//            instance = null;
             LOGGER.info("browser driver quit");
         } catch (Exception e) {
             LOGGER.debug(e.getMessage());
+        } finally {
+            driverHolder.set(null);
         }
     }
 

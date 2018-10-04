@@ -1,34 +1,13 @@
 package webdriver.reports.listeners;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import webdriver.Logger;
 
-public class WebEventListener implements WebDriverEventListener {
+public class WebEventListener extends AbstractWebDriverEventListener {
     private static final Logger LOGGER = Logger.getInstance();
-
-    @Override
-    public void beforeAlertAccept(WebDriver webDriver) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public void afterAlertAccept(WebDriver webDriver) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public void afterAlertDismiss(WebDriver webDriver) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public void beforeAlertDismiss(WebDriver webDriver) {
-        LOGGER.info("");
-    }
 
     @Override
     public void beforeNavigateTo(String url, WebDriver driver) {
@@ -51,16 +30,6 @@ public class WebEventListener implements WebDriverEventListener {
     }
 
     @Override
-    public void beforeChangeValueOf(WebElement webElement, WebDriver webDriver, CharSequence[] charSequences) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public void afterChangeValueOf(WebElement webElement, WebDriver webDriver, CharSequence[] charSequences) {
-        LOGGER.info("");
-    }
-
-    @Override
     public void beforeNavigateBack(WebDriver driver) {
         LOGGER.info("Navigating back to previous page");
     }
@@ -80,38 +49,8 @@ public class WebEventListener implements WebDriverEventListener {
         LOGGER.info("Navigated forward to next page");
     }
 
-    @Override
-    public void beforeNavigateRefresh(WebDriver webDriver) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public void afterNavigateRefresh(WebDriver webDriver) {
-        LOGGER.info("");
-    }
-
     public void onException(Throwable error, WebDriver driver) {
         LOGGER.info("Exception occured: " + error);
-    }
-
-    @Override
-    public <X> void beforeGetScreenshotAs(OutputType<X> outputType) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public <X> void afterGetScreenshotAs(OutputType<X> outputType, X x) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public void beforeGetText(WebElement webElement, WebDriver webDriver) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public void afterGetText(WebElement webElement, WebDriver webDriver, String s) {
-        LOGGER.info("");
     }
 
     @Override
@@ -123,25 +62,4 @@ public class WebEventListener implements WebDriverEventListener {
     public void afterFindBy(By by, WebElement element, WebDriver driver) {
         LOGGER.info("Found Element By : " + by.toString());
     }
-
-    @Override
-    public void beforeScript(String script, WebDriver driver) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public void afterScript(String script, WebDriver driver) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public void beforeSwitchToWindow(String s, WebDriver webDriver) {
-        LOGGER.info("");
-    }
-
-    @Override
-    public void afterSwitchToWindow(String s, WebDriver webDriver) {
-        LOGGER.info("");
-    }
-
 }

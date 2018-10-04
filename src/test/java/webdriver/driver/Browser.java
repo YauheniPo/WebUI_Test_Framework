@@ -9,6 +9,7 @@ import lombok.Synchronized;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import webdriver.Logger;
+import webdriver.reports.listeners.WebEventListener;
 import webdriver.resources.IDriverEnvironment;
 import webdriver.resources.IStageEnvironment;
 
@@ -92,7 +93,7 @@ public final class Browser {
         Configuration.timeout = IMPLICITY_WAIT;
         try {
             BrowserFactory.setUp(CURRENT_BROWSER.toString());
-            LOGGER.info("browser constructed");
+            WebDriverRunner.addListener(new WebEventListener());
         } catch (NamingException e) {
             LOGGER.debug("Browser: getting New Driver", e);
         }

@@ -4,7 +4,11 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.tokens.TokenString;
+import demo.test.webentities.models.TestDataMails;
 import webdriver.driver.Browser;
+
+import java.util.List;
 
 public class CommonSteps extends BaseSteps {
 
@@ -56,11 +60,11 @@ public class CommonSteps extends BaseSteps {
     }
 
     @Given("^data the sender: \"([^\"]*)\", \"([^\"]*)\", and the recipient: \"([^\"]*)\", \"([^\"]*)\"$")
-    public void dataTheSenderAndTheRecipient(String senderLogin, String senderPassword, String recipientLogin, String recipientPassword) {
-        SCENARIO_CONTEXT.setContext("senderMailLogin", senderLogin);
-        SCENARIO_CONTEXT.setContext("senderMailPassword", senderPassword);
-        SCENARIO_CONTEXT.setContext("recipientMailLogin", recipientLogin);
-        SCENARIO_CONTEXT.setContext("recipientMailPassword", recipientPassword);
+    public void dataTheSenderAndTheRecipient(TokenString senderLogin, TokenString senderPassword, TokenString recipientLogin, TokenString recipientPassword) {
+        SCENARIO_CONTEXT.setContext("senderMailLogin", senderLogin.toString());
+        SCENARIO_CONTEXT.setContext("senderMailPassword", senderPassword.toString());
+        SCENARIO_CONTEXT.setContext("recipientMailLogin", recipientLogin.toString());
+        SCENARIO_CONTEXT.setContext("recipientMailPassword", recipientPassword.toString());
     }
 
     private void sendingEmailLetter(ApiEmailSteps apiEmailSteps, String textLetter) {
@@ -70,5 +74,13 @@ public class CommonSteps extends BaseSteps {
         apiEmailSteps.generationLetter(textLetter);
         apiEmailSteps.sendingLetterToRecipient();
         apiEmailSteps.sendingLetterInSendFolder();
+    }
+
+    @Given("^email test data:$")
+    public void fetchEmailTestData(List<TestDataMails> dataTable) {
+        SCENARIO_CONTEXT.setContext("senderMailLogin", dataTable.get(0).getSenderMailLogin());
+        SCENARIO_CONTEXT.setContext("senderMailPassword", dataTable.get(0).getSenderMailPassword());
+        SCENARIO_CONTEXT.setContext("recipientMailLogin", dataTable.get(0).getRecipientMailLogin());
+        SCENARIO_CONTEXT.setContext("recipientMailPassword", dataTable.get(0).getRecipientMailPassword());
     }
 }

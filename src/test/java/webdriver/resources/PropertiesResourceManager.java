@@ -33,7 +33,7 @@ public final class PropertiesResourceManager {
      * @return the property
      */
     public String getProperty(@NonNull final String key) {
-        return this.properties.getProperty(key);
+        return this.properties.getProperty(key).trim();
     }
 
     /**

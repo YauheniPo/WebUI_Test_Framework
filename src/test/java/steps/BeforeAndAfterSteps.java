@@ -19,7 +19,6 @@ public class BeforeAndAfterSteps extends BaseEntity {
         if (scenario.isFailed()) {
             TestListener testListener = new TestListener();
             scenario.embed(testListener.makeScreenshot(), "image/png");
-            testListener.makeExtentReportScreenshot();
         }
         ScenarioContext.getInstance().clearScenario();
     }

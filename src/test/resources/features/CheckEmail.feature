@@ -17,5 +17,3 @@ Feature: Check recipient and sender email letter
       | sender_login              | sender_password              | recipient_login           | recipient_password           |
       | @testinfo.sender_login    | @testinfo.sender_password    | @testinfo.recipient_login | @testinfo.recipient_password |
       | @testinfo.recipient_login | @testinfo.recipient_password | @testinfo.sender_login    | @testinfo.sender_password    |
-      | epam1.popovich@tut.by     | epampopovich                 | epam2.popovich@tut.by     | epam2popovich                |
-      | epam2.popovich@tut.by     | epam2popovich                | epam1.popovich@tut.by     | epampopovich                 |

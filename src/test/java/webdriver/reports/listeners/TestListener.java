@@ -1,12 +1,9 @@
 package webdriver.reports.listeners;
 
 import io.qameta.allure.Attachment;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-import webdriver.driver.Browser;
 import webdriver.Logger;
 
 public class TestListener extends TestListenerAdapter {
@@ -59,18 +56,5 @@ public class TestListener extends TestListenerAdapter {
     @Override
     public void onTestFailure(ITestResult result) {
         LOGGER.info("Test FAILED: " + result.getName());
-        if (Browser.getDriver().getSessionId() != null) {
-            LOGGER.info("I am in onTestFailure method " + getTestMethodName(result) + " failed");
-            WebDriver driver = Browser.getDriver();
-            if (driver != null) {
-                LOGGER.info("Screenshot captured for test case:" + getTestMethodName(result));
-                makeScreenshot();
-            }
-        }
-    }
-
-    @Attachment(value = "Page screenshot", type = "image/png")
-    public byte[] makeScreenshot() {
-        return Browser.getDriver().getScreenshotAs(OutputType.BYTES);
     }
 }

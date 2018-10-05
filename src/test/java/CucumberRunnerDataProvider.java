@@ -14,7 +14,7 @@ import webdriver.common.ScenarioContext;
 
 @CucumberOptions(
         plugin = {"pretty", "com.epam.reportportal.cucumber.StepReporter"},
-        features = {"src/test/features/"},
+        features = {"src/test/resources/features/"},
         glue = "steps",
         strict = true,
         format = {"html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"},

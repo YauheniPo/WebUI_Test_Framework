@@ -7,7 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Synchronized;
 import org.aeonbits.owner.ConfigFactory;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebDriver;
 import webdriver.Logger;
 import webdriver.reports.listeners.WebEventListener;
 import webdriver.resources.IDriverEnvironment;
@@ -75,8 +75,8 @@ public final class Browser {
      *
      * @return the driver
      */
-    public static RemoteWebDriver getDriver() {
-        return (RemoteWebDriver) WebDriverRunner.getWebDriver();
+    public static WebDriver getDriver() {
+        return WebDriverRunner.getWebDriver();
     }
 
     /**
@@ -112,7 +112,6 @@ public final class Browser {
      */
     public void windowMaximise() {
         try {
-            Selenide.executeJavaScript("if (window.screen) {window.moveTo(0, 0);window.resizeTo(window.screen.availWidth,window.screen.availHeight);};");
             getDriver().manage().window().maximize();
         } catch (Exception e) {
             LOGGER.debug(e);

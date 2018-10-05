@@ -4,7 +4,9 @@ import static com.codeborne.selenide.Selenide.$;
 
 import com.codeborne.selenide.Condition;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import webdriver.driver.Browser;
 
 /**
@@ -20,7 +22,13 @@ public abstract class BaseForm extends BaseEntity {
      */
     protected BaseForm(final By locator, final String formTitle) {
         super(locator, formTitle);
+        waitForPageLoad();
         checkPageMainElement();
+    }
+
+    private void waitForPageLoad() {
+        new WebDriverWait(Browser.getDriver(), Browser.PAGE_WAIT).until(
+            webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
     }
 
     /**

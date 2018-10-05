@@ -45,7 +45,7 @@ public class AccountForm extends BaseForm {
      */
     public boolean isAuthorized(String login) {
         Label userNameLabel = new Label(By.xpath(MAIN_LOCATOR), "User Name");
-        return userNameLabel.isPresent() && userNameLabel.getText().contains(login);
+        return userNameLabel.isContainsText(login);
     }
 
     /**

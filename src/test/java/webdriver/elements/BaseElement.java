@@ -62,36 +62,10 @@ public abstract class BaseElement extends BaseEntity {
      * Wait for is element present.
      */
     void waitForIsElementPresent() {
-        boolean isVisible = false;
-        if (isPresent(Browser.TIMEOUT_FOR_CONDITION)) {
-            try {
-                isVisible = $(this.titleLocator).exists();
-            } catch (Exception ex) {
-                LOGGER.debug(this, ex);
-            }
-        }
-        if (!isVisible) {
+        try {
+            this.element = $(this.titleLocator).waitUntil(Condition.visible, Browser.TIMEOUT_FOR_CONDITION);
+        } catch (Exception ex) {
             ASSERT_WRAPPER.fatal(String.format("Element %s didn't find", this.title));
         }
-    }
-
-    /**
-     * Check for is element present on the page.
-     *
-     * @return Is element present
-     */
-    public boolean isPresent() {
-        return isPresent(Browser.TIMEOUT_FOR_CONDITION);
-    }
-
-    /**
-     * Is present boolean.
-     *
-     * @param timeout the timeout
-     * @return the boolean
-     */
-    public boolean isPresent(long timeout) {
-        this.element = $(this.titleLocator).waitUntil(Condition.visible, timeout);
-        return this.element.isDisplayed();
     }
 }

@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.openqa.selenium.By;
+import org.testng.IInvokedMethodListener;
+import org.testng.IReporter;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import webdriver.driver.Browser;
@@ -14,7 +16,7 @@ import webdriver.driver.Browser;
  */
 @Listeners({ReportPortalTestNGListener.class})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BaseEntity {
+public class BaseEntity implements IInvokedMethodListener, IReporter {
     protected By titleLocator;
     protected String title;
     protected static final Logger LOGGER = Logger.getInstance();
@@ -46,7 +48,7 @@ public class BaseEntity {
     @BeforeTest
     public void before() {
         Browser browser = getBrowser();
-        browser.windowMaximise();
         Browser.navigate(Browser.BROWSER_URL);
+        browser.windowMaximise();
     }
 }

@@ -17,7 +17,9 @@ import javax.naming.NamingException;
 public final class Browser {
     private static final IDriverEnvironment driverEnv = ConfigFactory.create(IDriverEnvironment.class);
     private static final IStageEnvironment stageEnv = ConfigFactory.create(IStageEnvironment.class);
-    private static final Browsers CURRENT_BROWSER = Browsers.valueOf(driverEnv.browser().toUpperCase());
+    private static final Browsers CURRENT_BROWSER = Browsers.valueOf((System.getenv("browser") == null
+                                                                      ? driverEnv.browser()
+                                                                      : System.getenv("browser")).toUpperCase());
     private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
     private static final int PAGE_IMPLICITY_WAIT = driverEnv.pageImplicityWait();
     private static final Logger LOGGER = Logger.getInstance();
@@ -95,7 +97,7 @@ public final class Browser {
      */
     private static RemoteWebDriver getNewDriver() {
         try {
-            RemoteWebDriver driver = BrowserFactory.setUp(CURRENT_BROWSER.toString());
+            RemoteWebDriver driver = BrowserFactory.setUp(CURRENT_BROWSER);
             driver.manage().timeouts().implicitlyWait(IMPLICITY_WAIT, TimeUnit.SECONDS);
             driver.manage().timeouts().pageLoadTimeout(PAGE_IMPLICITY_WAIT, TimeUnit.SECONDS);
             LOGGER.info("browser constructed");

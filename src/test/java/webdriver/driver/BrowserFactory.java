@@ -27,7 +27,6 @@ import java.net.URL;
 final public class BrowserFactory {
     private static final Logger LOGGER = Logger.getInstance();
 
-
     /**
      * Sets up.
      *
@@ -38,22 +37,9 @@ final public class BrowserFactory {
      * @throws NamingException the naming exception
      */
     public static RemoteWebDriver setUp(@NonNull final Browsers type) throws NamingException {
-        return getWebDriver(type);
-    }
-
-    /**
-     * Sets up.
-     *
-     * @param type the type
-     *
-     * @return the up
-     *
-     * @throws NamingException the naming exception
-     */
-    public static RemoteWebDriver setUp(@NonNull final String type) throws NamingException {
         for (Browsers t : Browsers.values()) {
-            if (t.toString().equalsIgnoreCase(type)) {
-                return setUp(t);
+            if (t == type) {
+                return getWebDriver(t);
             }
         }
         throw new NamingException("browser name wrong" + ":\nchrome\nfirefox");

@@ -4,12 +4,15 @@ import com.epam.reportportal.testng.ReportPortalTestNGListener;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.testng.IInvokedMethodListener;
 import org.testng.IReporter;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import webdriver.driver.Browser;
+
+import java.awt.*;
 
 /**
  * The type Base entity.
@@ -43,6 +46,15 @@ public class BaseEntity implements IInvokedMethodListener, IReporter {
     }
 
     /**
+     * Take off cursor.
+     */
+    @SneakyThrows(AWTException.class)
+    private void takeOffCursor() {
+        Robot robot = new Robot();
+        robot.mouseMove(0,0);
+    }
+
+    /**
      * Before.
      */
     @BeforeTest
@@ -50,5 +62,6 @@ public class BaseEntity implements IInvokedMethodListener, IReporter {
         Browser browser = getBrowser();
         Browser.navigate(Browser.BROWSER_URL);
         browser.windowMaximise();
+        takeOffCursor();
     }
 }

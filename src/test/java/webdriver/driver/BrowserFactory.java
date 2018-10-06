@@ -22,6 +22,13 @@ import java.net.URL;
 final public class BrowserFactory {
     private static final Logger LOGGER = Logger.getInstance();
 
+    /**
+     * Sets up.
+     *
+     * @param type the type
+     *
+     * @throws NamingException the naming exception
+     */
     public static void setUp(@NonNull final Browsers type) throws NamingException {
         for (Browsers t : Browsers.values()) {
             if (t == type) {

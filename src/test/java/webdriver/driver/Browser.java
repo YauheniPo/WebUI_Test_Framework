@@ -94,7 +94,7 @@ public final class Browser {
     private static void initNewDriver() {
         Configuration.timeout = IMPLICITY_WAIT;
         try {
-            BrowserFactory.setUp(CURRENT_BROWSER.toString());
+            BrowserFactory.setUp(CURRENT_BROWSER);
             WebDriverRunner.addListener(new WebEventListener());
         } catch (NamingException e) {
             LOGGER.debug("Browser: getting New Driver", e);
@@ -127,19 +127,6 @@ public final class Browser {
      */
     public static void navigate(final String url) {
         getDriver().navigate().to(url);
-    }
-
-    /**
-     * Exit.
-     */
-    public void exit() {
-        try {
-            getDriver().quit();
-//            instance = null;
-            LOGGER.info("browser driver quit");
-        } catch (Exception e) {
-            LOGGER.debug(e.getMessage());
-        }
     }
 
     /**

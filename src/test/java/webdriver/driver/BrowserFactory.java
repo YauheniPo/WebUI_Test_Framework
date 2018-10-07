@@ -30,20 +30,9 @@ final public class BrowserFactory {
      * @throws NamingException the naming exception
      */
     public static void setUp(@NonNull final Browsers type) throws NamingException {
-        setWebDriver(type);
-    }
-
-    /**
-     * Sets up.
-     *
-     * @param type the type
-     *
-     * @throws NamingException the naming exception
-     */
-    public static void setUp(@NonNull final String type) throws NamingException {
         for (Browsers t : Browsers.values()) {
-            if (t.toString().equalsIgnoreCase(type)) {
-                setUp(t);
+            if (t == type) {
+                setWebDriver(t);
                 return;
             }
         }

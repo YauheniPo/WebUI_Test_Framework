@@ -21,7 +21,9 @@ import javax.naming.NamingException;
 public final class Browser {
     private static final IDriverEnvironment driverEnv = ConfigFactory.create(IDriverEnvironment.class);
     private static final IStageEnvironment stageEnv = ConfigFactory.create(IStageEnvironment.class);
-    private static final Browsers CURRENT_BROWSER = Browsers.valueOf(driverEnv.browser().toUpperCase());
+    private static final Browsers CURRENT_BROWSER = Browsers.valueOf((System.getenv("browser") == null
+                                                                      ? driverEnv.browser()
+                                                                      : System.getenv("browser")).toUpperCase());
     private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
     private static final Logger LOGGER = Logger.getInstance();
     private static Browser instance;
@@ -92,7 +94,7 @@ public final class Browser {
     private static void initNewDriver() {
         Configuration.timeout = IMPLICITY_WAIT;
         try {
-            BrowserFactory.setUp(CURRENT_BROWSER.toString());
+            BrowserFactory.setUp(CURRENT_BROWSER);
             WebDriverRunner.addListener(new WebEventListener());
         } catch (NamingException e) {
             LOGGER.debug("Browser: getting New Driver", e);
@@ -124,7 +126,7 @@ public final class Browser {
      * @param url the url
      */
     public static void navigate(final String url) {
-        Selenide.open(url);
+        getDriver().navigate().to(url);
     }
 
     /**

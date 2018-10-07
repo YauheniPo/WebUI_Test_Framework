@@ -31,7 +31,7 @@ public abstract class BaseElement extends BaseEntity {
      *
      * @return the element
      */
-    SelenideElement getElement() {
+    public SelenideElement getElement() {
         waitForIsElementPresent();
         return this.element;
     }

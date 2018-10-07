@@ -24,7 +24,7 @@ public class CommonSteps extends BaseSteps {
         sendingEmailLetter(apiEmailSteps, textLetter);
     }
 
-    @Given("^sending email letter by test data from file and with text '(.*)'$")
+    @Given("^sending email letters? by test data from file and with text '(.*)'$")
     public void sendingEmailLetterOfTestDataFromThe(String textLetter) {
         ApiEmailSteps apiEmailSteps = new ApiEmailSteps();
         sendingEmailLetter(apiEmailSteps, textLetter);

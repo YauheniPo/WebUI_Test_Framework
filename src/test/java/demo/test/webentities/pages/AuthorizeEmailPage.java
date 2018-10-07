@@ -1,10 +1,12 @@
 package demo.test.webentities.pages;
 
 import demo.test.webentities.locators.IAuthorizeEmailPage;
+import lombok.Getter;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.By;
 import webdriver.BaseForm;
 import webdriver.elements.Button;
+import webdriver.elements.Label;
 import webdriver.elements.TextBox;
 
 /**
@@ -17,10 +19,12 @@ public class AuthorizeEmailPage extends BaseForm {
     private final String textBoxInputLoginLocator = authorizeEmailPageLocators.textBoxInputLogin();
     private final String textBoxInputPasswordLocator = authorizeEmailPageLocators.textBoxInputPassword();
     private final String btnSighInLocator = authorizeEmailPageLocators.btnSighIn();
+    private final String infoPanelLocator = authorizeEmailPageLocators.infoPanel();
 
     private final TextBox textBoxInputLogin = new TextBox(By.xpath(textBoxInputLoginLocator), "Input Login");
     private final TextBox textBoxInputPassword = new TextBox(By.xpath(textBoxInputPasswordLocator), "Input Password");
     private final Button btnSighIn = new Button(By.xpath(btnSighInLocator), "Sign In");
+    @Getter private final Label labelInfoPanel = new Label(By.xpath(infoPanelLocator), "Info Panel");
 
     /**
      * Instantiates a new Authorize email form.

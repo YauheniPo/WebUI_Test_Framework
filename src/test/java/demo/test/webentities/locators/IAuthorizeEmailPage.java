@@ -19,4 +19,7 @@ public interface IAuthorizeEmailPage extends Config {
 
     @Key("btn_sigh_in")
     String btnSighIn();
+
+    @Key("info_panel")
+    String infoPanel();
 }

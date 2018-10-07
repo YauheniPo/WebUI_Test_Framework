@@ -15,7 +15,7 @@ import lombok.Synchronized;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AssertWrapper {
-    private static AssertWrapper softAssert = null;
+    private static AssertWrapper assertWrapper = null;
     private static final Logger LOGGER = Logger.getInstance();
 
     /**
@@ -25,10 +25,10 @@ public class AssertWrapper {
      */
     @Synchronized
     public static AssertWrapper getInstance() {
-        if (softAssert == null) {
-            softAssert = new AssertWrapper();
+        if (assertWrapper == null) {
+            assertWrapper = new AssertWrapper();
         }
-        return softAssert;
+        return assertWrapper;
     }
 
     /**

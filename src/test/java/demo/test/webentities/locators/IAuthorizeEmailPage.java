@@ -22,4 +22,10 @@ public interface IAuthorizeEmailPage extends Config {
 
     @Key("info_panel")
     String infoPanel();
+
+    @Key("checkbox_memory")
+    String checkboxMemory();
+
+    @Key("login_form")
+    String loginForm();
 }

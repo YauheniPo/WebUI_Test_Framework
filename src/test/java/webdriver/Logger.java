@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.log4j.Log4j2;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * The type Logger.
  */
@@ -24,6 +27,18 @@ public final class Logger {
             instance = new Logger();
         }
         return instance;
+    }
+
+    /**
+     * Print stack trace.
+     *
+     * @param e the e
+     */
+    public void printStackTrace(Throwable e) {
+        StringWriter stringWriter = new StringWriter();
+        e.printStackTrace(new PrintWriter(stringWriter));
+        log.warn(e.getMessage());
+        log.warn(stringWriter.toString());
     }
 
     /**
@@ -52,6 +67,15 @@ public final class Logger {
      */
     public void error(Object message) {
         log.error(message);
+    }
+
+    /**
+     * Warn.
+     *
+     * @param message the message
+     */
+    public void warn(final String message) {
+        log.warn(message);
     }
 
     /**

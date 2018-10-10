@@ -2,13 +2,13 @@ package webdriver.utils.sikuli;
 
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
-import webdriver.BaseEntity;
+import webdriver.Logger;
 
 /**
  * The type Sikuli conf.
  */
-public class SikuliConf extends BaseEntity {
-
+public class SikuliConf {
+    private static final Logger LOGGER = Logger.getInstance();
     private Screen screen;
 
     /**
@@ -32,6 +32,7 @@ public class SikuliConf extends BaseEntity {
             screen.find(screenPath);
             return true;
         } catch (FindFailed findFailed) {
+            LOGGER.error(findFailed.getMessage());
             return false;
         }
     }

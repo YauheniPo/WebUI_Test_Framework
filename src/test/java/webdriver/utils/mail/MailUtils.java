@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.aeonbits.owner.ConfigFactory;
-import webdriver.BaseEntity;
+import webdriver.Logger;
 import webdriver.resources.IMailEnvironment;
 
 import javax.mail.*;
@@ -18,8 +18,8 @@ import static webdriver.resources.Constants.CHARSET;
 /**
  * The type Mail utils.
  */
-public class MailUtils extends BaseEntity {
-
+public class MailUtils {
+    private static final Logger LOGGER = Logger.getInstance();
     private final IMailEnvironment mailEnv = ConfigFactory.create(IMailEnvironment.class);
     private final Properties properties = new Properties();
     private final String fromAddress;

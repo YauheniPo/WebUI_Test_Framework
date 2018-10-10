@@ -52,11 +52,6 @@ public class TutByEmailTest extends BaseTest implements IDataProvider {
         this.mailBox.forEach(mail -> {if(this.nonNull.test(mail)) {mail.closeStore();}});
     }
 
-    @AfterMethod
-    public void returnBasePage() {
-        Browser.openStartPage();
-    }
-
     @Test(dataProvider = "initParams")
     public void emailTest(@NonNull TestDataMails testDataEmails) {
         this.senderMailLogin = testDataEmails.getSenderMailLogin();
@@ -97,6 +92,8 @@ public class TutByEmailTest extends BaseTest implements IDataProvider {
         Mail recipientMail = fetchAccountMail(EmailAccountPage.NavBox.INBOX, this.recipientMailLogin, this.recipientMailPassword);
         logoutAccount();
         checkAuthorization(this.recipientMailLogin, false);
+
+        Browser.openStartPage();
 
         LOGGER.step(6, "Verification of the correctness of the data of the sent mail");
         equalsMails(apiMail, new LinkedList<>(Arrays.asList(senderMail, recipientMail)));

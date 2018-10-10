@@ -1,7 +1,7 @@
 package webdriver.utils.db;
 
 import lombok.SneakyThrows;
-import webdriver.BaseEntity;
+import webdriver.Logger;
 import webdriver.resources.PropertiesResourceManager;
 
 import java.sql.Connection;
@@ -14,7 +14,8 @@ import static webdriver.resources.Constants.PROPERTIES_DB;
 /**
  * The type Database conn my sql.
  */
-public class DatabaseConnMySQL extends BaseEntity {
+public class DatabaseConnMySQL {
+    private static final Logger LOGGER = Logger.getInstance();
     private final PropertiesResourceManager props = new PropertiesResourceManager(PROPERTIES_DB);
     private Connection connection;
 

@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Synchronized;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The type Soft assert wrapper.
  */
@@ -17,6 +20,7 @@ import lombok.Synchronized;
 public class AssertWrapper {
     private static AssertWrapper assertWrapper = null;
     private static final Logger LOGGER = Logger.getInstance();
+    private static volatile Map<AssertionError, String> results = new HashMap<>();
 
     /**
      * Gets instance.
@@ -56,7 +60,50 @@ public class AssertWrapper {
      * @param message the message
      */
     public void fatal(final String message) {
-        LOGGER.fatal(message);
+        LOGGER.error(message);
         fail(message);
+    }
+
+    /**
+     * Soft assert equals.
+     *
+     * @param actual   the actual
+     * @param expected the expected
+     * @param message  the message
+     */
+    public void softAssertEquals(Object actual, Object expected, String message) {
+        try {
+            assertEquals(expected, actual);
+        } catch (AssertionError error) {
+            LOGGER.error(message);
+            results.put(error, message);
+        }
+    }
+
+
+    /**
+     * Soft assert true.
+     *
+     * @param condition the condition
+     * @param message   the message
+     */
+    public void softAssertTrue(boolean condition, String message) {
+        try {
+            assertTrue(condition);
+        } catch (AssertionError error) {
+            LOGGER.error(message);
+            results.put(error, message);
+        }
+    }
+
+    /**
+     * Soft assert all.
+     */
+    public void softAssertAll() {
+        if (!results.isEmpty()) {
+            results.forEach((error, message) -> LOGGER.printStackTrace(error));
+            results.clear();
+            fatal("Some of assertions were completed with errors\r\n");
+        }
     }
 }

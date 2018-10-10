@@ -2,13 +2,15 @@ package webdriver.utils.sikuli;
 
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
-import webdriver.BaseEntity;
+import webdriver.Logger;
+import webdriver.driver.Browser;
+import webdriver.utils.Helper;
 
 /**
  * The type Sikuli conf.
  */
-public class SikuliConf extends BaseEntity {
-
+public class SikuliConf {
+    private static final Logger LOGGER = Logger.getInstance();
     private Screen screen;
 
     /**
@@ -28,12 +30,7 @@ public class SikuliConf extends BaseEntity {
      */
     public boolean exists(String screenPath) {
         LOGGER.info("Check element is exists");
-        try {
-            screen.find(screenPath);
-            return true;
-        } catch (FindFailed findFailed) {
-            return false;
-        }
+        return screen.exists(screenPath, Helper.fetchSeconds(Browser.TIMEOUT_FOR_CONDITION)) != null;
     }
 
     /**

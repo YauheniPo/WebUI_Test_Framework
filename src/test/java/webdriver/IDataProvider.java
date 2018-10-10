@@ -20,7 +20,7 @@ public interface IDataProvider {
      *
      * @return the object [ ]
      */
-    @DataProvider(name = "initParams")
+    @DataProvider(name = "initParams")//, parallel = true)
     default Object[] initParams() {
         String dataBaseLocation = this.getDataBaseLocation();
         Object[] dataProvider = getTestData(dataBaseLocation);

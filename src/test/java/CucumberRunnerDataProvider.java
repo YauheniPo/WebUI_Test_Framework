@@ -44,7 +44,7 @@ public class CucumberRunnerDataProvider extends BaseEntity {
         }
     }
 
-    @DataProvider(name = "initParams")
+    @DataProvider(name = "initParams")//, parallel = true)
     public Object[] getParams() {
         return this.testData == null ? new String[]{null} : new FactoryInitParams().getTestData(this.testData);
     }

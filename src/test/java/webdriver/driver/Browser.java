@@ -5,7 +5,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Synchronized;
+import lombok.Getter;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 import webdriver.Logger;
@@ -21,9 +21,9 @@ import javax.naming.NamingException;
 public final class Browser {
     private static final IDriverEnvironment driverEnv = ConfigFactory.create(IDriverEnvironment.class);
     private static final IStageEnvironment stageEnv = ConfigFactory.create(IStageEnvironment.class);
-    private static final Browsers CURRENT_BROWSER = Browsers.valueOf((System.getenv("browser") == null
-                                                                      ? driverEnv.browser()
-                                                                      : System.getenv("browser")).toUpperCase());
+    private static Browsers currentBrowser = Browsers.valueOf((System.getenv("browser") == null
+                                                               ? driverEnv.browser()
+                                                               : System.getenv("browser")).toUpperCase());
     private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
     private static final Logger LOGGER = Logger.getInstance();
     private static Browser instance;
@@ -37,7 +37,7 @@ public final class Browser {
      * Instantiates a new Browser.
      */
     private Browser() {
-        LOGGER.info(String.format("browser %s is ready", CURRENT_BROWSER.name()));
+        LOGGER.info(String.format("browser %s is ready", currentBrowser.name()));
     }
 
     /**
@@ -45,11 +45,15 @@ public final class Browser {
      *
      * @return the instance
      */
-    @Synchronized
-    public static Browser getInstance() {
+    public static Browser getInstance(String browser) {
         if (instance == null) {
-            initNewDriver();
-            instance = new Browser();
+            synchronized (Browser.class) {
+                if (!Boolean.valueOf(browser)) {
+                    currentBrowser = Browsers.valueOf(browser.toUpperCase());
+                }
+                initNewDriver();
+                instance = new Browser();
+            }
         }
         return instance;
     }
@@ -69,7 +73,7 @@ public final class Browser {
      * @return the browser name
      */
     public static String getBrowserName() {
-        return CURRENT_BROWSER.name();
+        return currentBrowser.name();
     }
 
     /**
@@ -94,7 +98,7 @@ public final class Browser {
     private static void initNewDriver() {
         Configuration.timeout = IMPLICITY_WAIT;
         try {
-            BrowserFactory.setUp(CURRENT_BROWSER);
+            BrowserFactory.setUp(currentBrowser);
             WebDriverRunner.addListener(new WebEventListener());
         } catch (NamingException e) {
             LOGGER.debug("Browser: getting New Driver", e);
@@ -137,6 +141,6 @@ public final class Browser {
         FIREFOX("firefox"),
         CHROME("chrome");
 
-        private final String value;
+        @Getter private final String value;
     }
 }

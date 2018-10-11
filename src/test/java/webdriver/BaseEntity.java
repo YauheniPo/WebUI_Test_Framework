@@ -10,6 +10,8 @@ import org.testng.IInvokedMethodListener;
 import org.testng.IReporter;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import webdriver.driver.Browser;
 
 import java.awt.*;
@@ -39,10 +41,12 @@ public class BaseEntity implements IInvokedMethodListener, IReporter {
     /**
      * Gets browser.
      *
+     * @param browser   name of browser
+     *
      * @return the browser
      */
-    private Browser getBrowser() {
-        return Browser.getInstance();
+    private Browser getBrowser(String browser) {
+        return Browser.getInstance(browser);
     }
 
     /**
@@ -56,12 +60,19 @@ public class BaseEntity implements IInvokedMethodListener, IReporter {
 
     /**
      * Before.
+     *
+     * @param browser   name of browser
      */
-    @BeforeTest
-    public void before() {
-        Browser browser = getBrowser();
+    @Parameters({"browser"})
+    @BeforeTest(alwaysRun = true)
+    public void before(@Optional("true") String browser) {
+        Browser br = getBrowser(browser);
         Browser.navigate(Browser.BROWSER_URL);
-        browser.windowMaximise();
+        br.windowMaximise();
         takeOffCursor();
+    }
+
+    public void before() {
+        before(null);
     }
 }

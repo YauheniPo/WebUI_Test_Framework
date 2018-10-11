@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import webdriver.Logger;
@@ -13,7 +14,7 @@ import webdriver.driver.Browser.Browsers;
 
 import javax.naming.NamingException;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 
 /**
  * The type Browser factory.
@@ -48,21 +49,17 @@ final public class BrowserFactory {
      */
     private static void setWebDriver(@NonNull final Browsers type) throws NamingException {
         Configuration.headless = Browser.IS_HEADLESS;
-        boolean isGrid = Browser.isGrid();
+        if(Browser.isGrid()) {
+            RemoteWebDriver gridDriver = getGridRemoteDriver(type);
+            WebDriverRunner.setWebDriver(gridDriver);
+            return;
+        }
         switch (type) {
             case CHROME:
                 Configuration.browser = WebDriverRunner.CHROME;
-                if (isGrid) {
-                    RemoteWebDriver gridDriver = getGridRemoteDriver(DesiredCapabilities.chrome());
-                    WebDriverRunner.setWebDriver(gridDriver);
-                }
                 break;
             case FIREFOX:
                 Configuration.browser = WebDriverRunner.FIREFOX;
-                if (isGrid) {
-                    RemoteWebDriver gridDriver = getGridRemoteDriver(DesiredCapabilities.firefox());
-                    WebDriverRunner.setWebDriver(gridDriver);
-                }
                 break;
             default:
                 LOGGER.error(String.format("WebDriver %s not created", type.name()));
@@ -73,13 +70,17 @@ final public class BrowserFactory {
     /**
      * Gets grid remote driver.
      *
-     * @param capabilities the capabilities
+     * @param browser the browser type
      *
      * @return the grid remote driver
      */
     @SneakyThrows(MalformedURLException.class)
-    private static RemoteWebDriver getGridRemoteDriver(DesiredCapabilities capabilities) {
+    private static RemoteWebDriver getGridRemoteDriver(Browsers browser) {
         LOGGER.info("Set selenium grid driver");
-        return new RemoteWebDriver(new URL(Browser.GRID_URL), capabilities);
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        desiredCapabilities.setBrowserName(browser.getValue());
+        desiredCapabilities.setCapability("enableVNC", true);
+        desiredCapabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
+        return new RemoteWebDriver(URI.create(Browser.GRID_URL).toURL(), desiredCapabilities);
     }
 }

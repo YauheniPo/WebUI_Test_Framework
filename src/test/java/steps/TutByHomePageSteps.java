@@ -5,7 +5,7 @@ import demo.test.webentities.pages.TutByHomePage;
 
 public class TutByHomePageSteps extends BaseSteps {
 
-    @Given("^tut.by Home Page is (?:opened|navigated)$")
+    @Given("^tut.by(?:a)? Home Page is (?:opened|navigated)$")
     public void homePageIsOpened() {
         new TutByHomePage();
     }

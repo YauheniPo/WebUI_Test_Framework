@@ -111,7 +111,6 @@ public class TutByEmailTest extends BaseTest implements IDataProvider {
     @Step("{0} {1} {2}")
     private Mail fetchAccountMail(EmailAccountPage.NavBox folder, String emailLogin, String emailPassword) {
         EmailAccountPage emailAccountPage = new AuthorizeEmailPage().signIn(emailLogin, emailPassword);
-//        EmailAccountPage emailAccountPage = new AuthorizeEmailPageFactory().signIn(emailLogin, emailPassword);
         checkAuthorization(emailLogin, true);
         return emailAccountPage.fetchEmailFolder(folder).getMailsForm().choiceLastMail().getMail();
     }

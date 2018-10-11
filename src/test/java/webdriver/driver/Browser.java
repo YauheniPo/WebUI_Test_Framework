@@ -97,6 +97,8 @@ public final class Browser {
      */
     private static void initNewDriver() {
         Configuration.timeout = IMPLICITY_WAIT;
+        Configuration.pollingInterval = 300;
+        Configuration.collectionsPollingInterval = 450;
         try {
             BrowserFactory.setUp(currentBrowser);
             WebDriverRunner.addListener(new WebEventListener());

@@ -65,14 +65,17 @@ public class BaseEntity implements IInvokedMethodListener, IReporter {
      */
     @Parameters({"browser"})
     @BeforeTest(alwaysRun = true)
-    public void before(@Optional("true") String browser) {
+    public void before(@Optional(value = "true") String browser) {
         Browser br = getBrowser(browser);
         Browser.navigate(Browser.BROWSER_URL);
         br.windowMaximise();
         takeOffCursor();
     }
 
-    public void before() {
-        before(null);
+    /**
+     * Before.
+     */
+    protected void before() {
+        before("true");
     }
 }

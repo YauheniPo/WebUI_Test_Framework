@@ -11,7 +11,7 @@
     </test>
     <test name="Test @tut.by EMAIL2" group-by-instances="true">
         <parameter name="dataBaseLocation" value="accounts.xml"/>
-        <parameter name="browser" value="chrome"/>
+        <parameter name="browser" value="firefox"/>
         <classes>
             <class name="demo.test.tests.TutByEmailTest"/>
         </classes>

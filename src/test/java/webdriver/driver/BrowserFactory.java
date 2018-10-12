@@ -49,11 +49,6 @@ final public class BrowserFactory {
      */
     private static void setWebDriver(@NonNull final Browsers type) throws NamingException {
         Configuration.headless = Browser.IS_HEADLESS;
-        if(Browser.isGrid()) {
-            RemoteWebDriver gridDriver = getGridRemoteDriver(type);
-            WebDriverRunner.setWebDriver(gridDriver);
-            return;
-        }
         switch (type) {
             case CHROME:
                 Configuration.browser = WebDriverRunner.CHROME;
@@ -64,6 +59,10 @@ final public class BrowserFactory {
             default:
                 LOGGER.error(String.format("WebDriver %s not created", type.name()));
                 throw new NamingException("browser name wrong" + ":\nchrome\nfirefox");
+        }
+        if(Browser.isGrid()) {
+            RemoteWebDriver gridDriver = getGridRemoteDriver(type);
+            WebDriverRunner.setWebDriver(gridDriver);
         }
     }
 
@@ -80,6 +79,7 @@ final public class BrowserFactory {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setBrowserName(browser.getValue());
         desiredCapabilities.setCapability("enableVNC", true);
+        desiredCapabilities.setCapability("enableVideo", false);
         desiredCapabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
         return new RemoteWebDriver(URI.create(Browser.GRID_URL).toURL(), desiredCapabilities);
     }

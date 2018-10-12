@@ -1,13 +1,10 @@
 package webdriver.elements;
 
-import static com.codeborne.selenide.Selenide.$;
-
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import webdriver.BaseEntity;
-import webdriver.driver.Browser;
+import webdriver.utils.waitings.SmartWait;
 
 /**
  * The type Base element.
@@ -63,7 +60,7 @@ public abstract class BaseElement extends BaseEntity {
      */
     void waitForIsElementPresent() {
         try {
-            this.element = $(this.titleLocator).waitUntil(Condition.visible, Browser.TIMEOUT_FOR_CONDITION);
+            this.element = SmartWait.waitFor(this.titleLocator);
         } catch (Exception ex) {
             ASSERT_WRAPPER.fatal(String.format("Element %s didn't find", this.title));
         }

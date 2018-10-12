@@ -48,7 +48,7 @@ public class TutByScreenTest extends BaseTest {
         //.getImage();
         //.save();
 
-        double deviation = 0.02;
+        double deviation = 0.05;
 
         ElementSnapshot checkBoxMemoryElementSnapshot = Shutterbug.shootElement(Browser.getDriver(), authorizeEmailPage.getCheckBoxMemory().getElement());
         BufferedImage checkboxMemoryImage = ImageIO.read(Thread.currentThread().getContextClassLoader()
@@ -57,7 +57,7 @@ public class TutByScreenTest extends BaseTest {
             authorizeEmailSnapshotsPath + snapshotsEqualsResultsPath)).getPath() + checkboxMemorySnapshotName;
 
         ASSERT_WRAPPER.softAssertTrue(
-            checkBoxMemoryElementSnapshot.equalsWithDiff(checkboxMemoryImage, equalsDiffPath), "checkBoxElementSnapshot");
+            checkBoxMemoryElementSnapshot.equalsWithDiff(checkboxMemoryImage, equalsDiffPath, deviation), "checkBoxMemoryElementSnapshot");
 
 
         ElementSnapshot infoPanelElementSnapshot = Shutterbug.shootElement(Browser.getDriver(), authorizeEmailPage.getLabelInfoPanel().getElement());
@@ -67,7 +67,7 @@ public class TutByScreenTest extends BaseTest {
             authorizeEmailSnapshotsPath + snapshotsEqualsResultsPath)).getPath() +  infoPanelSnapshotName;
 
         ASSERT_WRAPPER.softAssertTrue(
-                infoPanelElementSnapshot.equalsWithDiff(infoPanelImage, equalsDiffPath), "infoPanelElementSnapshot");
+                infoPanelElementSnapshot.equalsWithDiff(infoPanelImage, equalsDiffPath, deviation), "infoPanelElementSnapshot");
 
 
         BufferedImage loginFormImage1 = ImageIO.read(Thread.currentThread().getContextClassLoader()
@@ -79,8 +79,6 @@ public class TutByScreenTest extends BaseTest {
 
         ASSERT_WRAPPER.softAssertTrue(
                 ImageProcessor.imagesAreEqualsWithDiff(loginFormImage1, loginFormImage2, equalsDiffPath, deviation), "loginFormImage");
-
-        ASSERT_WRAPPER.softAssertAll();
 
 
         SikuliConf sikuliConf = new SikuliConf();

@@ -10,7 +10,7 @@ import lombok.SneakyThrows;
 import org.testng.annotations.Test;
 import webdriver.BaseTest;
 import webdriver.driver.Browser;
-import webdriver.utils.sikuli.SikuliConf;
+import webdriver.utils.visual.SikuliConf;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -1,4 +1,4 @@
-package webdriver.utils.sikuli;
+package webdriver.utils.visual;
 
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;

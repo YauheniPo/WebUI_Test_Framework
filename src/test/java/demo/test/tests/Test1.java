@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import org.openqa.selenium.By;
+import org.testng.annotations.Test;
 
 import java.awt.*;
 import java.util.Date;
@@ -14,7 +15,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class Test1 {
 
-    @org.testng.annotations.Test
+    @Test
     public void test() {
         String resources = "src/test/resources/";
         String authorizeEmailSnapshotsPath = "screenshots";

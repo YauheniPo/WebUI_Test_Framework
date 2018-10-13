@@ -42,6 +42,17 @@ public final class Logger {
     }
 
     /**
+     * Print stack trace.
+     *
+     * @param e       the e
+     * @param message the message
+     */
+    public void printStackTrace(Throwable e, String message) {
+        log.warn(message);
+        printStackTrace(e);
+    }
+
+    /**
      * Step.
      *
      * @param step        the step

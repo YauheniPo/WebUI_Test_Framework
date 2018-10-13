@@ -18,7 +18,17 @@ public class SikuliConf {
      */
     public SikuliConf() {
         LOGGER.info("Create screen");
-        screen = new Screen();
+        this.screen = new Screen();
+    }
+
+    /**
+     * New screen sikuli conf.
+     *
+     * @return the sikuli conf
+     */
+    public SikuliConf newScreen() {
+        this.screen = new Screen();
+        return this;
     }
 
     /**

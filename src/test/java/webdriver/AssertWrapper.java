@@ -102,7 +102,7 @@ public class AssertWrapper {
     public void softAssertAll() {
         LOGGER.info("Soft Assert");
         if (!results.isEmpty()) {
-            results.forEach((error, message) -> LOGGER.printStackTrace(error));
+            results.forEach(LOGGER::printStackTrace);
             results.clear();
             fatal("Some of assertions were completed with errors\r\n");
         }

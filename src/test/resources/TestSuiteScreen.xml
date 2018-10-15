@@ -7,10 +7,4 @@
             <class name="demo.test.tests.TutByShutterbugVisualTest"/>
         </classes>
     </test>
-    <test name="Test @tut.by EMAIL2 screens" group-by-instances="true">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="demo.test.tests.TutByShutterbugVisualTest"/>
-        </classes>
-    </test>
 </suite>

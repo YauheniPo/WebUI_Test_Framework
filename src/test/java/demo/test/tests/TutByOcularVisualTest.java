@@ -1,15 +1,16 @@
 package demo.test.tests;
 
 import demo.test.webentities.forms.TutByHeader;
+import demo.test.webentities.models.images.CheckBoxMemory;
 import demo.test.webentities.pages.AuthorizeEmailPage;
 import demo.test.webentities.pages.TutByHomePage;
 import org.testng.annotations.Test;
 import webdriver.VisualTest;
-import webdriver.utils.visual.SikuliConf;
+import webdriver.utils.visual.OcularConf;
 
 import java.nio.file.Paths;
 
-public class TutBySikuliVisualTest extends VisualTest {
+public class TutByOcularVisualTest extends VisualTest {
 
     @Test
     public void shutterTest() {
@@ -23,11 +24,10 @@ public class TutBySikuliVisualTest extends VisualTest {
     }
 
     private void visualChecking() {
-        new AuthorizeEmailPage();
 
-        SikuliConf sikuliConf = new SikuliConf();
-        ASSERT_WRAPPER.assertTrue(sikuliConf.exists(Paths.get(super.visualEnv.screenshotsDir(),
-                AuthorizeEmailPage.AUTHORIZE_EMAIL_PAGE_SNAPSHOTS_PATH,
-                AuthorizeEmailPage.CHECKBOX_MEMORY_SNAPSHOT_NAME + super.visualEnv.imageExtention()).toString()));
+        new OcularConf(Paths.get(visualEnv.snapshotsEqualsResultsPath()).toAbsolutePath().toString(),
+                Paths.get(visualEnv.screenshotsDir(), AuthorizeEmailPage.AUTHORIZE_EMAIL_PAGE_SNAPSHOTS_PATH).toAbsolutePath().toString())
+                .saveSnapshot(true);
+        ASSERT_WRAPPER.assertTrue(new CheckBoxMemory().compare().isEqualsImages());
     }
 }

@@ -13,8 +13,9 @@ import webdriver.driver.Browser;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
+import java.nio.file.Paths;
 
 public class TutByShutterbugVisualTest extends VisualTest {
 
@@ -34,12 +35,6 @@ public class TutByShutterbugVisualTest extends VisualTest {
         AuthorizeEmailPage authorizeEmailPage = new AuthorizeEmailPage();
 
 
-        String pngExtention = ".png";
-        String infoPanelSnapshotName = "info_panel";
-        String checkboxMemorySnapshotName = "checkbox_memory";
-        String authorizeEmailSnapshotsPath = "authorize_email/";
-        String snapshotsEqualsResultsPath = "artifacts";
-
 //        Shutterbug.shootPage(Browser.getDriver(), ScrollStrategy.WHOLE_PAGE_CHROME, 500, false).save();
         //.withThumbnail(String path, String name, double scale).
         //.withTitle("Login_Form" + new Date()).
@@ -48,34 +43,44 @@ public class TutByShutterbugVisualTest extends VisualTest {
 
         double deviation = 0.08;
 
-        ElementSnapshot checkBoxMemoryElementSnapshot = Shutterbug.shootElement(Browser.getDriver(), authorizeEmailPage.getCheckBoxMemory().getElement());
-        BufferedImage checkboxMemoryImage = ImageIO.read(Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream(super.visualEnv.screenshotsDir() + authorizeEmailSnapshotsPath + checkboxMemorySnapshotName + pngExtention));
-        String equalsDiffPath = String.valueOf(FileSystems.getDefault()
-                .getPath(snapshotsEqualsResultsPath, checkboxMemorySnapshotName));
+        ElementSnapshot checkBoxMemoryElementSnapshot = Shutterbug.shootElement(Browser.getDriver(),
+                authorizeEmailPage.getCheckBoxMemory().getElement());
+        BufferedImage checkboxMemoryImage = ImageIO.read(new File(Paths.get(super.visualEnv.screenshotsDir(),
+                AuthorizeEmailPage.AUTHORIZE_EMAIL_PAGE_SNAPSHOTS_PATH,
+                AuthorizeEmailPage.CHECKBOX_MEMORY_SNAPSHOT_NAME + super.visualEnv.imageExtention()).toString()));
+        String equalsDiffPath = Paths.get(super.visualEnv.snapshotsEqualsResultsPath(),
+                AuthorizeEmailPage.CHECKBOX_MEMORY_SNAPSHOT_NAME).toString();
 
         ASSERT_WRAPPER.softAssertTrue(
-            checkBoxMemoryElementSnapshot.equalsWithDiff(checkboxMemoryImage, equalsDiffPath, deviation), "checkBoxMemoryElementSnapshot");
+            checkBoxMemoryElementSnapshot.equalsWithDiff(checkboxMemoryImage, equalsDiffPath, deviation),
+                "checkBoxMemoryElementSnapshot");
 
 
-        ElementSnapshot infoPanelElementSnapshot = Shutterbug.shootElement(Browser.getDriver(), authorizeEmailPage.getLabelInfoPanel().getElement());
-        BufferedImage infoPanelImage = ImageIO.read(Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream(super.visualEnv.screenshotsDir() + authorizeEmailSnapshotsPath + infoPanelSnapshotName + pngExtention));
-        equalsDiffPath = String.valueOf(FileSystems.getDefault()
-                .getPath(snapshotsEqualsResultsPath, infoPanelSnapshotName));
-
-        ASSERT_WRAPPER.softAssertTrue(
-                infoPanelElementSnapshot.equalsWithDiff(infoPanelImage, equalsDiffPath, deviation), "infoPanelElementSnapshot");
-
-
-        BufferedImage loginFormImage1 = ImageIO.read(Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream(super.visualEnv.screenshotsDir() + authorizeEmailSnapshotsPath + "login_form1.png"));
-        BufferedImage loginFormImage2 = ImageIO.read(Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream(super.visualEnv.screenshotsDir() + authorizeEmailSnapshotsPath + "login_form2.png"));
-        equalsDiffPath = String.valueOf(FileSystems.getDefault()
-                .getPath(snapshotsEqualsResultsPath, "login_form"));
+        ElementSnapshot infoPanelElementSnapshot = Shutterbug.shootElement(Browser.getDriver(),
+                authorizeEmailPage.getLabelInfoPanel().getElement());
+        BufferedImage infoPanelImage = ImageIO.read(new File(Paths.get(super.visualEnv.screenshotsDir(),
+                AuthorizeEmailPage.AUTHORIZE_EMAIL_PAGE_SNAPSHOTS_PATH,
+                AuthorizeEmailPage.INFO_PANEL_SNAPSHOT_NAME + super.visualEnv.imageExtention()).toString()));
+        equalsDiffPath = Paths.get(super.visualEnv.snapshotsEqualsResultsPath(),
+                AuthorizeEmailPage.INFO_PANEL_SNAPSHOT_NAME).toString();
 
         ASSERT_WRAPPER.softAssertTrue(
-                ImageProcessor.imagesAreEqualsWithDiff(loginFormImage1, loginFormImage2, equalsDiffPath, deviation), "loginFormImage");
+                infoPanelElementSnapshot.equalsWithDiff(infoPanelImage, equalsDiffPath, deviation),
+                "infoPanelElementSnapshot");
+
+
+        BufferedImage loginFormImage1 = ImageIO.read(new File(Paths.get(
+                super.visualEnv.screenshotsDir(),
+                AuthorizeEmailPage.AUTHORIZE_EMAIL_PAGE_SNAPSHOTS_PATH,
+                "login_form1" + super.visualEnv.imageExtention()).toString()));
+        BufferedImage loginFormImage2 = ImageIO.read(new File(Paths.get(
+                super.visualEnv.screenshotsDir(),
+                AuthorizeEmailPage.AUTHORIZE_EMAIL_PAGE_SNAPSHOTS_PATH,
+                "login_form2" + super.visualEnv.imageExtention()).toString()));
+        equalsDiffPath = Paths.get(super.visualEnv.snapshotsEqualsResultsPath(), "login_form").toString();
+
+        ASSERT_WRAPPER.softAssertTrue(
+                ImageProcessor.imagesAreEqualsWithDiff(loginFormImage1, loginFormImage2, equalsDiffPath, deviation),
+                "loginFormImage");
     }
 }

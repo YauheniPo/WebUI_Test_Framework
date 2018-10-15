@@ -10,4 +10,9 @@ public interface IVisualEnvironment extends Config {
     @DefaultValue("screenshots")
     String screenshotsDir();
 
+    @DefaultValue(".png")
+    String imageExtention();
+
+    @DefaultValue("artifacts")
+    String snapshotsEqualsResultsPath();
 }

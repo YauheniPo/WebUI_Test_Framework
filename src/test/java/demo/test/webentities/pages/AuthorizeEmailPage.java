@@ -23,6 +23,9 @@ public class AuthorizeEmailPage extends BaseForm {
     private final String infoPanelLocator = authorizeEmailPageLocators.infoPanel();
     private final String checkboxMemoryLocator = authorizeEmailPageLocators.checkboxMemory();
     private final String loginFormLocator = authorizeEmailPageLocators.loginForm();
+    public static final String AUTHORIZE_EMAIL_PAGE_SNAPSHOTS_PATH = "authorize_email";
+    public static final String INFO_PANEL_SNAPSHOT_NAME = "info_panel";
+    public static final String CHECKBOX_MEMORY_SNAPSHOT_NAME = "checkbox_memory";
 
     private final TextBox textBoxInputLogin = new TextBox(By.xpath(textBoxInputLoginLocator), "Input Login");
     private final TextBox textBoxInputPassword = new TextBox(By.xpath(textBoxInputPasswordLocator), "Input Password");

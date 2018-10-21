@@ -30,12 +30,10 @@ public class TutByMagickVisualTest extends VisualTest {
         LOGGER.step(2, "Receiving data from the sender's mail");
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
 
-        visualChecking();
-
-        ASSERT_WRAPPER.softAssertTrue(visualChecking(), "Comparison Failed!");
+        ASSERT_WRAPPER.softAssertTrue(visualCompare(), "Comparison Failed!");
     }
 
-    private boolean visualChecking() {
+    private boolean visualCompare() {
         AuthorizeEmailPage authorizeEmailPage = new AuthorizeEmailPage();
 
         Shutterbug.shootElement(Browser.getDriver(), authorizeEmailPage.getCheckBoxMemory().getElement())
@@ -48,7 +46,7 @@ public class TutByMagickVisualTest extends VisualTest {
         IMOperation cmpOp = new IMOperation();
         cmpOp.addRawArgs("magick", "compare");
         cmpOp.fuzz(3.0);
-        cmpOp.metric("AE");
+        cmpOp.metric("ae");
         cmpOp.addImage(Paths.get(super.visualEnv.screenshotsDir(), AuthorizeEmailPage.AUTHORIZE_EMAIL_PAGE_SNAPSHOTS_PATH,
                 CHECKBOX_MEMORY_SNAPSHOT_NAME + super.visualEnv.imageExtention()).toString());
         cmpOp.addImage(Paths.get(super.visualEnv.snapshotsEqualsResultsPath(),
@@ -72,7 +70,7 @@ public class TutByMagickVisualTest extends VisualTest {
             String procOut = IOUtils.toString(std, StandardCharsets.UTF_8.name());
             String procErr = IOUtils.toString(err, StandardCharsets.UTF_8.name());
 
-            return Integer.valueOf(procOut) == 0 && Integer.valueOf(procErr) == 0;
+            return procOut.isEmpty() && Integer.valueOf(procErr) == 0;
         }
         catch (IOException ex) {
             LOGGER.printStackTrace(ex);

@@ -3,19 +3,28 @@ package demo.test.tests;
 import com.assertthat.selenium_shutterbug.core.ElementSnapshot;
 import com.assertthat.selenium_shutterbug.core.Shutterbug;
 import com.assertthat.selenium_shutterbug.utils.image.ImageProcessor;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import demo.test.webentities.forms.TutByHeader;
 import demo.test.webentities.pages.AuthorizeEmailPage;
 import demo.test.webentities.pages.TutByHomePage;
 import lombok.SneakyThrows;
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import webdriver.VisualTest;
 import webdriver.driver.Browser;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Date;
+
+import static com.codeborne.selenide.Selenide.$;
 
 public class TutByShutterbugVisualTest extends VisualTest {
 
@@ -82,5 +91,27 @@ public class TutByShutterbugVisualTest extends VisualTest {
         ASSERT_WRAPPER.softAssertTrue(
                 ImageProcessor.imagesAreEqualsWithDiff(loginFormImage1, loginFormImage2, equalsDiffPath, deviation),
                 "loginFormImage");
+    }
+
+    @Test
+    public void test() {
+        Configuration.browser = WebDriverRunner.CHROME;
+        Selenide.open("https://www.google.com/imghp");
+        SelenideElement googleLogo = $(By.id("hplogo"));
+        SelenideElement searchBtn = $(By.id("mKlEF"));
+        SelenideElement searchBox = $(By.className("gsfi"));
+
+        searchBox.sendKeys("McKesson");
+
+        Shutterbug.shootPage(WebDriverRunner.getWebDriver())
+//                .blur(searchBox)
+                .highlight(searchBtn)
+//                .monochrome(googleLogo)
+                .highlightWithText(googleLogo, Color.blue, 3, "Monochromed logo", Color.blue, new Font("SansSerif", Font.BOLD, 20))
+                .highlightWithText(searchBox, "Searching word")
+                .withTitle("Google home page - " + new Date())
+                .withName("home_page")
+                .withThumbnail(super.visualEnv.screenshotsDir() + "thumbnail", "home_page", 0.7)
+                .save(super.visualEnv.screenshotsDir());
     }
 }

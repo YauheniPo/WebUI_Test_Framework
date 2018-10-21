@@ -15,4 +15,6 @@ public interface IVisualEnvironment extends Config {
 
     @DefaultValue("artifacts")
     String snapshotsEqualsResultsPath();
+
+    String magickInstallDir();
 }

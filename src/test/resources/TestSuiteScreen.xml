@@ -4,7 +4,7 @@
     <test name="Test @tut.by EMAIL screens" group-by-instances="true">
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="demo.test.tests.TutByShutterbugVisualTest"/>
+            <class name="demo.test.tests.TutByMagickVisualTest"/>
         </classes>
     </test>
 </suite>

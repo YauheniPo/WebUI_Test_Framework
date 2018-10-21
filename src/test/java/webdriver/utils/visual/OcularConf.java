@@ -3,6 +3,7 @@ package webdriver.utils.visual;
 import com.testautomationguru.ocular.Ocular;
 import com.testautomationguru.ocular.OcularConfiguration;
 import org.openqa.selenium.WebElement;
+import webdriver.Logger;
 import webdriver.driver.Browser;
 
 import java.nio.file.Paths;
@@ -11,6 +12,7 @@ import java.nio.file.Paths;
  * The type Ocular conf.
  */
 public class OcularConf {
+    private static final Logger LOGGER = Logger.getInstance();
     private OcularConfiguration ocularConfiguration = Ocular.config();
 
     /**
@@ -20,6 +22,7 @@ public class OcularConf {
      * @param snapshotsPath the snapshots path
      */
     public OcularConf(String resultPath, String snapshotsPath) {
+        LOGGER.info("Ocular setting");
         ocularConfiguration
                 .resultPath(Paths.get(resultPath))
                 .snapshotPath(Paths.get(snapshotsPath))

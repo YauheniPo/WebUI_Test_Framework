@@ -19,8 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -96,7 +94,7 @@ public class TutByEmailTest extends BaseTest implements IDataProvider {
         Browser.openStartPage();
 
         LOGGER.step(6, "Verification of the correctness of the data of the sent mail");
-        equalsMails(apiMail, new LinkedList<>(Arrays.asList(senderMail, recipientMail)));
+        equalsMails(apiMail, senderMail, recipientMail);
     }
 
     /**
@@ -162,11 +160,8 @@ public class TutByEmailTest extends BaseTest implements IDataProvider {
      * @param apiMail the api mail
      * @param mails   the mails
      */
-    private void equalsMails(Mail apiMail, List<Mail> mails) {
-        mails.forEach(mail -> {
-            ASSERT_WRAPPER.assertEquals(apiMail, mail);
-            LOGGER.info("Expected Mail: '" + apiMail.toString() + "' same as Mail: '" + mail.toString() + "'");
-        });
+    private void equalsMails(Mail apiMail, Mail...mails) {
+        Arrays.asList(mails).forEach(mail -> ASSERT_WRAPPER.assertEquals(apiMail, mail));
     }
 
     @Override

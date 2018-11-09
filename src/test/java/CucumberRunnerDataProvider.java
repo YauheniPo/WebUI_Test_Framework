@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import webdriver.BaseEntity;
+import webdriver.DriverEntity;
 import webdriver.common.ScenarioContext;
 
 @CucumberOptions(
@@ -20,7 +20,7 @@ import webdriver.common.ScenarioContext;
         format = {"html:target/cukes", "json:target/cukes/report.json", "junit:target/cukes/junit.xml"},
         tags = {"@check_email_data_provider"}
 )
-public class CucumberRunnerDataProvider extends BaseEntity {
+public class CucumberRunnerDataProvider extends DriverEntity {
     private static final ScenarioContext SCENARIO_CONTEXT = ScenarioContext.getInstance();
     private TestNGCucumberRunner testRunner;
     private String testData;

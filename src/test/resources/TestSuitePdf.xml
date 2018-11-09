@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="EPAM_e.popovich" parallel="tests" thread-count="1">
+    <test name="Test PDF" group-by-instances="true">
+        <parameter name="pdfFile" value="note.pdf"/>
+        <classes>
+            <class name="demo.test.tests.PdfTest"/>
+        </classes>
+    </test>
+</suite>

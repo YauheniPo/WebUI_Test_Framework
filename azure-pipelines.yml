@@ -18,5 +18,5 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-#    script: mvn clean test -Dsuite=TestSuite
-    goals: 'test'
+    script: echo --------------------------------------------------
+    goals: 'test -Dsuite=TestSuite'

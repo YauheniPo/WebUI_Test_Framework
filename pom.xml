@@ -232,7 +232,7 @@
                     <properties>
                         <property>
                             <name>listener</name>
-                            <value>webdriver.reports.listeners.TestListener, ru.yandex.qatools.allure.testng.AllureTestListener</value>
+                            <value>webdriver.reports.listeners.TestListener<!--, ru.yandex.qatools.allure.testng.AllureTestListener--></value>
                         </property>
                     </properties>
                     <suiteXmlFiles>

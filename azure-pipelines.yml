@@ -12,12 +12,15 @@ pool:
 
 steps:
 - task: Maven@3
+- script: |
+    echo Starting the build
+    mvn clean test -Dsuite=TestSuite
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.10'
     jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
+    publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    goals: 'test'
+#    goals: 'test'

@@ -4,6 +4,8 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 # Set variables once
+variables:
+  suite: TestSuite
 
 pool:
   vmImage: 'Ubuntu 16.04'
@@ -18,4 +20,4 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    goals: 'test -Dsuite=TestSuite'
+    goals: 'test'

@@ -19,7 +19,7 @@ import java.awt.*;
 /**
  * The type Base entity.
  */
-@Listeners({ReportPortalTestNGListener.class})
+//@Listeners({ReportPortalTestNGListener.class})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaseEntity implements IInvokedMethodListener, IReporter {
     protected By titleLocator;

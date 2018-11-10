@@ -236,7 +236,7 @@
                         </property>
                     </properties>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/${suite}.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/TestSuite.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
                 <dependencies>

@@ -8,7 +8,7 @@ pool:
 
 steps:
 - scrypt: echo '##vso[task.setvariable variable=suite]TestSuite'
-- task: tut.by
+- task: TUTBY@3
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'

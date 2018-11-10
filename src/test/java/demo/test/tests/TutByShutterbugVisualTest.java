@@ -37,6 +37,8 @@ public class TutByShutterbugVisualTest extends VisualTest {
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
 
         visualChecking();
+
+        ASSERT_WRAPPER.softAssertAll();
     }
 
     @SneakyThrows(IOException.class)

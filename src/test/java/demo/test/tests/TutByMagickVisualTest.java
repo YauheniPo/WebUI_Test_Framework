@@ -31,6 +31,8 @@ public class TutByMagickVisualTest extends VisualTest {
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
 
         ASSERT_WRAPPER.softAssertTrue(visualCompare(), "Comparison Failed!");
+
+        ASSERT_WRAPPER.softAssertAll();
     }
 
     private boolean visualCompare() {

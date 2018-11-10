@@ -12,9 +12,6 @@ pool:
 
 steps:
 - task: Maven@3
-- script: |
-    echo Starting the build
-    mvn clean test -Dsuite=TestSuite
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -23,5 +20,4 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/TEST-*.xml'
-#    suite: TestSuite
     goals: 'test'

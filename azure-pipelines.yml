@@ -7,16 +7,14 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-  - scrypt:
-    echo '##vso[task.setvariable variable=suite]TestSuite'
-
-  - task: tut.by
-    inputs:
-      mavenPomFile: 'pom.xml'
-      mavenOptions: '-Xmx3072m'
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.10'
-      jdkArchitectureOption: 'x64'
-      publishJUnitResults: false
-      testResultsFiles: '**/TEST-*.xml'
-      goals: 'test'
+- scrypt: echo '##vso[task.setvariable variable=suite]TestSuite'
+- task: tut.by
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.10'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    testResultsFiles: '**/TEST-*.xml'
+    goals: 'test'

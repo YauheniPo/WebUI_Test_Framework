@@ -7,7 +7,7 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-- script: echo '##vso[task.setvariable variable=suite]TestSuite'
+- script: echo 'Start Testing'
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
@@ -17,4 +17,4 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    goals: 'test'
+    goals: 'test -Dsuite=TestSuite'

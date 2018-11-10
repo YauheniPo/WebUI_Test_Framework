@@ -7,7 +7,7 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-- scrypt: echo '##vso[task.setvariable variable=suite]TestSuite'
+- script: echo '##vso[task.setvariable variable=suite]TestSuite'
 - task: TUTBY@3
   inputs:
     mavenPomFile: 'pom.xml'

@@ -7,10 +7,10 @@ jobs:
 - job: PopoTestUIFramework
   pool:
     vmImage: 'Ubuntu 16.04'
-#  variables:
-#    rp_launch: $(rp.launch)
-#    rp_endpoint: $(rp.endpoint)
-#    rp_project: $(rp.project)
+  variables:
+    rp_launch: $(test.rp.launch)
+    rp_endpoint: $(test.rp.endpoint)
+    rp_project: $(test.rp.project)
     rp_uuid: $(test.rp.uuid)
     suite: '$(test.suite)-$(test.rp.uuid)'
   steps:
@@ -30,4 +30,4 @@ jobs:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-      goals: 'test -Drp.launch=${test.rp.launch} -Drp.endpoint=${test.rp.endpoint} -Drp.project=${test.rp.project} -Drp.uuid=${test.rp.uuid} -Dsuite=$(test.suite)'
+      goals: 'test -Drp.launch=${rp_launch} -Drp.endpoint=${rp_endpoint} -Drp.project=${rp_project} -Drp.uuid=${rp_uuid} -Dsuite=$(test.suite)'

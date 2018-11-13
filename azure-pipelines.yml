@@ -10,11 +10,10 @@ variables:
   the_token: $(rp.project)
   suitee: 'TestSuite'
 
-parameters:
-  name: 'name'
-
 jobs:
 - job: PopoTestUIFramework
+  parameters:
+    name: 'name'
   steps:
   - script: echo Now I can use $(the_token)
   - script: echo Now I can use $(suitee)

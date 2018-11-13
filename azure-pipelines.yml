@@ -7,16 +7,14 @@ jobs:
 - job: PopoTestUIFramework
   pool:
     vmImage: 'Ubuntu 16.04'
-  variables:
-    rp_launch: $(rp.launch)
-    rp_endpoint: $(rp.endpoint)
-    rp_project: $(rp.project)
-    rp_uuid: $(rp.uuid)
+#  variables:
+#    rp_launch: $(rp.launch)
+#    rp_endpoint: $(rp.endpoint)
+#    rp_project: $(rp.project)
+#    rp_uuid: $(rp.uuid)
   steps:
   # Create a variable
 #  - script: echo '##vso[task.setvariable variable=rp_launch]$(rp_launch)'
-  # Print the variable
-  - script: echo 'test -Dsuite=$(test.suite) -Drp.launch=${rp.endpoint} -Drp.endpoint=${rp_endpoint} -Drp.project=${rp.project} -Drp.uuid=${rp_uuid}'
 
   - script: echo 'Start Testing'
   - task: Maven@3
@@ -28,5 +26,6 @@ jobs:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-#      goals: 'test -Dsuite=$(test.suite) -Drp.launch=${rp.endpoint} -Drp.endpoint=${rp_endpoint} -Drp.project=${rp.project} -Drp.uuid=${rp_uuid}'
-      goals: 'test -Dsuite=$(test.suite) -Drp.launch=yauheni_papovich1_TEST_EXAMPLE -Drp.endpoint=https://rp.epam.com -Drp.project=yauheni_papovich1_personal -Drp.uuid=5d3844f1-48ab-40ca-86e7-c6d6f0f101f0'
+#      goals: 'test -Dsuite=$(test.suite) -Drp.launch=${rp.launch} -Drp.endpoint=${rp.endpoint} -Drp.project=${rp.project} -Drp.uuid=${rp.uuid}'
+#      goals: 'test -Dsuite=$(test.suite) -Drp.launch=yauheni_papovich1_TEST_EXAMPLE -Drp.endpoint=https://rp.epam.com -Drp.project=yauheni_papovich1_personal -Drp.uuid=5d3844f1-48ab-40ca-86e7-c6d6f0f101f0'
+      goals: 'test -Dsuite=$(test.suite)'

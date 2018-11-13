@@ -8,17 +8,19 @@ jobs:
   pool:
     vmImage: 'Ubuntu 16.04'
   variables:
-#    rp_launch: $(test.rp.launch)
-#    rp_endpoint: $(test.rp.endpoint)
-#    rp_project: $(test.rp.project)
-#    rp_uuid: $(test.rp.uuid)
-    args: '-Drp.launch=${test.rp.launch} -Drp.endpoint=${test.rp.endpoint} -Drp.project=${test.rp.project} -Drp.uuid=${test.rp.uuid} -Dsuite=$(test.suite)'
+    rp_launch: $(rp.launch)
+    rp_endpoint: $(rp.endpoint)
+    rp_project: $(rp.project)
+    rp_uuid: $(rp.uuid)
+    args: '-Dsuite=$(test.suite) -Drp.launch=${rp.launch} -Drp.endpoint=${rp.endpoint} -Drp.project=${rp.project} -Drp.uuid=${rp.uuid}'
+    argss: '-Dsuite=$(test.suite) -Drp.launch=${rp_launch} -Drp.endpoint=${rp_endpoint} -Drp.project=${rp_project} -Drp.uuid=${rp_uuid}'
   steps:
   # Create a variable
 #  - script: echo '##vso[task.setvariable variable=suite]PdfTest'
   # Print the variable
   - script: echo my variable is $(suite)
   - script: echo my variable is $(args)
+  - script: echo my variable is $(argss)
 
   - script: echo 'Start Testing'
   - task: Maven@3
@@ -30,4 +32,4 @@ jobs:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-      goals: 'test ${args}'
+      goals: 'test ${argss}'

@@ -12,13 +12,12 @@ jobs:
     rp_endpoint: $(test.rp.endpoint)
     rp_project: $(test.rp.project)
     rp_uuid: $(test.rp.uuid)
-    suite: '$(test.suite)-$(test.rp.uuid)'
+    args: '-Drp.launch=${rp_launch} -Drp.endpoint=${rp_endpoint} -Drp.project=${rp_project} -Drp.uuid=${rp_uuid} -Dsuite=$(test.suite)'
   steps:
   # Create a variable
 #  - script: echo '##vso[task.setvariable variable=suite]PdfTest'
   # Print the variable
   - script: echo my variable is $(suite)
-  - script: echo my variable is $(rp_uuid)
 
   - script: echo 'Start Testing'
   - task: Maven@3
@@ -30,4 +29,4 @@ jobs:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-      goals: 'test -Drp.launch=${rp_launch} -Drp.endpoint=${rp_endpoint} -Drp.project=${rp_project} -Drp.uuid=${rp_uuid} -Dsuite=$(test.suite)'
+      goals: 'test ${args}'

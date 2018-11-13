@@ -8,7 +8,7 @@ jobs:
   pool:
     vmImage: 'Ubuntu 16.04'
   variables:
-    the_token: $(rp.project)
+    the_token: $(System.rp.project)
     suitee: 'TestSuite'
   steps:
   - script: echo Now I can use $(the_token)
@@ -33,4 +33,4 @@ jobs:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-      goals: 'test'
+      goals: 'test -DSuite=' + $(suitee)

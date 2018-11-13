@@ -33,4 +33,4 @@ jobs:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-      goals: 'test -Dsuite=TestSuite'
+      goals: 'test -Dыuite=$(suitee)'

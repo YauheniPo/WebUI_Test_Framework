@@ -63,30 +63,30 @@ public class PdfTest extends BaseTest {
         }
 
 
-        AssertThat.document(file)
-                .hasNumberOfPages(1);
-
-        AssertThat.document(file)
-                .restrictedTo(PagesToUse.getPage(1))
-                .hasText()
-                .containing("Arial");
-
-        AssertThat.document(file)
-                .hasText()
-                .first("Calibri Light")
-                .then("Calibri Light")
-                .then("Calibri");
-
-        AssertThat.document(file)
-                .restrictedTo(FIRST_PAGE)
-                .hasText()
-                .containing("11")
-                .containing("15");
-
-        AssertThat.document(file)
-                .hasFont()
-                .withNameContaining("Arial");
-
-        ASSERT_WRAPPER.softAssertAll();
+//        AssertThat.document(file)
+//                .hasNumberOfPages(1);
+//
+//        AssertThat.document(file)
+//                .restrictedTo(PagesToUse.getPage(1))
+//                .hasText()
+//                .containing("Arial");
+//
+//        AssertThat.document(file)
+//                .hasText()
+//                .first("Calibri Light")
+//                .then("Calibri Light")
+//                .then("Calibri");
+//
+//        AssertThat.document(file)
+//                .restrictedTo(FIRST_PAGE)
+//                .hasText()
+//                .containing("11")
+//                .containing("15");
+//
+//        AssertThat.document(file)
+//                .hasFont()
+//                .withNameContaining("Arial");
+//
+//        ASSERT_WRAPPER.softAssertAll();
     }
 }

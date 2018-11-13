@@ -8,18 +8,17 @@ jobs:
   pool:
     vmImage: 'Ubuntu 16.04'
   variables:
-    the_token: $(system.debug)
+    the_token: $(rp.launch)
   steps:
   - script: echo Now I can use $(the_token)
   # Create a variable
-  - script: echo '##vso[task.setvariable variable=suite]TestSuite'
+  - script: echo '##vso[task.setvariable variable=suite]PdfTest'
   # Print the variable
   - script: echo my variable is $(suite)
 
   - script: echo 'Start Testing'
   - task: Maven@3
     inputs:
-      suite: 'TestSuite'
       mavenPomFile: 'pom.xml'
       mavenOptions: '-Xmx3072m'
       javaHomeOption: 'JDKVersion'
@@ -27,4 +26,4 @@ jobs:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-      goals: 'test -Dsuite=TestSuite'
+      goals: 'test'

@@ -8,20 +8,15 @@ jobs:
   pool:
     vmImage: 'Ubuntu 16.04'
   variables:
-    the_token: $(System.rp.project)
-    suitee: 'TestSuite'
+    the_token: $(system.rp.project)
   steps:
   - script: echo Now I can use $(the_token)
-  - script: echo Now I can use $(suitee)
   # Create a variable
-  - script: echo '##vso[task.setvariable variable=myVariable]abc123'
+  - script: echo '##vso[task.setvariable variable=suite]TestSuite'
 
   # Print the variable
-  - script: echo my variable is $(myVariable)
+  - script: echo my variable is $(suite)
   - script: echo 'Start Testing'
-    env:
-      SOLUTION: 'xx'
-  - script: echo my variable is $(SOLUTION)
 
   - task: Maven@3
     inputs:
@@ -33,4 +28,4 @@ jobs:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-      goals: 'test -Dыuite=$(suitee)'
+      goals: 'test'

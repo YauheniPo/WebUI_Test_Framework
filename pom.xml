@@ -215,6 +215,13 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.pdfunit</groupId>
+            <artifactId>pdfunit-java</artifactId>
+            <version>2016.05</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/test/resources/pdfunit-java-2016.05_java-1.7/pdfunit-java-2016.05.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>

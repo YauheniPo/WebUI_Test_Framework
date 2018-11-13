@@ -12,19 +12,18 @@ jobs:
     rp_endpoint: $(rp.endpoint)
     rp_project: $(rp.project)
     rp_uuid: $(rp.uuid)
-    argss: '-Dsuite=$(test.suite) -Drp.launch=${rp.launch} -Drp.endpoint=${rp.endpoint} -Drp.project=${rp.project} -Drp.uuid=${rp.uuid}'
+#    argss: '-Dsuite=$(test.suite) -Drp.launch=${rp.launch} -Drp.endpoint=${rp.endpoint} -Drp.project=${rp.project} -Drp.uuid=${rp.uuid}'
   steps:
   # Create a variable
-  - script: echo '##vso[task.setvariable variable=rp_launch]$(rp_launch)'
+#  - script: echo '##vso[task.setvariable variable=rp_launch]$(rp_launch)'
   - script: echo '##vso[task.setvariable variable=rp_endpoint]${rp_endpoint}'
-  - script: echo '##vso[task.setvariable variable=rp_project]${rp_project}'
-  - script: echo '##vso[task.setvariable variable=rp_uuid]${rp_uuid}'
+#  - script: echo '##vso[task.setvariable variable=rp_project]${rp_project}'
+#  - script: echo '##vso[task.setvariable variable=rp_uuid]${rp_uuid}'
   # Print the variable
   - script: echo my variable is $(rp_launch)
   - script: echo my variable is $(rp_endpoint)
   - script: echo my variable is $(rp_project)
   - script: echo my variable is $(rp_uuid)
-  - script: echo my variable is $(argss)
 
   - script: echo 'Start Testing'
   - task: Maven@3

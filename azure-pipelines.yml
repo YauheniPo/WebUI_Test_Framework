@@ -3,20 +3,19 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-variables:
-  the_token: $(rp.project)
-  suitee: 'TestSuite'
+parameters:
+  vmImage: 'Ubuntu 16.04'
 
 jobs:
 - job: PopoTestUIFramework
   pool:
-    vmImage: 'Ubuntu 16.04'
-  parameters:
-    name: 'name'
+    vmImage: ${{vmImage}}
+  variables:
+    the_token: $(rp.project)
+    suitee: 'TestSuite'
   steps:
   - script: echo Now I can use $(the_token)
   - script: echo Now I can use $(suitee)
-  - script: echo Now I can use $({parameters.name})
   # Create a variable
   - script: echo '##vso[task.setvariable variable=myVariable]abc123'
 

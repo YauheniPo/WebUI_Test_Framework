@@ -14,12 +14,10 @@ jobs:
     rp_uuid: $(rp.uuid)
     suite: $(test.suite)
   steps:
-  - script: echo Now I can use $(the_token)
   # Create a variable
 #  - script: echo '##vso[task.setvariable variable=suite]PdfTest'
   # Print the variable
-  - script: echo my variable is $(suite)
-  - script: echo my variable is $(rp_uuid)
+#  - script: echo my variable is $(suite)
 
   - script: echo 'Start Testing'
   - task: Maven@3

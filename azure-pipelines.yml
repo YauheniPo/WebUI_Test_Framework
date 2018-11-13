@@ -3,15 +3,14 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-pool:
-  vmImage: 'Ubuntu 16.04'
-
 variables:
   the_token: $(rp.project)
   suitee: 'TestSuite'
 
 jobs:
 - job: PopoTestUIFramework
+  pool:
+    vmImage: 'Ubuntu 16.04'
   parameters:
     name: 'name'
   steps:

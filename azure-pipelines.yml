@@ -8,16 +8,17 @@ jobs:
   pool:
     vmImage: 'Ubuntu 16.04'
   variables:
-    rp_launch: $(test.rp.launch)
-    rp_endpoint: $(test.rp.endpoint)
-    rp_project: $(test.rp.project)
-    rp_uuid: $(test.rp.uuid)
-    args: '-Drp.launch=${rp_launch} -Drp.endpoint=${rp_endpoint} -Drp.project=${rp_project} -Drp.uuid=${rp_uuid} -Dsuite=$(test.suite)'
+#    rp_launch: $(test.rp.launch)
+#    rp_endpoint: $(test.rp.endpoint)
+#    rp_project: $(test.rp.project)
+#    rp_uuid: $(test.rp.uuid)
+    args: '-Drp.launch=${test.rp.launch} -Drp.endpoint=${test.rp.endpoint} -Drp.project=${test.rp.project} -Drp.uuid=${test.rp.uuid} -Dsuite=$(test.suite)'
   steps:
   # Create a variable
 #  - script: echo '##vso[task.setvariable variable=suite]PdfTest'
   # Print the variable
   - script: echo my variable is $(suite)
+  - script: echo my variable is $(args)
 
   - script: echo 'Start Testing'
   - task: Maven@3

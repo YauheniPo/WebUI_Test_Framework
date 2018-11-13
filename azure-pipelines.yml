@@ -13,13 +13,18 @@ jobs:
     rp_project: $(rp.project)
     rp_uuid: $(rp.uuid)
 #    args: '-Dsuite=$(test.suite) -Drp.launch=${rp.launch} -Drp.endpoint=${rp.endpoint} -Drp.project=${rp.project} -Drp.uuid=${rp.uuid}'
-    argss: '-Dsuite=$(test.suite) -Drp.launch=${rp_launch} -Drp.endpoint=${rp_endpoint} -Drp.project=${rp_project} -Drp.uuid=${rp_uuid}'
+#    argss: '-Dsuite=$(test.suite) -Drp.launch=${rp_launch} -Drp.endpoint=${rp_endpoint} -Drp.project=${rp_project} -Drp.uuid=${rp_uuid}'
   steps:
   # Create a variable
   - script: echo '##vso[task.setvariable variable=rp.launch]${rp_launch}'
+  - script: echo '##vso[task.setvariable variable=rp.endpoint]${rp_endpoint}'
+  - script: echo '##vso[task.setvariable variable=rp.project]${rp_project}'
+  - script: echo '##vso[task.setvariable variable=rp.uuid]${rp_uuid}'
   # Print the variable
-  - script: echo my variable is $(rp.launch)
-  - script: echo my variable is $(argss)
+  - script: echo my variable is $(rp_launch)
+  - script: echo my variable is $(rp_endpoint)
+  - script: echo my variable is $(rp_project)
+  - script: echo my variable is $(rp_uuid)
 
   - script: echo 'Start Testing'
   - task: Maven@3
@@ -31,4 +36,4 @@ jobs:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-      goals: 'test ${argss}'
+      goals: 'test -Dsuite=$(test.suite) -Drp.launch=${rp.launch} -Drp.endpoint=${rp.endpoint} -Drp.project=${rp.project} -Drp.uuid=${rp.uuid}'

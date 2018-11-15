@@ -4,7 +4,11 @@
     <test name="Test PDF" group-by-instances="true">
         <parameter name="pdfFile" value="note.pdf"/>
         <classes>
-            <class name="demo.test.tests.PdfTest"/>
+            <class name="demo.test.tests.PdfTest">
+                <methods>
+                    <include name="pdfTest1"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>

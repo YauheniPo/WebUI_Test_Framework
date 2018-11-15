@@ -57,7 +57,7 @@ public class DriverEntity extends BaseEntity {
      * @param browser   name of browser
      */
     @Parameters({"browser"})
-    @BeforeTest(alwaysRun = true)
+    @BeforeTest
     public void before(@Optional(value = "true") String browser) {
         Browser br = getBrowser(browser);
         Browser.navigate(Browser.BROWSER_URL);

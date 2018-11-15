@@ -44,13 +44,13 @@ public class TutByEmailTest extends BaseDriverTest implements IDataProvider {
         this.dataBaseLocation = dataBaseLocation;
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void clearEmailAndCloseMailStore() {
         deleteMails();
         this.mailBox.forEach(mail -> {if(this.nonNull.test(mail)) {mail.closeStore();}});
     }
 
-    @Test(dataProvider = "initParams")
+    @Test(dataProvider = "initParams", groups = {"email"})
     public void emailTest(@NonNull TestDataMails testDataEmails) {
         this.senderMailLogin = testDataEmails.getSenderMailLogin();
         this.senderMailPassword = testDataEmails.getSenderMailPassword();

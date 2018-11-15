@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="EPAM_e.popovich" parallel="tests" thread-count="1">
     <parameter name="email_text" value="epam_e.popovich"/>
-    <test name="Test @tut.by EMAIL" group-by-instances="true">
+    <test verbose="2" name="Test @tut.by EMAIL" group-by-instances="true">
         <!--accounts.xml        accounts.xls        accounts.csv        db-->
         <parameter name="data_base_location" value="accounts.csv"/>
         <parameter name="browser" value="chrome"/>

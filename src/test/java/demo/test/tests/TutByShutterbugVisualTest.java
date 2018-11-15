@@ -28,7 +28,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class TutByShutterbugVisualTest extends VisualTest {
 
-    @Test
+    @Test(groups = {"visual"})
     public void shutterTest() {
         LOGGER.step(1, "Opening the main page");
         TutByHomePage tutByHomePage = new TutByHomePage();
@@ -95,7 +95,7 @@ public class TutByShutterbugVisualTest extends VisualTest {
                 "loginFormImage");
     }
 
-    @Test
+    @Test(groups = {"visual"})
     public void test() {
         Configuration.browser = WebDriverRunner.CHROME;
         Selenide.open("https://www.google.com/imghp");

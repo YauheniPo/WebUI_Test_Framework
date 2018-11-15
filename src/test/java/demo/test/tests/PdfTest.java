@@ -36,7 +36,7 @@ public class PdfTest extends BaseTest {
         this.file = Paths.get(ARTIFACTS_DIR, pdfFile).toFile();
     }
 
-    @Test
+    @Test(groups = {"pdf"})
     public void pdfTest1() throws IOException {
         List<String> fonts = Arrays.asList("BCDEEE+Calibri Light", "Arial", "BCDFEE+Calibri");
 
@@ -68,7 +68,7 @@ public class PdfTest extends BaseTest {
         }
     }
 
-    @Test
+    @Test(groups = {"pdf$"})
     public void pdfTest2() {
         AssertThat.document(file)
                 .hasNumberOfPages(1);

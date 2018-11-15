@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 public class TutByOcularVisualTest extends VisualTest {
 
-    @Test
+    @Test(groups = {"visual"})
     public void shutterTest() {
         LOGGER.step(1, "Opening the main page");
         TutByHomePage tutByHomePage = new TutByHomePage();
@@ -24,7 +24,6 @@ public class TutByOcularVisualTest extends VisualTest {
     }
 
     private void visualChecking() {
-
         new OcularConf(Paths.get(visualEnv.snapshotsEqualsResultsPath()).toAbsolutePath().toString(),
                 Paths.get(visualEnv.screenshotsDir(), AuthorizeEmailPage.AUTHORIZE_EMAIL_PAGE_SNAPSHOTS_PATH).toAbsolutePath().toString())
                 .saveSnapshot(true);

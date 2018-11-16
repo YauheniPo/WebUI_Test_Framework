@@ -31,7 +31,7 @@ public class PdfTest extends BaseTest {
     private File file;
 
     @Parameters({"pdfFile"})
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void beforeClass(@NonNull String pdfFile) {
         this.file = Paths.get(ARTIFACTS_DIR, pdfFile).toFile();
     }

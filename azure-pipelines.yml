@@ -26,6 +26,6 @@ jobs:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
-#      goals: 'test -Dsuite=$(test.suite) -Drp.launch=${rp.launch} -Drp.endpoint=${rp.endpoint} -Drp.project=${rp.project} -Drp.uuid=${rp.uuid}'
+      goals: 'test -Dsuite=$(test.suite) -Drp.launch=${rp.launch} -Drp.endpoint=${rp.endpoint} -Drp.project=${rp.project} -Drp.uuid=${rp.uuid}'
 #      goals: 'test -Dsuite=$(test.suite) -Drp.launch=yauheni_papovich1_TEST_EXAMPLE -Drp.endpoint=https://rp.epam.com -Drp.project=yauheni_papovich1_personal -Drp.uuid=5d3844f1-48ab-40ca-86e7-c6d6f0f101f0'
-      goals: 'test -Dsuite=$(test.suite)'
+#      goals: 'test -Dsuite=$(test.suite)'

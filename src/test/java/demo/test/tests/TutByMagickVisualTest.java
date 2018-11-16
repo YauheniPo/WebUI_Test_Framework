@@ -22,7 +22,7 @@ import static demo.test.webentities.pages.AuthorizeEmailPage.CHECKBOX_MEMORY_SNA
 
 public class TutByMagickVisualTest extends VisualTest {
 
-    @Test
+    @Test(groups = {"visual"})
     public void shutterTest() {
         LOGGER.step(1, "Opening the main page");
         TutByHomePage tutByHomePage = new TutByHomePage();
@@ -31,6 +31,8 @@ public class TutByMagickVisualTest extends VisualTest {
         tutByHomePage.getHeader().clickTopBarElement(TutByHeader.TopBar.EMAIL);
 
         ASSERT_WRAPPER.softAssertTrue(visualCompare(), "Comparison Failed!");
+
+        ASSERT_WRAPPER.softAssertAll();
     }
 
     private boolean visualCompare() {

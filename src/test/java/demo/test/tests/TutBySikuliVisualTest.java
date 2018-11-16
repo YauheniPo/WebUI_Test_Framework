@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public class TutBySikuliVisualTest extends VisualTest {
 
-    @Test
+    @Test(groups = {"visual"})
     public void shutterTest() {
         LOGGER.step(1, "Opening the main page");
         TutByHomePage tutByHomePage = new TutByHomePage();

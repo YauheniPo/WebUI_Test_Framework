@@ -10,7 +10,7 @@ import demo.test.webentities.pages.TutByHomePage;
 import io.qameta.allure.Step;
 import lombok.NonNull;
 import org.testng.annotations.*;
-import webdriver.BaseTest;
+import webdriver.BaseDriverTest;
 import webdriver.IDataProvider;
 import webdriver.driver.Browser;
 import webdriver.utils.mail.MailUtils;
@@ -25,7 +25,7 @@ import java.util.function.Predicate;
 /**
  * The type Tut by email test.
  */
-public class TutByEmailTest extends BaseTest implements IDataProvider {
+public class TutByEmailTest extends BaseDriverTest implements IDataProvider {
     private String senderMailLogin;
     private String recipientMailLogin;
     private String senderMailPassword;
@@ -37,20 +37,20 @@ public class TutByEmailTest extends BaseTest implements IDataProvider {
     private String emailText;
     private String dataBaseLocation;
 
-    @Parameters({"emailText", "dataBaseLocation"})
+    @Parameters({"email_text", "data_base_location"})
     @BeforeClass
-    public void fetchTestData(@Optional(value = "test_text") String emailText, String dataBaseLocation) {
+    public void fetchTestData(@Optional(value = "test_text") String emailText, @NonNull String dataBaseLocation) {
         this.emailText = emailText;
         this.dataBaseLocation = dataBaseLocation;
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void clearEmailAndCloseMailStore() {
         deleteMails();
         this.mailBox.forEach(mail -> {if(this.nonNull.test(mail)) {mail.closeStore();}});
     }
 
-    @Test(dataProvider = "initParams")
+    @Test(dataProvider = "initParams", groups = {"email"})
     public void emailTest(@NonNull TestDataMails testDataEmails) {
         this.senderMailLogin = testDataEmails.getSenderMailLogin();
         this.senderMailPassword = testDataEmails.getSenderMailPassword();

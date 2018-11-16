@@ -11,5 +11,6 @@ public class Constants {
     public static final String PROPERTIES_SELENIUM = "selenium.properties";
     public static final String PROPERTIES_VISUAL = "visual.properties";
     public static final String PROPERTIES_STAGE = "stage.properties";
-    public static final String PROPERTIES_TEST_INFO = "testsdata/testinfo.properties";
+    public static final String PROPERTIES_TEST = "test.properties";
+    public static final String PROPERTIES_TEST_INFO = "test_data/test_info_credentials.properties";
 }

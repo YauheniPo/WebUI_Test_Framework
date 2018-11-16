@@ -32,6 +32,7 @@
         <allure.version>1.5.4</allure.version>
         <aspectj.version>1.9.1</aspectj.version>
         <allure.maven.version>2.6</allure.maven.version>
+        <lombok.version>1.18.2</lombok.version>
     </properties>
 
     <dependencies>
@@ -132,7 +133,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.0</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -197,10 +198,30 @@
             <artifactId>im4java</artifactId>
             <version>1.4.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.2</version>
+        </dependency>
+
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pdfunit</groupId>
+            <artifactId>pdfunit-java</artifactId>
+            <version>2016.05</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/test/resources/pdfunit-java-2016.05_java-1.7/pdfunit-java-2016.05.jar</systemPath>
         </dependency>
     </dependencies>
 
@@ -209,8 +230,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.8.0</version>
                 <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
@@ -225,6 +253,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.18.1</version>
                 <configuration>
+                    <!--<systemPropertyVariables>-->
+                        <!--<user.language>en</user.language>-->
+                        <!--<user.region>US</user.region>-->
+                    <!--</systemPropertyVariables>-->
+
                     <forkCount>5</forkCount>
                     <reuseForks>true</reuseForks>
                     <includes>

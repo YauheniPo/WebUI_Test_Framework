@@ -11,7 +11,7 @@ import webdriver.utils.waitings.SmartWait;
 /**
  * The type Base form.
  */
-public abstract class BaseForm extends BaseEntity {
+public abstract class BaseForm extends DriverEntity {
 
     /**
      * Instantiates a new Base form.

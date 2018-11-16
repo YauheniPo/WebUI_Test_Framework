@@ -3,13 +3,13 @@ package webdriver.elements;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-import webdriver.BaseEntity;
+import webdriver.DriverEntity;
 import webdriver.utils.waitings.SmartWait;
 
 /**
  * The type Base element.
  */
-public abstract class BaseElement extends BaseEntity {
+public abstract class BaseElement extends DriverEntity {
     private SelenideElement element;
 
     /**

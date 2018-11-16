@@ -27,8 +27,8 @@ public final class Browser {
     private static final int IMPLICITY_WAIT = driverEnv.implicityWait();
     private static final Logger LOGGER = Logger.getInstance();
     private static Browser instance;
-    static final String GRID_URL =driverEnv.gridUrl();
-    static final boolean IS_HEADLESS = driverEnv.browserHeadless();
+    static final String GRID_URL = driverEnv.gridUrl();
+    public static final boolean IS_HEADLESS = driverEnv.browserHeadless();
     public static final int TIMEOUT_FOR_CONDITION = driverEnv.defaultConditionTimeout();
     public static final String BROWSER_URL = stageEnv.urlLoginPage();
     public static final int PAGE_WAIT = driverEnv.pageImplicityWait();

@@ -62,7 +62,8 @@ public class DriverEntity extends BaseEntity {
         Browser br = getBrowser(browser);
         Browser.navigate(Browser.BROWSER_URL);
         br.windowMaximise();
-        takeOffCursor();
+        if (!Browser.IS_HEADLESS)
+            takeOffCursor();
     }
 
     /**

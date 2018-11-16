@@ -38,8 +38,8 @@ public class TutByEmailTest extends BaseDriverTest implements IDataProvider {
     private String dataBaseLocation;
 
     @Parameters({"email_text", "data_base_location"})
-    @BeforeClass
-    public void fetchTestData(@Optional(value = "test_text") String emailText, @NonNull String dataBaseLocation) {
+    @BeforeClass(alwaysRun = true)
+    public void fetchTestData(@Optional(value = "test_text") String emailText, @Optional(value = "accounts.xml") String dataBaseLocation) {
         this.emailText = emailText;
         this.dataBaseLocation = dataBaseLocation;
     }

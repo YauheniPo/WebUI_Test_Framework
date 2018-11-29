@@ -529,7 +529,7 @@ public class PDFTextStripperHelper extends PDFTextStripper {
 //     */
 //    protected void writeString(String string, List<TextPosition> textPositions) throws IOException {
 //        for (TextPosition text : textPositions) {
-//            System.out.println("String[" + text.getXDirAdj() + ","
+//            LOGGER.info("String[" + text.getXDirAdj() + ","
 //                    + text.getYDirAdj() + " fs=" + text.getFontSize() + " xscale="
 //                    + text.getXScale() + " height=" + text.getHeightDir() + " space="
 //                    + text.getWidthOfSpace() + " width="
